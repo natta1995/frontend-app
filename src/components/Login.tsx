@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Link} from 'react-router-dom';
 
 interface LoginProps {
     onLogin: (username: string, password: string) => void;
@@ -40,6 +41,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               />
             </div>
             <button type="submit" style={{ padding: '8px 16px' }}>Login</button>
+            <p>Har du inget konto hos oss? <br></br><Link to="/register">Registrera här</Link></p>
           </form>
         </div>
       );

@@ -1,6 +1,8 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Login from './components/Login'
-import { login } from './api/auth'
+import Register from './components/Register';
+import { login, register } from './api/auth'
 
 
 const App: React.FC = () => {
@@ -14,13 +16,25 @@ const App: React.FC = () => {
     }
   };
 
+  const handleRegister = async (username: string, password: string, name: string, email: string, age: number) => {
+    const result = await register(username, password, name, email, age);
+    if (result.success) {
+      alert(result.message);
+    } else {
+      alert(result.message);
+    }
+  };
+
 
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-      <Login onLogin={handleLogin} />
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Login onLogin={handleLogin}/>} />
+          <Route path="/register" element={<Register onRegister={handleRegister} />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
