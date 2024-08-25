@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+
 
 type Post = {
   id: number;
@@ -78,7 +78,6 @@ const Feed = () => {
 
   return (
     <div style={{ margin: '0 auto', backgroundColor: "#d3efe5", padding: "3%", width: "70%", height: "auto"}}>
-      <Link to="/profile" > Min profil </Link>
       <h1>Välkommen tillbaka ....</h1>
       <form onSubmit={handlePostSubmit}>
         <h6>Vad vill du dela med dig av idag?</h6>

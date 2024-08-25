@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Feed from './components/Feed';
 import Profile from './components/Profile';
+import Layout from './components/Layout';
 import { login, register } from './api/auth';
 
 
@@ -36,14 +37,15 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="App">
         <Routes>
           <Route path="/" element={<Login onLogin={handleLogin}/>} />
           <Route path="/register" element={<Register onRegister={handleRegister} />} />
+          <Route element={<Layout />}>
           <Route path="/feed" element={<Feed/>} />
           <Route path="/profile" element={<Profile/>} />
+          </Route>
         </Routes>
-      </div>
+    
     </Router>
   );
 }

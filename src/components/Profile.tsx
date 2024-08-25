@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+//import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 const ProfileContainer = styled.div`
   background-color: #d3efe5;  
@@ -46,7 +46,7 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <ProfileContainer style={{ maxWidth: '600px', margin: '0 auto' }}>
+    <ProfileContainer style={{ width: "70%", margin: '0 auto' }}>
       <h1>{profile.name}</h1>
       <p><strong>Användarnamn:</strong> {profile.username}</p>
       <p><strong>Namn:</strong> {profile.name}</p>
