@@ -73,7 +73,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
           />
         </div>
         <button type="submit" style={{ padding: '8px 16px' }}>Register</button>
-        <p>har du redan ett konto hos oss? <br></br> <Link to="/">Logga in här</Link></p>
+        <p>Har du redan ett konto hos oss? <br></br> <Link to="/">Logga in här</Link></p>
       </form>
     </div>
   );
