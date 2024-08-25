@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+
+
+const RegisterContainer = styled.div`
+  background-color: #d3efe5;
+  padding: 10%;
+  border-radius: 10px;
+  border: 1px solid #d3efe5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+`;
 
 
 interface RegisterProps {
@@ -19,63 +30,79 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
   };
 
   return (
-    <div style={{ width: '300px', margin: '0 auto', textAlign: 'center' }}>
-      <h2>Registrera dig</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '10px' }}>
-          <label>Användarnamn:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
-          />
-        </div>
-        <div style={{ marginBottom: '10px' }}>
-          <label>Lösenord:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
-          />
-        </div>
-        <div style={{ marginBottom: '10px' }}>
-          <label>Namn:</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
-          />
-        </div>
-        <div style={{ marginBottom: '10px' }}>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
-          />
-        </div>
-        <div style={{ marginBottom: '10px' }}>
-          <label>Ålder:</label>
-          <input
-            type="number"
-            value={age}
-            onChange={(e) => setAge(Number(e.target.value))}
-            required
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
-          />
-        </div>
-        <button type="submit" style={{ padding: '8px 16px' }}>Registrera</button>
-        <p>Har du redan ett konto hos oss? <br></br> <Link to="/">Logga in här</Link></p>
-      </form>
-    </div>
+    <Container className="mt-5">
+      <Row className="justify-content-md-center">
+        <Col md={4}>
+          <RegisterContainer>
+            <h2 className="text-center">Registrera dig</h2>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formName" className="mb-3">
+                <Form.Label>Namn</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ange ditt namn"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formUsername" className="mb-3">
+                <Form.Label>Användarnamn</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ange användarnamn"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formEmail" className="mb-3">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Ange din email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formPassword" className="mb-3">
+                <Form.Label>Lösenord</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Ange lösenord"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formAge" className="mb-3">
+                <Form.Label>Ålder</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Ange din ålder"
+                  value={age}
+                  onChange={(e) => setAge(Number(e.target.value))}
+                  required
+                />
+              </Form.Group>
+
+              <Button variant="primary" type="submit" className="w-100">
+                Registrera
+              </Button>
+
+              <div className="mt-3 text-center">
+                <Link to="/">Har du redan ett konto? Logga in här</Link>
+              </div>
+            </Form>
+          </RegisterContainer>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
