@@ -22,10 +22,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
     return (
         <div style={{ width: '300px', margin: '0 auto', textAlign: 'center' }}>
-          <h2>Login</h2>
+          <h2>Logga in</h2>
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: '10px' }}>
-              <label htmlFor="username">Username:</label>
+              <label htmlFor="username">Användarnamn:</label>
               <input
                 id="username"
                 type="text"
@@ -36,7 +36,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               />
             </div>
             <div style={{ marginBottom: '10px' }}>
-              <label htmlFor="password">Password:</label>
+              <label htmlFor="password">Lösenord:</label>
               <input
                 id="password"
                 type="password"
@@ -46,7 +46,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
               />
             </div>
-            <button type="submit" style={{ padding: '8px 16px' }}>Login</button>
+            <button type="submit" style={{ padding: '8px 16px' }}>Logga in</button>
             <p>Har du inget konto hos oss? <br></br><Link to="/register">Registrera här</Link></p>
           </form>
         </div>

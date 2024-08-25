@@ -20,10 +20,10 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
 
   return (
     <div style={{ width: '300px', margin: '0 auto', textAlign: 'center' }}>
-      <h2>Register</h2>
+      <h2>Registrera dig</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '10px' }}>
-          <label>Username:</label>
+          <label>Användarnamn:</label>
           <input
             type="text"
             value={username}
@@ -33,7 +33,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
           />
         </div>
         <div style={{ marginBottom: '10px' }}>
-          <label>Password:</label>
+          <label>Lösenord:</label>
           <input
             type="password"
             value={password}
@@ -43,7 +43,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
           />
         </div>
         <div style={{ marginBottom: '10px' }}>
-          <label>Name:</label>
+          <label>Namn:</label>
           <input
             type="text"
             value={name}
@@ -63,7 +63,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
           />
         </div>
         <div style={{ marginBottom: '10px' }}>
-          <label>Age:</label>
+          <label>Ålder:</label>
           <input
             type="number"
             value={age}
@@ -72,7 +72,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
             style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
           />
         </div>
-        <button type="submit" style={{ padding: '8px 16px' }}>Register</button>
+        <button type="submit" style={{ padding: '8px 16px' }}>Registrera</button>
         <p>Har du redan ett konto hos oss? <br></br> <Link to="/">Logga in här</Link></p>
       </form>
     </div>
