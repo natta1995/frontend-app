@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/Login'
+import Login from './components/Login';
 import Register from './components/Register';
-import Feed from './components/Feed'
-import { login, register } from './api/auth'
+import Feed from './components/Feed';
+import Profile from './components/Profile';
+import { login, register } from './api/auth';
 
 
 const App: React.FC = () => {
@@ -40,6 +41,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Login onLogin={handleLogin}/>} />
           <Route path="/register" element={<Register onRegister={handleRegister} />} />
           <Route path="/feed" element={<Feed/>} />
+          <Route path="/profile" element={<Profile/>} />
         </Routes>
       </div>
     </Router>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 type Post = {
   id: number;
@@ -78,6 +79,7 @@ const Feed = () => {
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto' }}>
       <h1>Här är ditt flöde</h1>
+      <Link to="/profile" > Min profil </Link>
       <form onSubmit={handlePostSubmit}>
         <textarea
           value={newPost}
