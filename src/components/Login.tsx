@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
+import {Link , useNavigate} from 'react-router-dom';
 
 interface LoginProps {
-    onLogin: (username: string, password: string) => void;
+    onLogin: (username: string, password: string) => Promise<boolean>;
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        onLogin(username, password)
+        const success = await onLogin(username, password);
+
+        if (success) {
+          navigate('/feed'); 
+        }
+        
     }
 
     return (

@@ -3,7 +3,7 @@ export interface LoginResponse {
     message: string;
   }
   
-  export const login = async (username: string, password: string): Promise<LoginResponse> => {
+  export const login = async (username: string, password: string): Promise<{ success: boolean; message: string }> => {
     try {
       const response = await fetch('http://localhost:1337/users/login', {
         method: 'POST',

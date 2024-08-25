@@ -1,18 +1,25 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login'
 import Register from './components/Register';
+import Feed from './components/Feed'
 import { login, register } from './api/auth'
 
 
 const App: React.FC = () => {
-  const handleLogin = async (username: string, password: string) => {
-    const result = await login(username, password);
-
-    if (result.success) {
-      alert(result.message);
-    } else {
-      alert(result.message);
+  const handleLogin = async (username: string, password: string): Promise<boolean> => {
+    try {
+      const result = await login(username, password);
+  
+      if (result.success) {
+        return true;  
+      } else {
+        alert(result.message);
+        return false; 
+      }
+    } catch (error) {
+      console.error('An unexpected error occurred:', error);
+      return false; 
     }
   };
 
@@ -32,6 +39,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Login onLogin={handleLogin}/>} />
           <Route path="/register" element={<Register onRegister={handleRegister} />} />
+          <Route path="/feed" element={<Feed/>} />
         </Routes>
       </div>
     </Router>
