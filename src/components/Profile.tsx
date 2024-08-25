@@ -1,4 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+
+const ProfileContainer = styled.div`
+  background-color: #d3efe5;  
+  padding: 10%;
+  border-radius: 10px;
+  border: 1px solid #d3efe5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+`
 
 const Profile: React.FC = () => {
   const [profile, setProfile] = useState<any>(null);
@@ -9,7 +19,7 @@ const Profile: React.FC = () => {
       try {
         const response = await fetch('http://localhost:1337/users/profile', {
           method: 'GET',
-          credentials: 'include', // Skicka cookies för sessionen
+          credentials: 'include', 
         });
 
         if (response.ok) {
@@ -36,8 +46,8 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-      <h1>Min Profil</h1>
+    <ProfileContainer style={{ maxWidth: '600px', margin: '0 auto' }}>
+      <h1>{profile.name}</h1>
       <p><strong>Användarnamn:</strong> {profile.username}</p>
       <p><strong>Namn:</strong> {profile.name}</p>
       <p><strong>Email:</strong> {profile.email}</p>
@@ -45,7 +55,7 @@ const Profile: React.FC = () => {
       <p><strong>Arbetsplats:</strong> {profile.workplace}</p>
       <p><strong>Skola:</strong> {profile.school}</p>
       <p><strong>Bio:</strong> {profile.bio}</p>
-    </div>
+    </ProfileContainer>
   );
 };
 
