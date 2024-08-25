@@ -8,7 +8,7 @@ type Post = {
 };
 
 const Feed = () => {
-  const [posts, setPosts] = useState<Post[]>([]); // Lägg till typ för posts
+  const [posts, setPosts] = useState<Post[]>([]); 
   const [newPost, setNewPost] = useState<string>('');
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Feed = () => {
     fetchPosts();
   }, []);
 
-  const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => { // Lägg till typ för e
+  const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault();
 
     try {
@@ -58,7 +58,7 @@ const Feed = () => {
     }
   };
 
-  const handleDelete = async (postId: number) => { // Lägg till typ för postId
+  const handleDelete = async (postId: number) => { 
     try {
       const response = await fetch(`http://localhost:1337/feed/${postId}`, {
         method: 'DELETE',
