@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 //import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
-const ProfileContainer = styled.div`
-  background-color: #d3efe5;  
+const ProfileContainer = styled.div` 
   padding: 10%;
   border-radius: 10px;
   border: 1px solid #d3efe5;

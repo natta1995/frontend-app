@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { Form, Button } from 'react-bootstrap';
 
 type Post = {
   id: number;
@@ -77,9 +77,9 @@ const Feed = () => {
   };
 
   return (
-    <div style={{ margin: '0 auto', backgroundColor: "#d3efe5", padding: "3%", width: "70%", height: "auto"}}>
-      <h1>Välkommen tillbaka ....</h1>
-      <form onSubmit={handlePostSubmit}>
+    <div style={{ margin: '0 auto',  padding: "3%", width: "70%", height: "auto"}}>
+      <h1>Välkommen tillbaka ...</h1>
+      <Form onSubmit={handlePostSubmit}>
         <h6>Vad vill du dela med dig av idag?</h6>
         <textarea
           value={newPost}
@@ -87,8 +87,8 @@ const Feed = () => {
           placeholder="Vad vill du dela?"
           style={{ width: '100%', padding: '10px', marginBottom: '10px', height: '100px' }}
         />
-        <button type="submit" style={{ padding: '10px 20px' }}>Skapa Inlägg</button>
-      </form>
+        <Button type="submit" style={{ padding: '10px 20px' }}>Skapa Inlägg</Button>
+      </Form>
 
       <div style={{ marginTop: '20px' }}>
         {posts.length > 0 ? (
@@ -97,7 +97,7 @@ const Feed = () => {
               <p><strong>{post.username}</strong> says:</p>
               <p>{post.content}</p>
               <p style={{ fontSize: '0.8em', color: '#555' }}>{new Date(post.createdAt).toLocaleString()}</p>
-              <button onClick={() => handleDelete(post.id)}>Ta Bort</button>
+              <Button onClick={() => handleDelete(post.id)}>Ta Bort</Button>
             </div>
           ))
         ) : (
