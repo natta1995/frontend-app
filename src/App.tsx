@@ -5,6 +5,7 @@ import Register from './components/Register';
 import Feed from './components/Feed';
 import Profile from './components/Profile';
 import Layout from './components/Layout';
+import EditProfile from './components/EditProfile';
 import { login, register } from './api/auth';
 
 
@@ -43,6 +44,7 @@ const App: React.FC = () => {
           <Route element={<Layout />}>
           <Route path="/feed" element={<Feed/>} />
           <Route path="/profile" element={<Profile/>} />
+          <Route path="/edit-profile" element={<EditProfile/>} />
           </Route>
         </Routes>
     

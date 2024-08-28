@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-//import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { useNavigate  } from 'react-router-dom';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 const ProfileContainer = styled.div` 
   padding: 10%;
@@ -12,6 +13,8 @@ const ProfileContainer = styled.div`
 const Profile: React.FC = () => {
   const [profile, setProfile] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -54,8 +57,9 @@ const Profile: React.FC = () => {
       <p><strong>Arbetsplats:</strong> {profile.workplace}</p>
       <p><strong>Skola:</strong> {profile.school}</p>
       <p><strong>Bio:</strong> {profile.bio}</p>
+      <Button onClick={() => navigate('/edit-profile')}>Redigera</Button>
     </ProfileContainer>
   );
 };
 
-export default Profile;
+export default Profile; 
