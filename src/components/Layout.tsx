@@ -23,7 +23,7 @@ const Layout: React.FC = () => {
             <Nav className="me-auto">
               <Nav.Link href="/feed">Hem</Nav.Link>
               <Nav.Link href="/profile">Profil</Nav.Link>
-              <Nav.Link href="/find-friends">Hitta vänner</Nav.Link>
+              <Nav.Link href="/find-friends">Vänner</Nav.Link>
               <Nav.Link href="/">Logga ut</Nav.Link> {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
             </Nav>
           </Navbar.Collapse>
