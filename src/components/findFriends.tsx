@@ -140,10 +140,13 @@ const Friends: React.FC = () => {
 
   return (
     <div style={{ margin: '0 auto', padding: '20px', width: '80%' }}>
+        <h1 style={{textAlign: "center", paddingBottom: "3%"}}>Hantera vänner</h1>
+      <div style={{display: "flex", flexDirection: "row",}}>
+      <div style={{width: "50%", padding: "5%", border: "solid 1px black"}}>
       <h2>Lägg Till Användare</h2>
       <ul>
         {users.map((user) => (
-          <li key={user.id}>
+          <li style={{marginBottom: "5%"}} key={user.id}>
             {user.name} ({user.username})
             {sentRequests.includes(user.id) ? (
               <span style={{ marginLeft: '10px', color: 'green' }}>Skickad</span>
@@ -153,31 +156,34 @@ const Friends: React.FC = () => {
           </li>
         ))}
       </ul>
-
+      </div>
+      <div style={{width: "50%", padding: "5%", border: "solid 1px black"}}>
       <h2>Mottagna Vänförfrågningar</h2>
       <ul>
         {receivedRequests.length > 0 ? (
           receivedRequests.map((request) => (
-            <li key={request.id}>
+            <li style={{marginBottom: "5%"}} key={request.id}>
               {request.name} ({request.username})
               <Button onClick={() => respondToRequest(request.id, 'accept')} style={{ marginLeft: '10px' }} variant="success">Acceptera</Button>
               <Button onClick={() => respondToRequest(request.id, 'reject')} style={{ marginLeft: '10px' }} variant="danger">Avvisa</Button>
             </li>
           ))
         ) : (
-          <li>Inga mottagna vänförfrågningar</li>
+          <li>Inga mottagna vänförfrågningar just nu!</li>
         )}
       </ul>
 
       <h2>Mina Vänner</h2>
       <ul>
         {friends.map((friend) => (
-          <li key={friend.id}>
+          <li style={{marginBottom: "5%"}} key={friend.id}>
             {friend.name} ({friend.username})
             <Button onClick={() => removeFriend(friend.id)} style={{ marginLeft: '10px' }} variant="danger">Ta bort vän</Button>
           </li>
         ))}
       </ul>
+    </div>
+    </div>
     </div>
   );
 };
