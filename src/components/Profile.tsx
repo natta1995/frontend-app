@@ -100,9 +100,12 @@ const Profile: React.FC = () => {
       <p><strong>Arbetsplats:</strong> {profile.workplace}</p>
       <p><strong>Skola:</strong> {profile.school}</p>
       <p><strong>Bio:</strong> {profile.bio}</p>
+      <div style={{display: "flex", justifyContent: "space-between"}}>
       <Button onClick={() => navigate('/edit-profile')}>Redigera</Button>
-      <div>
-        <h3>Mitt flöde:</h3>
+      <Button onClick={() => navigate('/find-friends')}>Hantera Vänner</Button>
+      </div>
+      <div style={{paddingTop: "8%"}}>
+        <h3 style={{ borderTop: '1px solid #ccc', padding: '10px 0' }}>Mina inlägg:</h3>
       {posts.length > 0 ? (
     posts
       .filter(post => post.username === currentUser) 
