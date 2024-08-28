@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
+
 type Post = {
   id: number;
   username: string;
@@ -11,10 +12,12 @@ type Post = {
 const Feed = () => {
   const [posts, setPosts] = useState<Post[]>([]); 
   const [newPost, setNewPost] = useState<string>('');
+  const [currentUser, setCurrentUser] = useState<string>('');
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        // Hämta inlägg
         const response = await fetch('http://localhost:1337/feed', {
           method: 'GET',
           credentials: 'include',
@@ -26,8 +29,21 @@ const Feed = () => {
         } else {
           console.error('Failed to fetch posts');
         }
+
+        // Hämta nuvarande användares username
+        const userResponse = await fetch('http://localhost:1337/users/profile', {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          setCurrentUser(userData.username); // Sätt användarnamnet i state
+        } else {
+          console.error('Failed to fetch current user');
+        }
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
@@ -97,7 +113,10 @@ const Feed = () => {
               <p><strong>{post.username}</strong> says:</p>
               <p>{post.content}</p>
               <p style={{ fontSize: '0.8em', color: '#555' }}>{new Date(post.createdAt).toLocaleString()}</p>
-              <Button onClick={() => handleDelete(post.id)}>Ta Bort</Button>
+              {post.username === currentUser && ( 
+                <Button onClick={() => handleDelete(post.id)} variant="danger">Ta Bort</Button>
+              )}
+              
             </div>
           ))
         ) : (
