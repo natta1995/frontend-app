@@ -90,6 +90,23 @@ const Profile: React.FC = () => {
     return <div>Loading...</div>;
   }
 
+  const handleDelete = async (postId: number) => { 
+    try {
+      const response = await fetch(`http://localhost:1337/feed/${postId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        setPosts(posts.filter(post => post.id !== postId));
+      } else {
+        console.error('Failed to delete post');
+      }
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
+  };
+
   return (
     <ProfileContainer style={{ width: "70%", margin: '0 auto' }}>
       <h1>{profile.name}</h1>
@@ -114,7 +131,7 @@ const Profile: React.FC = () => {
           <p><strong>{post.username}</strong> säger:</p>
           <p>{post.content}</p>
           <p style={{ fontSize: '0.8em', color: '#555' }}>{new Date(post.createdAt).toLocaleString()}</p>
-          
+          <Button onClick={() => handleDelete(post.id)} variant="danger">Ta Bort</Button>
         </div>
       ))
   ) : (
