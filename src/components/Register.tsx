@@ -29,6 +29,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
     onRegister(username, password, name, email, age);
   };
 
+  
   return (
     <Container className="mt-5">
       <Row className="justify-content-md-center">
