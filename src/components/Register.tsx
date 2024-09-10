@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 
 const RegisterContainer = styled.div`
@@ -23,10 +23,12 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [age, setAge] = useState<number>(0);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onRegister(username, password, name, email, age);
+    navigate('/')
   };
 
   
