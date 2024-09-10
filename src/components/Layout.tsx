@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Dropdown } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 import LogoImg from '../deer.webp';
 
@@ -43,13 +43,22 @@ const Layout: React.FC = () => {
             DearFriends
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+          <Navbar.Collapse id="basic-navbar-nav"  >
+            <Nav className="me-auto" >
               <Nav.Link href="/feed">Hem</Nav.Link>
-              <Nav.Link href="/profile">{currentUser}</Nav.Link>
-              <Nav.Link href="/find-friends">Vänner</Nav.Link>
-              <Nav.Link href="/">Logga ut</Nav.Link> {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
+              <Nav.Link href="/find-friends">Hantera Vänner</Nav.Link>
             </Nav>
+              <Dropdown className="ms-auto" >
+              <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic">
+                {currentUser}
+              </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+                <Dropdown.Item href="/profile">Min profil</Dropdown.Item>
+                <Dropdown.Item href="/">Logga ut</Dropdown.Item> {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
+            </Dropdown.Menu>
+            </Dropdown>
+            
           </Navbar.Collapse>
         </Container>
       </Navbar>
