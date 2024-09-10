@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 import LogoImg from '../deer.webp';
 
 const Layout: React.FC = () => {
+  const [currentUser, setCurrentUser] = useState<string>('');
+  
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userResponse = await fetch('http://localhost:1337/users/profile', {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          setCurrentUser(userData.name); // Sätt namnet i state
+        } else {
+          console.error('Failed to fetch current user');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+  
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -22,7 +46,7 @@ const Layout: React.FC = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="/feed">Hem</Nav.Link>
-              <Nav.Link href="/profile">Profil</Nav.Link>
+              <Nav.Link href="/profile">{currentUser}</Nav.Link>
               <Nav.Link href="/find-friends">Vänner</Nav.Link>
               <Nav.Link href="/">Logga ut</Nav.Link> {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
             </Nav>
