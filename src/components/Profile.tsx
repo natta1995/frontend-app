@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate  } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import ProfileImg from '../startimg.webp'
 
 const ProfileContainer = styled.div` 
   padding: 10%;
@@ -109,6 +110,7 @@ const Profile: React.FC = () => {
 
   return (
     <ProfileContainer style={{ width: "70%", margin: '0 auto' }}>
+      <img src={ProfileImg} alt="StartProfileImg" style={{ width: '250px', height: 'auto', borderRadius: "50%" }} />
       <h1>{profile.name}</h1>
       <p><strong>Användarnamn:</strong> {profile.username}</p>
       <p><strong>Namn:</strong> {profile.name}</p>
