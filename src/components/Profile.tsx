@@ -131,7 +131,7 @@ const Profile: React.FC = () => {
           <p><strong>{post.username}</strong> säger:</p>
           <p>{post.content}</p>
           <p style={{ fontSize: '0.8em', color: '#555' }}>{new Date(post.createdAt).toLocaleString()}</p>
-          <Button onClick={() => handleDelete(post.id)} variant="danger">Ta Bort</Button>
+          <Button onClick={() => handleDelete(post.id)} variant="danger">Ta bort inlägg</Button>
         </div>
       ))
   ) : (

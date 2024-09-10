@@ -110,11 +110,11 @@ const Feed = () => {
         {posts.length > 0 ? (
           posts.map((post) => (
             <div key={post.id} style={{ borderBottom: '1px solid #ccc', padding: '10px 0' }}>
-              <p><strong>{post.username}</strong> says:</p>
+              <p><strong>{post.username}</strong> säger:</p>
               <p>{post.content}</p>
               <p style={{ fontSize: '0.8em', color: '#555' }}>{new Date(post.createdAt).toLocaleString()}</p>
               {post.username === currentUser && ( 
-                <Button onClick={() => handleDelete(post.id)} variant="danger">Ta Bort</Button>
+                <Button onClick={() => handleDelete(post.id)} variant="danger">Ta bort inlägg</Button>
               )}
               
             </div>
