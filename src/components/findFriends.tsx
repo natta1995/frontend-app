@@ -117,7 +117,7 @@ const Friends: React.FC = () => {
     }
   };
 
-  const removeFriend = async (friendId: number) => {
+  /* const removeFriend = async (friendId: number) => {
     try {
       const response = await fetch('http://localhost:1337/friends/remove', {
         method: 'POST',
@@ -141,7 +141,7 @@ const Friends: React.FC = () => {
 
   if (error) {
     return <div>{error}</div>;
-  }
+  } */
 
   const filteredUsers = users.filter(user => 
     !friends.some(friends => friends.id === user.id) && user.id !== currentUser?.id
@@ -182,7 +182,7 @@ const Friends: React.FC = () => {
         )}
       </ul>
 
-      <h2>Mina Vänner</h2>
+{/*       <h2>Mina Vänner</h2>
       <ul>
         {friends.map((friend) => (
           <li style={{marginBottom: "5%", listStyle: "none"}} key={friend.id}>
@@ -190,7 +190,7 @@ const Friends: React.FC = () => {
             <Button onClick={() => removeFriend(friend.id)} style={{ marginLeft: '10px' }} variant="danger">Ta bort vän</Button>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
     </div>
     </div>

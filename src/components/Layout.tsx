@@ -3,6 +3,8 @@ import { useUser } from '../UserContext';
 import { Navbar, Nav, Container, Dropdown } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 import LogoImg from '../deer.webp';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHouse, faUserGroup, faGear, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Layout: React.FC = () => {
 
@@ -28,8 +30,12 @@ const Layout: React.FC = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav"  >
             <Nav className="me-auto" >
-              <Nav.Link href="/feed">Hem</Nav.Link>
-              <Nav.Link href="/find-friends">Hantera Vänner</Nav.Link>
+              <Nav.Link href="/feed">
+              <FontAwesomeIcon icon={faHouse} />
+              </Nav.Link>
+              <Nav.Link href="/find-friends">
+              <FontAwesomeIcon icon={faUserGroup}/>
+              </Nav.Link>
             </Nav>
               <Dropdown className="ms-auto" >
               <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic">
@@ -37,8 +43,10 @@ const Layout: React.FC = () => {
               </Dropdown.Toggle>
 
             <Dropdown.Menu>
-                <Dropdown.Item href={"/profile"}>Min profil</Dropdown.Item>
-                <Dropdown.Item href="/">Logga ut</Dropdown.Item> {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
+                <Dropdown.Item href="/profile"><FontAwesomeIcon icon={faUser} /> Min profil</Dropdown.Item>
+                <Dropdown.Item href='/edit-profile'>
+                <FontAwesomeIcon icon={faGear} /> Inställningar</Dropdown.Item>
+                <Dropdown.Item href="/"><FontAwesomeIcon icon={faRightFromBracket} /> Logga ut</Dropdown.Item> {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
             </Dropdown.Menu>
             </Dropdown>
             
