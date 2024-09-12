@@ -63,9 +63,12 @@ const Friends: React.FC = () => {
       }
     };
 
+   
+
     fetchUsers();
     fetchFriends();
     fetchReceivedRequests();
+    
   }, []);
 
   const sendFriendRequest = async (friendId: number) => {
@@ -138,6 +141,11 @@ const Friends: React.FC = () => {
     return <div>{error}</div>;
   }
 
+
+
+  const filteredUsers = users.filter(user => 
+    !friends.some(friends => friends.id === user.id));
+
   return (
     <div style={{ margin: '0 auto', padding: '20px', width: '80%' }}>
         <h1 style={{textAlign: "center", paddingBottom: "3%"}}>Hantera vänner</h1>
@@ -145,7 +153,7 @@ const Friends: React.FC = () => {
       <div style={{width: "50%", padding: "5%", border: "solid 1px black"}}>
       <h2>Lägg Till Användare</h2>
       <ul>
-        {users.map((user) => (
+        {filteredUsers.map((user) => (
           <li style={{marginBottom: "5%", listStyle: "none"}} key={user.id}>
             {user.name} ({user.username})
             {sentRequests.includes(user.id) ? (
