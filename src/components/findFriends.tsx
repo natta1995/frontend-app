@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Button} from 'react-bootstrap';
 import {useUser} from '../UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import {  faUserPlus, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const Friends: React.FC = () => {
   const [users, setUsers] = useState<any[]>([]);
@@ -175,8 +175,8 @@ const Friends: React.FC = () => {
           receivedRequests.map((request) => (
             <li style={{marginBottom: "5%", listStyle: "none"}} key={request.id}>
               {request.name} ({request.username})
-              <Button onClick={() => respondToRequest(request.id, 'accept')} style={{ marginLeft: '10px' }} variant="success">Acceptera</Button>
-              <Button onClick={() => respondToRequest(request.id, 'reject')} style={{ marginLeft: '10px' }} variant="danger">Avvisa</Button>
+              <Button onClick={() => respondToRequest(request.id, 'accept')} style={{ marginLeft: '10px' }} variant="success"><FontAwesomeIcon icon={faCheck} /></Button>
+              <Button onClick={() => respondToRequest(request.id, 'reject')} style={{ marginLeft: '10px' }} variant="danger"><FontAwesomeIcon icon={faXmark} /></Button>
             </li>
           ))
         ) : (

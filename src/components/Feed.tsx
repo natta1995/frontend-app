@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import ProfileImg from '../startimg.webp'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+
+const BoxContainer = styled.div` 
+  padding: 5%;
+  border-radius: 10px;
+  border: 1px solid #d3efe5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  margin-bottom: 5%;
+`
 
 type Post = {
   id: number;
@@ -110,11 +119,12 @@ const Feed = () => {
         />
         <Button type="submit" style={{ padding: '10px 20px' }}>Publicera Inlägg</Button>
       </Form>
-
+    
       <div style={{ marginTop: '20px' }}>
         {posts.length > 0 ? (
           posts.map((post) => (
-            <div key={post.id} style={{ borderBottom: '1px solid #ccc', padding: '10px 0' }}>
+            <BoxContainer>
+            <div key={post.id} style={{ borderBottom: '1px solid #ccc', padding: '10px 0'}}>
               <p><strong
               onClick={() => navigate(`/profile/${post.username}`)} // Navigera till användarens profil
               >
@@ -125,14 +135,17 @@ const Feed = () => {
               {post.username === currentUser && ( 
                 <Button onClick={() => handleDelete(post.id)} variant="danger"><FontAwesomeIcon icon={faTrashCan}/> </Button>
               )}
-              
+             
             </div>
+            </BoxContainer>
           ))
         ) : (
           <p>Inga inlägg tillgängliga.</p>
         )}
       </div>
+      
     </div>
+      
   );
 };
 
