@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 
 
@@ -13,11 +14,11 @@ const Feed = () => {
   const [posts, setPosts] = useState<Post[]>([]); 
   const [newPost, setNewPost] = useState<string>('');
   const [currentUser, setCurrentUser] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // Hämta inlägg
         const response = await fetch('http://localhost:1337/feed', {
           method: 'GET',
           credentials: 'include',
@@ -92,6 +93,8 @@ const Feed = () => {
     }
   };
 
+  
+
   return (
     <div style={{ margin: '0 auto',  padding: "3%", width: "70%", height: "auto"}}>
       <h1>Välkommen tillbaka {currentUser} !</h1>
@@ -110,7 +113,10 @@ const Feed = () => {
         {posts.length > 0 ? (
           posts.map((post) => (
             <div key={post.id} style={{ borderBottom: '1px solid #ccc', padding: '10px 0' }}>
-              <p><strong>{post.username}</strong> säger:</p>
+              <p><strong
+              onClick={() => navigate(`/profile/${post.username}`)} // Navigera till användarens profil
+              >
+                {post.username}</strong> säger:</p>
               <p>{post.content}</p>
               <p style={{ fontSize: '0.8em', color: '#555' }}>{new Date(post.createdAt).toLocaleString()}</p>
               {post.username === currentUser && ( 

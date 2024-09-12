@@ -37,7 +37,7 @@ const Layout: React.FC = () => {
               </Dropdown.Toggle>
 
             <Dropdown.Menu>
-                <Dropdown.Item href={currentUser && currentUser.name ? `/profile/${currentUser.name}` : '#'}>Min profil</Dropdown.Item>
+                <Dropdown.Item href={"/profile"}>Min profil</Dropdown.Item>
                 <Dropdown.Item href="/">Logga ut</Dropdown.Item> {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
             </Dropdown.Menu>
             </Dropdown>

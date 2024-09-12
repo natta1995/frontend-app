@@ -5,6 +5,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Feed from './components/Feed';
 import Profile from './components/Profile';
+import UserProfile from './components/UserProfile'
 import Layout from './components/Layout';
 import EditProfile from './components/EditProfile';
 import FindFriends from './components/findFriends';
@@ -46,7 +47,8 @@ const App: React.FC = () => {
           <Route path="/register" element={<Register onRegister={handleRegister} />} />
           <Route element={<Layout />}>
           <Route path="/feed" element={<Feed/>} />
-          <Route path="/profile/:username" element={<Profile/>} />
+          <Route path="/profile" element={<Profile/>} />
+          <Route path="/profile/:username" element={<UserProfile/>} />
           <Route path="/edit-profile" element={<EditProfile/>} />
           <Route path="/find-friends" element={<FindFriends/>} />
           </Route>
