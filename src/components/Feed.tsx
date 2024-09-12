@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
-
+import ProfileImg from '../startimg.webp'
 
 type Post = {
   id: number;
@@ -116,7 +116,8 @@ const Feed = () => {
               <p><strong
               onClick={() => navigate(`/profile/${post.username}`)} // Navigera till användarens profil
               >
-                {post.username}</strong> säger:</p>
+                 <img src={ProfileImg} alt="StartProfileImg" style={{ width: '40px', height: 'auto', borderRadius: "50%" }} />
+                 {post.username}</strong> säger:</p>
               <p>{post.content}</p>
               <p style={{ fontSize: '0.8em', color: '#555' }}>{new Date(post.createdAt).toLocaleString()}</p>
               {post.username === currentUser && ( 
