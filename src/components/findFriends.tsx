@@ -162,7 +162,7 @@ const Friends: React.FC = () => {
             {sentRequests.includes(user.id) ? (
               <span style={{ marginLeft: '10px', color: 'green' }}>Skickad</span>
             ) : (
-              <Button onClick={() => sendFriendRequest(user.id)} style={{ marginLeft: '10px' }} variant="success"><FontAwesomeIcon icon={faUserPlus} /></Button>
+              <Button onClick={() => sendFriendRequest(user.id)} style={{ marginLeft: '10px' }}><FontAwesomeIcon icon={faUserPlus} /></Button>
             )}
           </li>
         ))}
