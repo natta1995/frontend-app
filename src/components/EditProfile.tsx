@@ -54,7 +54,6 @@ const EditProfile: React.FC = () => {
       });
 
       if (response.ok) {
-        alert('Profil uppdaterad!');
         navigate('/profile');
       } else {
         console.error('Failed to update profile');
