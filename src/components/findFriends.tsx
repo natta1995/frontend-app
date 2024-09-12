@@ -146,7 +146,7 @@ const Friends: React.FC = () => {
       <h2>Lägg Till Användare</h2>
       <ul>
         {users.map((user) => (
-          <li style={{marginBottom: "5%"}} key={user.id}>
+          <li style={{marginBottom: "5%", listStyle: "none"}} key={user.id}>
             {user.name} ({user.username})
             {sentRequests.includes(user.id) ? (
               <span style={{ marginLeft: '10px', color: 'green' }}>Skickad</span>
@@ -162,21 +162,21 @@ const Friends: React.FC = () => {
       <ul>
         {receivedRequests.length > 0 ? (
           receivedRequests.map((request) => (
-            <li style={{marginBottom: "5%"}} key={request.id}>
+            <li style={{marginBottom: "5%", listStyle: "none"}} key={request.id}>
               {request.name} ({request.username})
               <Button onClick={() => respondToRequest(request.id, 'accept')} style={{ marginLeft: '10px' }} variant="success">Acceptera</Button>
               <Button onClick={() => respondToRequest(request.id, 'reject')} style={{ marginLeft: '10px' }} variant="danger">Avvisa</Button>
             </li>
           ))
         ) : (
-          <li>Inga mottagna vänförfrågningar just nu!</li>
+          <li style={{listStyle: "none"}}>Du har inga väntade vänförfrågningar just nu.</li>
         )}
       </ul>
 
       <h2>Mina Vänner</h2>
       <ul>
         {friends.map((friend) => (
-          <li style={{marginBottom: "5%"}} key={friend.id}>
+          <li style={{marginBottom: "5%", listStyle: "none"}} key={friend.id}>
             {friend.name} ({friend.username})
             <Button onClick={() => removeFriend(friend.id)} style={{ marginLeft: '10px' }} variant="danger">Ta bort vän</Button>
           </li>
