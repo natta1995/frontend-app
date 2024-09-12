@@ -46,7 +46,7 @@ const App: React.FC = () => {
           <Route path="/register" element={<Register onRegister={handleRegister} />} />
           <Route element={<Layout />}>
           <Route path="/feed" element={<Feed/>} />
-          <Route path="/profile" element={<Profile/>} />
+          <Route path="/profile/:username" element={<Profile/>} />
           <Route path="/edit-profile" element={<EditProfile/>} />
           <Route path="/find-friends" element={<FindFriends/>} />
           </Route>

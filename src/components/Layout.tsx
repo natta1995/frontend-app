@@ -1,32 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useUser } from '../UserContext';
 import { Navbar, Nav, Container, Dropdown } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 import LogoImg from '../deer.webp';
 
 const Layout: React.FC = () => {
-  const [currentUser, setCurrentUser] = useState<string>('');
+
+  const {currentUser} = useUser();
+  console.log("här", currentUser)
   
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userResponse = await fetch('http://localhost:1337/users/profile', {
-          method: 'GET',
-          credentials: 'include',
-        });
-
-        if (userResponse.ok) {
-          const userData = await userResponse.json();
-          setCurrentUser(userData.name); // Sätt namnet i state
-        } else {
-          console.error('Failed to fetch current user');
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchUser();
-  }, []);
+  
   
   return (
     <>
@@ -50,11 +33,11 @@ const Layout: React.FC = () => {
             </Nav>
               <Dropdown className="ms-auto" >
               <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic">
-                {currentUser}
+              {currentUser && currentUser.name ? currentUser.name : 'Laddar...'}
               </Dropdown.Toggle>
 
             <Dropdown.Menu>
-                <Dropdown.Item href="/profile">Min profil</Dropdown.Item>
+                <Dropdown.Item href={currentUser && currentUser.name ? `/profile/${currentUser.name}` : '#'}>Min profil</Dropdown.Item>
                 <Dropdown.Item href="/">Logga ut</Dropdown.Item> {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
             </Dropdown.Menu>
             </Dropdown>
