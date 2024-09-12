@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate  } from 'react-router-dom';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import {Button, Dropdown } from 'react-bootstrap';
 import ProfileImg from '../startimg.webp'
 
 const ProfileContainer = styled.div` 
@@ -23,6 +23,7 @@ const Profile: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [posts, setPosts] = useState<Post[]>([]); 
+  const [friends, setFriends] = useState<any[]>([]);
   const navigate = useNavigate();
 
 
@@ -78,9 +79,28 @@ const Profile: React.FC = () => {
       }
     };
 
+    const fetchFriends = async () => {
+      try {
+        const response = await fetch('http://localhost:1337/friends/list', {
+          method: 'GET',
+          credentials: 'include',
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setFriends(data);
+        } else {
+          setError('Failed to fetch friends');
+        }
+      } catch (error) {
+        console.error('Error fetching friends:', error);
+        setError('Error fetching friends');
+      }
+    };
+
 
     fetchPosts();
     fetchProfile();
+    fetchFriends();
   }, []);
 
   if (error) {
@@ -90,6 +110,29 @@ const Profile: React.FC = () => {
   if (!profile) {
     return <div>Loading...</div>;
   }
+
+  
+  const removeFriend = async (friendId: number) => {
+    try {
+      const response = await fetch('http://localhost:1337/friends/remove', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ friendId }),
+      });
+
+      if (response.ok) {
+        setFriends(friends.filter(friend => friend.id !== friendId));
+      } else {
+        setError('Failed to remove friend');
+      }
+    } catch (error) {
+      console.error('Error removing friend:', error);
+      setError('Error removing friend');
+    }
+  };
 
   const handleDelete = async (postId: number) => { 
     try {
@@ -121,8 +164,24 @@ const Profile: React.FC = () => {
       <p><strong>Bio:</strong> {profile.bio}</p>
       <div style={{display: "flex", justifyContent: "space-between"}}>
       <Button onClick={() => navigate('/edit-profile')}>Redigera</Button>
-      <Button onClick={() => navigate('/find-friends')}>Hantera Vänner</Button>
+      <Dropdown className="ms-auto" >
+            <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic">
+              Visa vänner
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+                <Dropdown.Item><ul>
+        {friends.map((friend) => (
+          <li style={{marginBottom: "5%", listStyle: "none"}} key={friend.id}>
+            {friend.name} ({friend.username})
+            <Button onClick={() => removeFriend(friend.id)} style={{ marginLeft: '10px' }} variant="danger">Ta bort vän</Button>
+          </li>
+        ))}
+      </ul></Dropdown.Item>
+            </Dropdown.Menu>
+            </Dropdown>
       </div>
+
       <div style={{paddingTop: "8%"}}>
         <h3 style={{ borderTop: '1px solid #ccc', padding: '10px 0' }}>Mina inlägg:</h3>
       {posts.length > 0 ? (

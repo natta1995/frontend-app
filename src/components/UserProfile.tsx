@@ -71,6 +71,9 @@ const UserProfile: React.FC = () => {
       <p><strong>Arbetsplats:</strong> {profile?.workplace}</p>
       <p><strong>Skola:</strong> {profile?.school}</p>
       <p><strong>Bio:</strong> {profile?.bio}</p>
+
+      <h3>Mina vänner:</h3>
+
       
       {posts.map(post => (
         <div key={post.id} style={{ borderBottom: '1px solid #ccc', padding: '10px 0' }}>
