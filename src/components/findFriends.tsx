@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {Button} from 'react-bootstrap';
+import {useUser} from '../UserContext';
 
 const Friends: React.FC = () => {
   const [users, setUsers] = useState<any[]>([]);
+  const { currentUser} = useUser();
   const [friends, setFriends] = useState<any[]>([]);
   const [receivedRequests, setReceivedRequests] = useState<any[]>([]);
   const [sentRequests, setSentRequests] = useState<number[]>([]);
@@ -141,10 +143,9 @@ const Friends: React.FC = () => {
     return <div>{error}</div>;
   }
 
-
-
   const filteredUsers = users.filter(user => 
-    !friends.some(friends => friends.id === user.id));
+    !friends.some(friends => friends.id === user.id) && user.id !== currentUser?.id
+  );
 
   return (
     <div style={{ margin: '0 auto', padding: '20px', width: '80%' }}>

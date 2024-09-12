@@ -1,4 +1,5 @@
 import React from 'react';
+import { UserProvider } from './UserContext'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -38,6 +39,7 @@ const App: React.FC = () => {
 
 
   return (
+    <UserProvider>
     <Router>
         <Routes>
           <Route path="/" element={<Login onLogin={handleLogin}/>} />
@@ -49,8 +51,8 @@ const App: React.FC = () => {
           <Route path="/find-friends" element={<FindFriends/>} />
           </Route>
         </Routes>
-    
     </Router>
+  </UserProvider>
   );
 }
 
