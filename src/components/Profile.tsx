@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useNavigate  } from 'react-router-dom';
 import {Button, Dropdown } from 'react-bootstrap';
 import ProfileImg from '../startimg.webp'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {  faGear, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 
 const ProfileContainer = styled.div` 
   padding: 10%;
@@ -163,10 +165,10 @@ const Profile: React.FC = () => {
       <p><strong>Skola:</strong> {profile.school}</p>
       <p><strong>Bio:</strong> {profile.bio}</p>
       <div style={{display: "flex", justifyContent: "space-between"}}>
-      <Button onClick={() => navigate('/edit-profile')}>Redigera</Button>
+      <Button onClick={() => navigate('/edit-profile')}>
+      <FontAwesomeIcon icon={faGear} /> Redigera</Button>
       <Dropdown className="ms-auto" >
-            <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic">
-              Visa vänner
+            <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic"> <FontAwesomeIcon icon={faUserGroup}/> Vänner
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
