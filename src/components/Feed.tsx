@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import ProfileImg from '../startimg.webp'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faGears, faUserGroup, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 type Post = {
   id: number;
