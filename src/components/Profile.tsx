@@ -176,7 +176,7 @@ const Profile: React.FC = () => {
         {friends.map((friend) => (
           <li style={{marginBottom: "5%", listStyle: "none"}} key={friend.id}>
             {friend.name} ({friend.username})
-            <Button onClick={() => removeFriend(friend.id)} style={{ marginLeft: '10px' }} variant="danger">Ta bort vän</Button>
+            <Button onClick={() => removeFriend(friend.id)} style={{ marginLeft: '10px' }} variant="danger"><FontAwesomeIcon icon={faTrashCan}/></Button>
           </li>
         ))}
       </ul></Dropdown.Item>

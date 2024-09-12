@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import ProfileImg from '../startimg.webp'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {  faGears, faUserGroup, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 type Post = {
   id: number;
@@ -121,7 +123,7 @@ const Feed = () => {
               <p>{post.content}</p>
               <p style={{ fontSize: '0.8em', color: '#555' }}>{new Date(post.createdAt).toLocaleString()}</p>
               {post.username === currentUser && ( 
-                <Button onClick={() => handleDelete(post.id)} variant="danger">Ta bort inlägg</Button>
+                <Button onClick={() => handleDelete(post.id)} variant="danger"><FontAwesomeIcon icon={faTrashCan}/> </Button>
               )}
               
             </div>
