@@ -4,7 +4,7 @@ import { useNavigate  } from 'react-router-dom';
 import {Button, Dropdown } from 'react-bootstrap';
 import ProfileImg from '../startimg.webp'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faGear, faUserGroup } from '@fortawesome/free-solid-svg-icons';
+import {  faGears, faUserGroup, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 const ProfileContainer = styled.div` 
   padding: 10%;
@@ -166,7 +166,7 @@ const Profile: React.FC = () => {
       <p><strong>Bio:</strong> {profile.bio}</p>
       <div style={{display: "flex", justifyContent: "space-between"}}>
       <Button onClick={() => navigate('/edit-profile')}>
-      <FontAwesomeIcon icon={faGear} /> Redigera</Button>
+      <FontAwesomeIcon icon={faGears} /> Redigera</Button>
       <Dropdown className="ms-auto" >
             <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic"> <FontAwesomeIcon icon={faUserGroup}/> Vänner
             </Dropdown.Toggle>
@@ -194,7 +194,9 @@ const Profile: React.FC = () => {
           <p><strong>{post.username}</strong> säger:</p>
           <p>{post.content}</p>
           <p style={{ fontSize: '0.8em', color: '#555' }}>{new Date(post.createdAt).toLocaleString()}</p>
-          <Button onClick={() => handleDelete(post.id)} variant="danger">Ta bort inlägg</Button>
+          <Button onClick={() => handleDelete(post.id)} variant="danger">
+          <FontAwesomeIcon icon={faTrashCan}/>
+          </Button>
         </div>
       ))
   ) : (
