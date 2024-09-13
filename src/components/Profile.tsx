@@ -190,13 +190,15 @@ const Profile: React.FC = () => {
     posts
       .filter(post => post.username === currentUser) 
       .map((post) => (
-        <div key={post.id} style={{ borderBottom: '1px solid #ccc', padding: '10px 0' }}>
+        <div key={post.id} style={{ borderBottom: '1px solid #ccc', padding: '10px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
           <p><strong>{post.username}</strong> säger:</p>
           <p>{post.content}</p>
           <p style={{ fontSize: '0.8em', color: '#555' }}>{new Date(post.createdAt).toLocaleString()}</p>
-          <Button onClick={() => handleDelete(post.id)} variant="danger">
-          <FontAwesomeIcon icon={faTrashCan}/>
-          </Button>
+          </div>
+          <div style={{display: "flex", backgroundColor: "pink", }}>
+          <Button onClick={() => handleDelete(post.id)} variant="danger"><FontAwesomeIcon icon={faTrashCan}/></Button>
+          </div>
         </div>
       ))
   ) : (
