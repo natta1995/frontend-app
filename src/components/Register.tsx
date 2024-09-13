@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import {Link, useNavigate} from 'react-router-dom';
-
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterContainer = styled.div`
   background-color: #d3efe5;
@@ -12,26 +11,30 @@ const RegisterContainer = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 `;
 
-
 interface RegisterProps {
-  onRegister: (username: string, password: string, name: string, email: string, age: number) => void;
+  onRegister: (
+    username: string,
+    password: string,
+    name: string,
+    email: string,
+    age: number
+  ) => void;
 }
 
 const Register: React.FC<RegisterProps> = ({ onRegister }) => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [age, setAge] = useState<number>(0);
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onRegister(username, password, name, email, age);
-    navigate('/')
+    navigate("/");
   };
 
-  
   return (
     <Container className="mt-5">
       <Row className="justify-content-md-center">

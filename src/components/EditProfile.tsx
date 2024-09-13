@@ -1,40 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile: React.FC = () => {
   const [profile, setProfile] = useState({
-    name: '',
-    email: '',
-    age: '',
-    workplace: '',
-    school: '',
-    bio: '',
+    name: "",
+    email: "",
+    age: "",
+    workplace: "",
+    school: "",
+    bio: "",
   });
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch('http://localhost:1337/users/profile', {
-          method: 'GET',
-          credentials: 'include',
+        const response = await fetch("http://localhost:1337/users/profile", {
+          method: "GET",
+          credentials: "include",
         });
         if (response.ok) {
           const data = await response.json();
           setProfile(data);
         } else {
-          console.error('Failed to fetch profile');
+          console.error("Failed to fetch profile");
         }
       } catch (error) {
-        console.error('Error fetching profile:', error);
+        console.error("Error fetching profile:", error);
       }
     };
 
     fetchProfile();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setProfile({
       ...profile,
       [e.target.name]: e.target.value,
@@ -44,27 +46,35 @@ const EditProfile: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:1337/users/profile', {
-        method: 'POST',
+      const response = await fetch("http://localhost:1337/users/profile", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify(profile),
       });
 
       if (response.ok) {
-        navigate('/profile');
+        navigate("/profile");
       } else {
-        console.error('Failed to update profile');
+        console.error("Failed to update profile");
       }
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error("Error updating profile:", error);
     }
   };
 
   return (
-    <Form onSubmit={handleSubmit} style={{ width: '70%', margin: '0 auto', padding: '10%', paddingTop: "5%" }}>
+    <Form
+      onSubmit={handleSubmit}
+      style={{
+        width: "70%",
+        margin: "0 auto",
+        padding: "10%",
+        paddingTop: "5%",
+      }}
+    >
       <Form.Group controlId="formName">
         <Form.Label>Namn</Form.Label>
         <Form.Control
@@ -124,11 +134,19 @@ const EditProfile: React.FC = () => {
           onChange={handleChange}
         />
       </Form.Group>
- <div style={{display: "flex", justifyContent: "space-between", marginTop: "5%"}}>
-      <Button variant="primary" type="submit">
-        Uppdatera Profil
-      </Button>
-      <Button variant="danger" onClick={() => navigate('/profile')}>Avbryt</Button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "5%",
+        }}
+      >
+        <Button variant="primary" type="submit">
+          Uppdatera Profil
+        </Button>
+        <Button variant="danger" onClick={() => navigate("/profile")}>
+          Avbryt
+        </Button>
       </div>
     </Form>
   );
