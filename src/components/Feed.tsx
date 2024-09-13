@@ -12,6 +12,7 @@ const BoxContainer = styled.div`
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: 5%;
+  background-color: #f3f4e3;
 `;
 
 const InputContainer = styled.div`
@@ -20,6 +21,7 @@ const InputContainer = styled.div`
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: 5%;
+   background-color: #f3f4e3;
 `;
 
 type Post = {
@@ -136,9 +138,11 @@ const Feed = () => {
               height: "100px",
             }}
           />
-          <Button type="submit" style={{ padding: "10px 20px" }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button type="submit" style={{ padding: "10px 20px", width: "70%" }}>
             Publicera Inlägg
           </Button>
+        </div>
         </Form>
       </InputContainer>
 
@@ -152,10 +156,11 @@ const Feed = () => {
                   padding: "10px 0",
                   display: "flex",
                   justifyContent: "space-between",
-                  alignItems: "center", }}
+                  alignItems: "center"
+                }}
               >
                 <div>
-                <p>
+                <h5>
                   <strong
                     onClick={() => navigate(`/profile/${post.username}`)} // Navigera till användarens profil
                   >
@@ -171,7 +176,7 @@ const Feed = () => {
                     {post.username}
                   </strong>{" "}
                   säger:
-                </p>
+                </h5>
                 <p>{post.content}</p>
                 <p style={{ fontSize: "0.8em", color: "#555" }}>
                   {new Date(post.createdAt).toLocaleString()}
