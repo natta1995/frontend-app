@@ -148,8 +148,13 @@ const Feed = () => {
             <BoxContainer>
               <div
                 key={post.id}
-                style={{ borderBottom: "1px solid #ccc", padding: "10px 0" }}
+                style={{     borderBottom: "1px solid #ccc",
+                  padding: "10px 0",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center", }}
               >
+                <div>
                 <p>
                   <strong
                     onClick={() => navigate(`/profile/${post.username}`)} // Navigera till användarens profil
@@ -171,6 +176,7 @@ const Feed = () => {
                 <p style={{ fontSize: "0.8em", color: "#555" }}>
                   {new Date(post.createdAt).toLocaleString()}
                 </p>
+                </div>
                 {post.username === currentUser && (
                   <Button
                     onClick={() => handleDelete(post.id)}
