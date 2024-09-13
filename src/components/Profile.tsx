@@ -12,9 +12,11 @@ import {
 
 const ProfileContainer = styled.div`
   padding: 10%;
+  padding-top: 5%;
   border-radius: 10px;
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  background-color:  #f3f4e3;
 `;
 
 type Post = {
@@ -158,7 +160,7 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <ProfileContainer style={{ width: "70%", margin: "0 auto" }}>
+    <ProfileContainer style={{ width: "70%", margin: "0 auto", marginTop: "30px", marginBottom: "30px" }}>
       <img
         src={ProfileImg}
         alt="StartProfileImg"
