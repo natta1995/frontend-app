@@ -14,6 +14,14 @@ const BoxContainer = styled.div`
   margin-bottom: 5%;
 `;
 
+const InputContainer = styled.div`
+  padding: 5%;
+  border-radius: 10px;
+  border: 1px solid #d3efe5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  margin-bottom: 5%;
+`;
+
 type Post = {
   id: number;
   username: string;
@@ -111,24 +119,28 @@ const Feed = () => {
     <div
       style={{ margin: "0 auto", padding: "3%", width: "70%", height: "auto" }}
     >
-      <h1>Välkommen tillbaka {currentUser} !</h1>
-      <Form onSubmit={handlePostSubmit}>
-        <h6>Vad vill du dela med dig av idag?</h6>
-        <textarea
-          value={newPost}
-          onChange={(e) => setNewPost(e.target.value)}
-          placeholder="Vad vill du dela?"
-          style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "10px",
-            height: "100px",
-          }}
-        />
-        <Button type="submit" style={{ padding: "10px 20px" }}>
-          Publicera Inlägg
-        </Button>
-      </Form>
+      <InputContainer>
+        <Form onSubmit={handlePostSubmit}>
+          <h1 style={{ textAlign: "center", paddingBottom: "15px" }}>
+            Välkommen tillbaka {currentUser} !
+          </h1>
+          <h6>Vad vill du dela med dig av idag?</h6>
+          <textarea
+            value={newPost}
+            onChange={(e) => setNewPost(e.target.value)}
+            placeholder="Vad vill du dela?"
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginBottom: "10px",
+              height: "100px",
+            }}
+          />
+          <Button type="submit" style={{ padding: "10px 20px" }}>
+            Publicera Inlägg
+          </Button>
+        </Form>
+      </InputContainer>
 
       <div style={{ marginTop: "20px" }}>
         {posts.length > 0 ? (

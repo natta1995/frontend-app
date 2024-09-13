@@ -6,8 +6,8 @@ import ProfileImg from "../startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGears,
-  faUserGroup,
   faTrashCan,
+  faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ProfileContainer = styled.div`
