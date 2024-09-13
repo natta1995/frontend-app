@@ -196,7 +196,7 @@ const Profile: React.FC = () => {
           <p>{post.content}</p>
           <p style={{ fontSize: '0.8em', color: '#555' }}>{new Date(post.createdAt).toLocaleString()}</p>
           </div>
-          <div style={{display: "flex", backgroundColor: "pink", }}>
+          <div>
           <Button onClick={() => handleDelete(post.id)} variant="danger"><FontAwesomeIcon icon={faTrashCan}/></Button>
           </div>
         </div>
