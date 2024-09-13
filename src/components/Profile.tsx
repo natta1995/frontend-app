@@ -166,7 +166,7 @@ const Profile: React.FC = () => {
       <p><strong>Bio:</strong> {profile.bio}</p>
       <div style={{display: "flex", justifyContent: "space-between"}}>
       <Button onClick={() => navigate('/edit-profile')}>
-      <FontAwesomeIcon icon={faGears} /> Redigera</Button>
+      <FontAwesomeIcon icon={faGears} /></Button>
       <Dropdown className="ms-auto" >
             <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic"> <FontAwesomeIcon icon={faUserGroup}/> Vänner
             </Dropdown.Toggle>
