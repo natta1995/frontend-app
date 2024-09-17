@@ -82,7 +82,7 @@ const EditProfile: React.FC = () => {
 
       }}
     >
-    
+    <h2 style={{textAlign: "center"}}>Ändra Profil</h2>
       <Form.Group controlId="formName">
         <Form.Label>Namn</Form.Label>
         <Form.Control
