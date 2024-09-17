@@ -72,7 +72,7 @@ const EditProfile: React.FC = () => {
       style={{
         width: "70%",
         padding: "10%",
-        paddingTop: "5%",
+        paddingTop: "3%",
         paddingBottom: "3%",
         backgroundColor: " #f3f4e3",
         borderRadius: "10px",
