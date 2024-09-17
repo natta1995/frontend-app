@@ -167,6 +167,11 @@ const Profile: React.FC = () => {
         style={{ width: "250px", height: "auto", borderRadius: "50%" }}
       />
       <h1>{profile.name}</h1>
+      <div style={{display: "flex", justifyContent: "flex-end"}}>
+      <Button variant="secondary" onClick={() => navigate("/edit-profile")}>
+          <FontAwesomeIcon icon={faGears} />
+        </Button>
+      </div>
       <p>
         <strong>Användarnamn:</strong> {profile.username}
       </p>
@@ -189,9 +194,6 @@ const Profile: React.FC = () => {
         <strong>Bio:</strong> {profile.bio}
       </p>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Button onClick={() => navigate("/edit-profile")}>
-          <FontAwesomeIcon icon={faGears} />
-        </Button>
         <Dropdown className="ms-auto">
           <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic">
             {" "}
