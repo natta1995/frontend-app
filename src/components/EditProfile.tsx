@@ -66,15 +66,23 @@ const EditProfile: React.FC = () => {
   };
 
   return (
+    <div style={{display: "flex", justifyContent: "center", paddingBottom: "1%"}}>
     <Form
       onSubmit={handleSubmit}
       style={{
         width: "70%",
-        margin: "0 auto",
         padding: "10%",
         paddingTop: "5%",
+        paddingBottom: "3%",
+        backgroundColor: " #f3f4e3",
+        borderRadius: "10px",
+        marginTop: "3%",
+        marginBottom: "3%"
+        
+
       }}
     >
+    
       <Form.Group controlId="formName">
         <Form.Label>Namn</Form.Label>
         <Form.Control
@@ -138,17 +146,19 @@ const EditProfile: React.FC = () => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          marginTop: "5%",
+          marginTop: "6%",
+          
         }}
       >
-        <Button variant="primary" type="submit">
-          Uppdatera Profil
+        <Button variant="success" type="submit">
+          Uppdatera
         </Button>
         <Button variant="danger" onClick={() => navigate("/profile")}>
           Avbryt
         </Button>
       </div>
     </Form>
+    </div>
   );
 };
 
