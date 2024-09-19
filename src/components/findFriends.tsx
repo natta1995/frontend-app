@@ -125,7 +125,7 @@ const Friends: React.FC = () => {
     }
   };
 
-  /* const removeFriend = async (friendId: number) => {
+   const removeFriend = async (friendId: number) => {
     try {
       const response = await fetch('http://localhost:1337/friends/remove', {
         method: 'POST',
@@ -149,7 +149,7 @@ const Friends: React.FC = () => {
 
   if (error) {
     return <div>{error}</div>;
-  } */
+  } 
 
   const filteredUsers = users.filter(
     (user) =>
@@ -158,12 +158,9 @@ const Friends: React.FC = () => {
   );
 
   return (
-    <div style={{ margin: "0 auto", padding: "20px", width: "80%" }}>
-      <h1 style={{ textAlign: "center", paddingBottom: "3%" }}>
-        Hantera vänner
-      </h1>
+    <div style={{ margin: "0 auto", width: "80%", backgroundColor: "#f3f4e3", marginTop: "4%", marginBottom: "4%" }}>
       <div style={{ display: "flex", flexDirection: "row" }}>
-        <div style={{ width: "50%", padding: "5%", border: "solid 1px black" }}>
+        <div style={{ width: "50%", padding: "5%" }}>
           <h2>Lägg Till Användare</h2>
           <ul>
             {filteredUsers.map((user) => (
@@ -188,7 +185,7 @@ const Friends: React.FC = () => {
             ))}
           </ul>
         </div>
-        <div style={{ width: "50%", padding: "5%", border: "solid 1px black" }}>
+        <div style={{ width: "50%", padding: "5%" }}>
           <h2>Mottagna Vänförfrågningar</h2>
           <ul>
             {receivedRequests.length > 0 ? (
@@ -221,7 +218,7 @@ const Friends: React.FC = () => {
             )}
           </ul>
 
-          {/*       <h2>Mina Vänner</h2>
+                <h2>Mina Vänner</h2>
       <ul>
         {friends.map((friend) => (
           <li style={{marginBottom: "5%", listStyle: "none"}} key={friend.id}>
@@ -229,7 +226,7 @@ const Friends: React.FC = () => {
             <Button onClick={() => removeFriend(friend.id)} style={{ marginLeft: '10px' }} variant="danger">Ta bort vän</Button>
           </li>
         ))}
-      </ul> */}
+      </ul> 
         </div>
       </div>
     </div>
