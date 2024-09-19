@@ -93,7 +93,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
     <div className="comments-section">
       <h6>Kommentarer:</h6>
       {comments.map((comment) => (
-        <div key={comment.id} style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div key={comment.id} style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #ccc" }}>
           <div>
           <strong>{comment.username} säger:</strong>
           <p>{comment.content}</p>
@@ -111,14 +111,16 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
         </div>
       ))}
 
-      <Form onSubmit={handleCommentSubmit}>
+      <Form  onSubmit={handleCommentSubmit}>
         <textarea
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Skriv en kommentar..."
           style={{ width: "100%", padding: "10px", marginBottom: "10px", height: "60px" }}
         />
+        <div style={{display: "flex", justifyContent: "flex-end"}}>
         <Button type="submit">Skicka</Button>
+        </div>
       </Form>
     </div>
   );
