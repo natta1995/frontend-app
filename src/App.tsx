@@ -9,6 +9,7 @@ import UserProfile from "./components/UserProfile";
 import Layout from "./components/Layout";
 import EditProfile from "./components/EditProfile";
 import FindFriends from "./components/findFriends";
+import MyFriends from "./components/MyFriends";
 import { login, register } from "./api/auth";
 
 const App: React.FC = () => {
@@ -60,6 +61,7 @@ const App: React.FC = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/:username" element={<UserProfile />} />
             <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/my-friends" element={<MyFriends />} />
             <Route path="/find-friends" element={<FindFriends />} />
           </Route>
         </Routes>

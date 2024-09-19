@@ -18,6 +18,7 @@ import {
   faGear,
   faRightFromBracket,
   faUser,
+  faHeart
 } from "@fortawesome/free-solid-svg-icons";
 
 const Layout: React.FC = () => {
@@ -86,6 +87,9 @@ const Layout: React.FC = () => {
               </Nav.Link>
               <Nav.Link href="/find-friends">
                 <FontAwesomeIcon icon={faUserGroup} />
+              </Nav.Link>
+              <Nav.Link href="/my-friends">
+                <FontAwesomeIcon icon={faHeart} />
               </Nav.Link>
             </Nav>
 

@@ -194,34 +194,12 @@ const Profile: React.FC = () => {
         <strong>Bio:</strong> {profile.bio}
       </p>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Dropdown className="ms-auto">
-          <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic">
-            {" "}
+       <div>
+          <Button>
             <FontAwesomeIcon icon={faUserGroup} /> Vänner
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            <Dropdown.Item>
-              <ul>
-                {friends.map((friend) => (
-                  <li
-                    style={{ marginBottom: "5%", listStyle: "none" }}
-                    key={friend.id}
-                  >
-                    {friend.name} ({friend.username})
-                    <Button
-                      onClick={() => removeFriend(friend.id)}
-                      style={{ marginLeft: "10px" }}
-                      variant="danger"
-                    >
-                      <FontAwesomeIcon icon={faTrashCan} />
-                    </Button>
-                  </li>
-                ))}
-              </ul>
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+          </Button>
+        </div>
+             
       </div>
 
       <div style={{ paddingTop: "8%" }}>
