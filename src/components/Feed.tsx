@@ -5,6 +5,7 @@ import { Form, Button } from "react-bootstrap";
 import ProfileImg from "../startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import Comments from './Comments';
 
 const BoxContainer = styled.div`
   padding: 5%;
@@ -90,8 +91,10 @@ const Feed = () => {
 
       if (response.ok) {
         const createdPost: Post = await response.json();
+        console.log("API Response:", createdPost);
         setPosts([createdPost, ...posts]);
         setNewPost("");
+        
       } else {
         console.error("Failed to create post");
       }
@@ -99,6 +102,8 @@ const Feed = () => {
       console.error("Error creating post:", error);
     }
   };
+
+
 
   const handleDelete = async (postId: number) => {
     try {
@@ -149,9 +154,8 @@ const Feed = () => {
       <div style={{ marginTop: "20px" }}>
         {posts.length > 0 ? (
           posts.map((post) => (
-            <BoxContainer>
+            <BoxContainer key={post.id}>
               <div
-                key={post.id}
                 style={{     borderBottom: "1px solid #ccc",
                   padding: "10px 0",
                   display: "flex",
@@ -191,6 +195,7 @@ const Feed = () => {
                   </Button>
                 )}
               </div>
+              <Comments postId={post.id} currentUser={currentUser} />
             </BoxContainer>
           ))
         ) : (
