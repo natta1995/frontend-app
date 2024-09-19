@@ -20,7 +20,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>("");
 
-  // Hämta kommentarer för detta inlägg
+ 
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -43,7 +43,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
     fetchComments();
   }, [postId]);
 
-  // Lägg till en ny kommentar
+
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -69,7 +69,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
     }
   };
 
-  // Ta bort en kommentar
+  
   const handleDeleteComment = async (commentId: number) => {
     try {
       const response = await fetch(`http://localhost:1337/feed/comments/${commentId}`, {
@@ -93,21 +93,24 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
     <div className="comments-section">
       <h6>Kommentarer:</h6>
       {comments.map((comment) => (
-        <div key={comment.id} style={{ marginBottom: "10px" }}>
+        <div key={comment.id} style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div>
           <strong>{comment.username} säger:</strong>
           <p>{comment.content}</p>
           <p style={{ fontSize: "0.8em", color: "#555" }}>
             {new Date(comment.createdAt).toLocaleString()}
           </p>
+          </div>
+          <div>
           {comment.username === currentUser && (
             <Button variant="danger" onClick={() => handleDeleteComment(comment.id)}>
                <FontAwesomeIcon icon={faTrashCan} />
             </Button>
           )}
+          </div>
         </div>
       ))}
 
-      {/* Lägg till en kommentar */}
       <Form onSubmit={handleCommentSubmit}>
         <textarea
           value={newComment}
