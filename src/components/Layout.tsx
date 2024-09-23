@@ -27,6 +27,7 @@ const Layout: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState(""); // Håll koll på sökfrågan
   const [filteredUsers, setFilteredUsers] = useState([]); // Håll koll på filtrerade användare baserat på sökfrågan
   const [error, setError] = useState<string | null>(null);
+  const [pendingRequests, setPendingRequests] = useState<number>(0);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -65,6 +66,27 @@ const Layout: React.FC = () => {
     }
   }, [searchQuery, users]);
 
+  useEffect(() => {
+    const fetchPendingRequests = async () => {
+      try {
+        const response = await fetch("http://localhost:1337/friends/requests", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setPendingRequests(data.length); // Sätt antalet vänförfrågningar
+        } else {
+          console.error("Failed to fetch pending friend requests");
+        }
+      } catch (error) {
+        console.error("Error fetching pending requests:", error);
+      }
+    };
+  
+    fetchPendingRequests();
+  }, []);
+
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -85,8 +107,22 @@ const Layout: React.FC = () => {
               <Nav.Link href="/feed">
                 <FontAwesomeIcon icon={faHouse} />
               </Nav.Link>
-              <Nav.Link href="/find-friends">
+              <Nav.Link href="/find-friends" style={{ position: "relative" }} >
                 <FontAwesomeIcon icon={faUserGroup} />
+                {pendingRequests > 0 && (
+          <span
+      style={{
+        position: "absolute",
+        top: "0.2",
+        right: "5px",
+        width: "10px",
+        height: "10px",
+        backgroundColor: "#e4190f",
+        borderRadius: "50%",
+        display: "inline-block",
+      }}
+    ></span>
+  )}
               </Nav.Link>
               <Nav.Link href="/my-friends">
                 <FontAwesomeIcon icon={faHeart} />
