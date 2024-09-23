@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Button, Dropdown } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import ProfileImg from "../startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -161,11 +161,13 @@ const Profile: React.FC = () => {
 
   return (
     <ProfileContainer style={{ width: "70%", margin: "0 auto", marginTop: "30px", marginBottom: "30px" }}>
-      <img
-        src={ProfileImg}
-        alt="StartProfileImg"
-        style={{ width: "250px", height: "auto", borderRadius: "50%" }}
+    <img
+      src={profile.profile_image ? `http://localhost:1337${profile.profile_image}` : ProfileImg}
+      alt="Profile Image"
+      style={{ width: "250px", height: "auto", borderRadius: "50%" }}
       />
+
+      
       <h1>{profile.name}</h1>
       <div style={{display: "flex", justifyContent: "flex-end"}}>
       <Button variant="secondary" onClick={() => navigate("/edit-profile")}>

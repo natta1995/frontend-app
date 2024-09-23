@@ -11,6 +11,7 @@ const EditProfile: React.FC = () => {
     school: "",
     bio: "",
   });
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,18 +46,28 @@ const EditProfile: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append("name", profile.name);
+    formData.append("email", profile.email);
+    formData.append("age", profile.age);
+    formData.append("workplace", profile.workplace);
+    formData.append("school", profile.school);
+    formData.append("bio", profile.bio);
+    
+    if (profileImage) {
+      formData.append("image", profileImage); 
+    }
+  
     try {
-      const response = await fetch("http://localhost:1337/users/profile", {
+      const response = await fetch("http://localhost:1337/users/profile-image", { 
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         credentials: "include",
-        body: JSON.stringify(profile),
+        body: formData, 
       });
-
+  
       if (response.ok) {
-        navigate("/profile");
+        navigate("/profile"); 
       } else {
         console.error("Failed to update profile");
       }
@@ -64,9 +75,23 @@ const EditProfile: React.FC = () => {
       console.error("Error updating profile:", error);
     }
   };
+  
 
   return (
     <div style={{display: "flex", justifyContent: "center", paddingBottom: "1%"}}>
+      <Form.Group controlId="formProfileImage">
+  <Form.Label>Profilbild</Form.Label>
+  <Form.Control
+  type="file"
+  accept="image/*"
+  onChange={(e) => {
+    const fileInput = e.target as HTMLInputElement; 
+    setProfileImage(fileInput.files ? fileInput.files[0] : null);
+  }}
+/>
+</Form.Group>
+
+
     <Form
       onSubmit={handleSubmit}
       style={{
