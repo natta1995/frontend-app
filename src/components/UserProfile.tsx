@@ -5,9 +5,11 @@ import styled from "styled-components";
 
 const ProfileContainer = styled.div`
   padding: 10%;
+  padding-top: 5%;
   border-radius: 10px;
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  background-color:  #f3f4e3;
 `;
 
 type Post = {
@@ -62,12 +64,12 @@ const UserProfile: React.FC = () => {
 
   return (
     <div>
-      <ProfileContainer style={{ width: "70%", margin: "0 auto" }}>
-        <img
-          src={ProfileImg}
-          alt="StartProfileImg"
-          style={{ width: "250px", height: "auto", borderRadius: "50%" }}
-        />
+      <ProfileContainer style={{ width: "70%", margin: "0 auto", marginTop: "30px", marginBottom: "30px" }}>
+      <img
+  src={profile && profile.profile_image ? `http://localhost:1337${profile.profile_image}` : ProfileImg}
+  alt="Profile Image"
+  style={{ width: "250px", height: "auto", borderRadius: "50%" }}
+/>
         <h1 style={{ paddingTop: "8%" }}>{profile?.name}</h1>
         <p>
           <strong>Användarnamn:</strong> {profile?.username}
