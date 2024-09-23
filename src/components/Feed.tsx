@@ -30,6 +30,7 @@ type Post = {
   username: string;
   content: string;
   createdAt: string;
+  profile_image: string;
 };
 
 const Feed = () => {
@@ -168,16 +169,17 @@ const Feed = () => {
                   <strong
                     onClick={() => navigate(`/profile/${post.username}`)} // Navigera till användarens profil
                   >
-                    <img
-                      src={ProfileImg}
-                      alt="StartProfileImg"
-                      style={{
-                        width: "40px",
-                        height: "auto",
-                        borderRadius: "50%",
-                      }}
-                    />
-                    {post.username}
+                     <img
+            src={post.profile_image ? `http://localhost:1337${post.profile_image}` : ProfileImg}
+            alt="Profile Image"
+            style={{
+              width: "40px",
+              height: "auto",
+              borderRadius: "50%",
+              marginRight: "10px",
+            }}
+          />
+                 {post.username}
                   </strong>{" "}
                   säger:
                 </h5>
