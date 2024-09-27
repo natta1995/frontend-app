@@ -97,7 +97,17 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
 
   return (
     <div className="comments-section">
+       <Form onSubmit={handleCommentSubmit}>
+            <textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Skriv en kommentar..."
+              style={{ width: "100%", padding: "10px", marginBottom: "10px", height: "60px" }}
+            />
+            <Button type="submit">Skicka</Button>
+          </Form>
     <div style={{ display: "flex", justifyContent: "flex-end"}}>
+      
       <Button onClick={toggleCommentsVisibility} style={{ marginBottom: "10px", marginTop: "10px" }}>
         {isVisible ? (
         <>
@@ -135,15 +145,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
           )}
 
           {/* Lägg till en kommentar */}
-          <Form onSubmit={handleCommentSubmit}>
-            <textarea
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Skriv en kommentar..."
-              style={{ width: "100%", padding: "10px", marginBottom: "10px", height: "60px" }}
-            />
-            <Button type="submit">Skicka</Button>
-          </Form>
+         
         </div>
       )}
     </div>

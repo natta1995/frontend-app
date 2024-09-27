@@ -5,7 +5,7 @@ import { Form, Button } from "react-bootstrap";
 import ProfileImg from "../startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import Comments from './Comments';
+import Comments from "./Comments";
 
 const BoxContainer = styled.div`
   padding: 5%;
@@ -22,7 +22,7 @@ const InputContainer = styled.div`
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: 5%;
-   background-color: #f3f4e3;
+  background-color: #f3f4e3;
 `;
 
 type Post = {
@@ -95,7 +95,6 @@ const Feed = () => {
         console.log("API Response:", createdPost);
         setPosts([createdPost, ...posts]);
         setNewPost("");
-        
       } else {
         console.error("Failed to create post");
       }
@@ -103,8 +102,6 @@ const Feed = () => {
       console.error("Error creating post:", error);
     }
   };
-
-
 
   const handleDelete = async (postId: number) => {
     try {
@@ -144,11 +141,14 @@ const Feed = () => {
               height: "100px",
             }}
           />
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button type="submit" style={{ padding: "10px 20px", width: "70%" }}>
-            Publicera Inlägg
-          </Button>
-        </div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Button
+              type="submit"
+              style={{ padding: "10px 20px", width: "70%" }}
+            >
+              Publicera Inlägg
+            </Button>
+          </div>
         </Form>
       </InputContainer>
 
@@ -157,36 +157,41 @@ const Feed = () => {
           posts.map((post) => (
             <BoxContainer key={post.id}>
               <div
-                style={{     borderBottom: "1px solid #ccc",
+                style={{
+                  borderBottom: "1px solid #ccc",
                   padding: "10px 0",
                   display: "flex",
                   justifyContent: "space-between",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <div>
-                <h5>
-                  <strong
-                    onClick={() => navigate(`/profile/${post.username}`)} // Navigera till användarens profil
-                  >
-                     <img
-            src={post.profile_image ? `http://localhost:1337${post.profile_image}` : ProfileImg}
-            alt="Profile Image"
-            style={{
-              width: "40px",
-              height: "auto",
-              borderRadius: "50%",
-              marginRight: "10px",
-            }}
-          />
-                 {post.username}
-                  </strong>{" "}
-                  säger:
-                </h5>
-                <p>{post.content}</p>
-                <p style={{ fontSize: "0.8em", color: "#555" }}>
-                  {new Date(post.createdAt).toLocaleString()}
-                </p>
+                  <h5>
+                    <strong
+                      onClick={() => navigate(`/profile/${post.username}`)} // Navigera till användarens profil
+                    >
+                      <img
+                        src={
+                          post.profile_image
+                            ? `http://localhost:1337${post.profile_image}`
+                            : ProfileImg
+                        }
+                        alt="Profile Image"
+                        style={{
+                          width: "100px",
+                          height: "auto",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
+                      {post.username}
+                    </strong>{" "}
+                    säger:
+                  </h5>
+                  <p>{post.content}</p>
+                  <p style={{ fontSize: "0.8em", color: "#555" }}>
+                    {new Date(post.createdAt).toLocaleString()}
+                  </p>
                 </div>
                 {post.username === currentUser && (
                   <Button
