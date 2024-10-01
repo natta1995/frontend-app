@@ -8,7 +8,7 @@ type Comment = {
   id: number;
   username: string;
   content: string;
-  createdAt: string;
+  created_at: Date;
   user_id: number;
 };
 
@@ -33,7 +33,12 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
 
         if (response.ok) {
           const data = await response.json();
-          setComments(data);
+          const transformedData = data.map((comment: Comment) => ({
+            ...comment,
+            createdAt: new Date(comment.created_at), 
+          }));
+          console.log("Här är infon", transformedData)
+          setComments(transformedData);
         } else {
           console.error("Failed to fetch comments");
         }
@@ -133,7 +138,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
                   <strong>{comment.username} säger:</strong>
                   <p>{comment.content}</p>
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
-                    {new Date(comment.createdAt).toLocaleString()}
+                  {comment.created_at.toLocaleString()}
                   </p>
                 </div>
                 {comment.username === currentUser && (
