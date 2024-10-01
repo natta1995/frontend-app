@@ -125,10 +125,10 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
      )}
       </Button>
       ): (
-        <h6>Inga kommentar gjorde ännu</h6>
+        <h6>Ingen har kommenterat detta inlägg ännu</h6>
       )}
     </div>
-      {isVisible && ( // Visa eller dölj kommentarerna baserat på isVisible
+      {isVisible && ( 
         <div>
           <h6>Kommentarer:</h6>
           {comments.length > 0 ? (
