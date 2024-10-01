@@ -107,7 +107,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
             <Button type="submit">Skicka</Button>
           </Form>
     <div style={{ display: "flex", justifyContent: "flex-end"}}>
-      
+      {comments.length > 0 ? (
       <Button onClick={toggleCommentsVisibility} style={{ marginBottom: "10px", marginTop: "10px" }}>
         {isVisible ? (
         <>
@@ -119,6 +119,9 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
     </>
      )}
       </Button>
+      ): (
+        <h6>Inga kommentar gjorde ännu</h6>
+      )}
     </div>
       {isVisible && ( // Visa eller dölj kommentarerna baserat på isVisible
         <div>
@@ -144,7 +147,6 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
             <p>Inga kommentarer ännu.</p>
           )}
 
-          {/* Lägg till en kommentar */}
          
         </div>
       )}
