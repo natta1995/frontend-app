@@ -111,11 +111,11 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
       <Button onClick={toggleCommentsVisibility} style={{ marginBottom: "10px", marginTop: "10px" }}>
         {isVisible ? (
         <>
-        <FontAwesomeIcon icon={faAngleUp} />
+      Dölj kommentarer <FontAwesomeIcon icon={faAngleUp} />
         </>
   ) : (
     <>
-    <FontAwesomeIcon icon={faAngleDown} />
+    Visa kommentarer <FontAwesomeIcon icon={faAngleDown} />
     </>
      )}
       </Button>
