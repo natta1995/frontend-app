@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProfileImg from "../startimg.webp";
 import { faTrashCan, faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 
 type Comment = {
@@ -23,6 +24,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const navigate = useNavigate();
  
 
   useEffect(() => {
@@ -131,12 +133,11 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
     </div>
       {isVisible && ( 
         <div>
-          <h6>Kommentarer:</h6>
           {comments.length > 0 ? (
             comments.map((comment) => (
               <div key={comment.id} style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div>
-        
+                <div onClick={() => navigate(`/profile/${comment.username}`)}>
                 <img
                         src={
                           comment.profile_image
@@ -152,7 +153,8 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
                         }}
                       />
       
-                  <strong>{comment.username} säger:</strong>
+                  <strong>{comment.username}</strong>
+                  </div>
                   <p>{comment.content}</p>
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
                   {new Date(comment.created_at).toLocaleString()}

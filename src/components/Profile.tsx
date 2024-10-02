@@ -164,7 +164,7 @@ const Profile: React.FC = () => {
     <img
       src={profile.profile_image ? `http://localhost:1337${profile.profile_image}` : ProfileImg}
       alt="Profile Image"
-      style={{ width: "250px", height: "auto", borderRadius: "50%" }}
+      style={{ width: "250px", height: "250px", borderRadius: "50%" }}
       />
 
       

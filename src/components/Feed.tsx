@@ -168,7 +168,7 @@ const Feed = () => {
                 <div>
                   <h5>
                     <strong
-                      onClick={() => navigate(`/profile/${post.username}`)} // Navigera till användarens profil
+                      onClick={() => navigate(`/profile/${post.username}`)}
                     >
                       <img
                         src={
@@ -186,7 +186,6 @@ const Feed = () => {
                       />
                       {post.username}
                     </strong>{" "}
-                    säger:
                   </h5>
                   <p>{post.content}</p>
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
