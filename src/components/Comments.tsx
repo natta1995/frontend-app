@@ -37,7 +37,6 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
             ...comment,
             createdAt: new Date(comment.created_at), 
           }));
-          console.log("Här är infon", transformedData)
           setComments(transformedData);
         } else {
           console.error("Failed to fetch comments");
