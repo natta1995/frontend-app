@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ProfileImg from "../startimg.webp";
 import { faTrashCan, faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { Button, Form } from "react-bootstrap";
 
@@ -10,6 +11,7 @@ type Comment = {
   content: string;
   created_at: string;
   user_id: number;
+  profile_image: string;
 };
 
 type CommentProps = {
@@ -134,6 +136,22 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
             comments.map((comment) => (
               <div key={comment.id} style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div>
+        
+                <img
+                        src={
+                          comment.profile_image
+                            ? `http://localhost:1337${comment.profile_image}`
+                            : ProfileImg
+                        }
+                        alt="Profile Image"
+                        style={{
+                          width: "50px",
+                          height: "auto",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
+      
                   <strong>{comment.username} säger:</strong>
                   <p>{comment.content}</p>
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
