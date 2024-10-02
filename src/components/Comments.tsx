@@ -8,7 +8,7 @@ type Comment = {
   id: number;
   username: string;
   content: string;
-  created_at: Date;
+  created_at: string;
   user_id: number;
 };
 
@@ -137,7 +137,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
                   <strong>{comment.username} säger:</strong>
                   <p>{comment.content}</p>
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
-                  {comment.created_at.toLocaleString()}
+                  {new Date(comment.created_at).toLocaleString()}
                   </p>
                 </div>
                 {comment.username === currentUser && (
