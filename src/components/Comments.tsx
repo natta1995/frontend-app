@@ -146,7 +146,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
                         alt="Profile Image"
                         style={{
                           width: "50px",
-                          height: "auto",
+                          height: "50px",
                           borderRadius: "50%",
                           marginRight: "10px",
                         }}

@@ -179,7 +179,7 @@ const Feed = () => {
                         alt="Profile Image"
                         style={{
                           width: "100px",
-                          height: "auto",
+                          height: "100px",
                           borderRadius: "50%",
                           marginRight: "10px",
                         }}
