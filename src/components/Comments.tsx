@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProfileImg from "../startimg.webp";
+import styled from "styled-components";
 import { faTrashCan, faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+
+const CommentContainer = styled.div`
+  padding: 2%;
+  border-radius: 10px;
+  border: 1px solid #d3efe5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  margin-bottom: 2%;
+  background-color: #f3f4e3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 
 type Comment = {
@@ -135,9 +148,9 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
         <div>
           {comments.length > 0 ? (
             comments.map((comment) => (
-              <div key={comment.id} style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <CommentContainer key={comment.id} >
                 <div>
-                <div onClick={() => navigate(`/profile/${comment.username}`)}>
+                <div style={{backgroundColor: "#84c18f", paddingLeft: "10px", paddingRight: "700px", paddingTop: "10px", paddingBottom: "10px", borderRadius: "10px", display:"flex", alignItems: "row"}}onClick={() => navigate(`/profile/${comment.username}`)}>
                 <img
                         src={
                           comment.profile_image
@@ -153,19 +166,19 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
                         }}
                       />
       
-                  <strong>{comment.username}</strong>
+                  <strong style={{marginTop: "5px"}}>{comment.username}</strong>
                   </div>
-                  <p>{comment.content}</p>
+                  <p style={{marginTop: "10px", marginLeft: "5px"}}>{comment.content}</p>
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
                   {new Date(comment.created_at).toLocaleString()}
                   </p>
                 </div>
                 {comment.username === currentUser && (
-                  <Button variant="danger" onClick={() => handleDeleteComment(comment.id)} style={{ marginLeft: "10px" }}>
+                  <Button variant="danger" onClick={() => handleDeleteComment(comment.id)} style={{ marginLeft: "-6%", marginTop: "10%" }}>
                     <FontAwesomeIcon icon={faTrashCan} />
                   </Button>
                 )}
-              </div>
+              </CommentContainer>
             ))
           ) : (
             <p>Inga kommentarer ännu.</p>
