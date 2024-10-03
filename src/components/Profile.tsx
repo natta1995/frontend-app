@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import ProfileImg from "../startimg.webp";
-import BackgroundImg from "../forestimg.jpg";
+import ProfileImg from "../Img/startimg.webp";
+import BackgroundImg from "../Img/forestimg.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Comments from "./Comments";
 import {
@@ -11,6 +11,7 @@ import {
   faTrashCan,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
+
 
 const BackgroundWrapper = styled.div`
   position: relative;
@@ -115,7 +116,6 @@ const Profile: React.FC = () => {
           console.error("Failed to fetch posts");
         }
 
-        // Hämta nuvarande användares username
         const userResponse = await fetch(
           "http://localhost:1337/users/profile",
           {
@@ -134,8 +134,6 @@ const Profile: React.FC = () => {
         console.error("Error fetching data:", error);
       }
     };
-
-    
 
     fetchPosts();
     fetchProfile();

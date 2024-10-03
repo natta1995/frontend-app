@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useUser } from "../UserContext";
 import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
-import LogoImg from "../deer.webp";
+import LogoImg from "../Img/deer.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,

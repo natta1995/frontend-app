@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ProfileImg from "../startimg.webp";
+import ProfileImg from "../Img/startimg.webp";
 import styled from "styled-components";
 import { faTrashCan, faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { Button, Form } from "react-bootstrap";

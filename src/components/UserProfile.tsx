@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ProfileImg from "../startimg.webp";
+import ProfileImg from "../Img/startimg.webp";
 import styled from "styled-components";
 
 const ProfileContainer = styled.div`

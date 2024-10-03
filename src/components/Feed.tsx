@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
-import ProfileImg from "../startimg.webp";
+import ProfileImg from "../Img/startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faLeaf } from "@fortawesome/free-solid-svg-icons";
 import Comments from "./Comments";
