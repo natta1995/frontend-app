@@ -17,6 +17,16 @@ const BackgroundWrapper = styled.div`
   width: 100%;
 `;
 
+
+const PostContainer = styled.div`
+  padding: 5%;
+  border-radius: 10px;
+  border: 1px solid #d3efe5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  margin-bottom: 5%;
+  background-color: #f3f4e3;
+`;
+
 const BackgroundContainer = styled.div`
   width: 100%;
   height: 300px;
@@ -218,16 +228,14 @@ const Profile: React.FC = () => {
             </div>
           </div>
         </div>
-        <div style={{ paddingTop: "8%" }}>
-          <h3 style={{ borderTop: "2px solid #ccc", padding: "10px 0" }}>
-            Mina inlägg:
-          </h3>
+        <div style={{ paddingTop: "8%", borderTop: "2px solid #ccc", marginTop: "4%", marginBottom: "0.5%" }}>
+         
           {posts.length > 0 ? (
             posts
               .filter((post) => post.username === currentUser)
               .map((post) => (
                 <BoxContainer key={post.id}>
-                  <div>
+                  <PostContainer>
                     <img
                       src={
                         post.profile_image
@@ -236,8 +244,8 @@ const Profile: React.FC = () => {
                       }
                       alt="Profile Image"
                       style={{
-                        width: "50px",
-                        height: "50px",
+                        width: "100px",
+                        height: "100px",
                         borderRadius: "50%",
                         marginRight: "10px",
                       }}
@@ -249,7 +257,7 @@ const Profile: React.FC = () => {
                     <p style={{ fontSize: "0.8em", color: "#555" }}>
                       {new Date(post.createdAt).toLocaleString()}
                     </p>
-                  </div>
+                  
                   <div style={{ display: "flex", justifyContent: "flex-end" }}>
                     <div style={{ marginTop: "-15%" }}>
                       <Button
@@ -260,7 +268,9 @@ const Profile: React.FC = () => {
                       </Button>
                     </div>
                   </div>
+                 
                   <Comments postId={post.id} currentUser={currentUser} />
+                  </PostContainer>
                 </BoxContainer>
               ))
           ) : (
