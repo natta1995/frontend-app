@@ -13,6 +13,8 @@ import {
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
+
+
 const Layout: React.FC = () => {
   const { currentUser } = useUser();
   const [pendingRequests, setPendingRequests] = useState<number>(0);
@@ -40,7 +42,7 @@ const Layout: React.FC = () => {
 
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light">
         <Container>
           <Navbar.Brand href="/feed" className="d-flex align-items-center">
             <img
@@ -52,8 +54,7 @@ const Layout: React.FC = () => {
             />
             DearFriends
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
+          
             <Nav className="me-auto">
               <Nav.Link href="/feed">
                 <FontAwesomeIcon icon={faHouse} />
@@ -79,6 +80,7 @@ const Layout: React.FC = () => {
                 <FontAwesomeIcon icon={faHeart} />
               </Nav.Link>
             </Nav>
+            
             <Dropdown className="ms-auto">
               <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic">
                 {currentUser && currentUser.name
@@ -99,7 +101,7 @@ const Layout: React.FC = () => {
                 {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
               </Dropdown.Menu>
             </Dropdown>
-          </Navbar.Collapse>
+          
         </Container>
       </Navbar>
 
