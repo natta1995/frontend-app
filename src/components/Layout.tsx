@@ -1,70 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "../UserContext";
-import {
-  Navbar,
-  Nav,
-  Container,
-  Dropdown,
-  Form,
-  FormControl,
-} from "react-bootstrap";
+import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 import LogoImg from "../deer.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ProfileImg from "../startimg.webp";
 import {
   faHouse,
   faUserGroup,
   faGear,
   faRightFromBracket,
   faUser,
-  faHeart
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Layout: React.FC = () => {
   const { currentUser } = useUser();
-  const [users, setUsers] = useState([]); // Håll koll på alla användare
-  const [searchQuery, setSearchQuery] = useState(""); // Håll koll på sökfrågan
-  const [filteredUsers, setFilteredUsers] = useState([]); // Håll koll på filtrerade användare baserat på sökfrågan
-  const [error, setError] = useState<string | null>(null);
   const [pendingRequests, setPendingRequests] = useState<number>(0);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("http://localhost:1337/users/userslist", {
-          method: "GET",
-          credentials: "include",
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setUsers(data); // Sätt alla användare i state
-          setFilteredUsers(data); // Sätt även filtrerade användare som standard till alla användare
-        } else {
-          setError("Failed to fetch users");
-        }
-      } catch (error) {
-        console.error("Error fetching users:", error);
-        setError("Error fetching users");
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
-  useEffect(() => {
-    if (searchQuery) {
-      setFilteredUsers(
-        users.filter(
-          (user: any) =>
-            user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user.username.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredUsers([]);
-    }
-  }, [searchQuery, users]);
 
   useEffect(() => {
     const fetchPendingRequests = async () => {
@@ -75,7 +26,7 @@ const Layout: React.FC = () => {
         });
         if (response.ok) {
           const data = await response.json();
-          setPendingRequests(data.length); // Sätt antalet vänförfrågningar
+          setPendingRequests(data.length);
         } else {
           console.error("Failed to fetch pending friend requests");
         }
@@ -83,7 +34,7 @@ const Layout: React.FC = () => {
         console.error("Error fetching pending requests:", error);
       }
     };
-  
+
     fetchPendingRequests();
   }, []);
 
@@ -107,42 +58,27 @@ const Layout: React.FC = () => {
               <Nav.Link href="/feed">
                 <FontAwesomeIcon icon={faHouse} />
               </Nav.Link>
-              <Nav.Link href="/find-friends" style={{ position: "relative" }} >
+              <Nav.Link href="/find-friends" style={{ position: "relative" }}>
                 <FontAwesomeIcon icon={faUserGroup} />
                 {pendingRequests > 0 && (
-          <span
-      style={{
-        position: "absolute",
-        top: "0.2",
-        right: "5px",
-        width: "10px",
-        height: "10px",
-        backgroundColor: "#e4190f",
-        borderRadius: "50%",
-        display: "inline-block",
-      }}
-    ></span>
-  )}
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "0.2",
+                      right: "5px",
+                      width: "10px",
+                      height: "10px",
+                      backgroundColor: "#e4190f",
+                      borderRadius: "50%",
+                      display: "inline-block",
+                    }}
+                  ></span>
+                )}
               </Nav.Link>
               <Nav.Link href="/my-friends">
                 <FontAwesomeIcon icon={faHeart} />
               </Nav.Link>
             </Nav>
-
-            <Form style={{ width: "60%" }} className="d-flex">
-              <FormControl
-                type="search"
-                placeholder="Sök efter användare"
-                className="me-2"
-                aria-label="Sök"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </Form>
-
-            {filteredUsers.length === 0 && searchQuery && (
-              <p>Inga användare hittades</p>
-            )}
             <Dropdown className="ms-auto">
               <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic">
                 {currentUser && currentUser.name
@@ -166,32 +102,6 @@ const Layout: React.FC = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
-      <div>
-        {filteredUsers.length > 0 && (
-          <div style={{ padding: "20px" }}>
-            <ul>
-              {filteredUsers.map((user: any) => (
-                <li style={{ listStyle: "none" }} key={user.id}>
-                  <a href={`/profile/${user.username}`}>
-                    {" "}
-                    <img
-                      src={ProfileImg}
-                      alt="StartProfileImg"
-                      style={{
-                        width: "40px",
-                        height: "auto",
-                        borderRadius: "50%",
-                      }}
-                    />{" "}
-                    {user.name} ({user.username})
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
 
       <div style={{ minHeight: "calc(100vh - 100px)" }}>
         <Outlet />
