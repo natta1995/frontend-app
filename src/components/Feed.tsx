@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import ProfileImg from "../startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faLeaf } from "@fortawesome/free-solid-svg-icons";
 import Comments from "./Comments";
 
 const BoxContainer = styled.div`
@@ -54,7 +54,6 @@ const Feed = () => {
           console.error("Failed to fetch posts");
         }
 
-        // Hämta nuvarande användares username
         const userResponse = await fetch(
           "http://localhost:1337/users/profile",
           {
@@ -65,7 +64,7 @@ const Feed = () => {
 
         if (userResponse.ok) {
           const userData = await userResponse.json();
-          setCurrentUser(userData.username); // Sätt användarnamnet i state
+          setCurrentUser(userData.username);
         } else {
           console.error("Failed to fetch current user");
         }
@@ -127,7 +126,7 @@ const Feed = () => {
       <InputContainer>
         <Form onSubmit={handlePostSubmit}>
           <h1 style={{ textAlign: "center", paddingBottom: "15px" }}>
-            Välkommen tillbaka {currentUser} !
+            Välkommen tillbaka {currentUser} ! <FontAwesomeIcon icon={faLeaf} />
           </h1>
           <h6>Vad vill du dela med dig av idag?</h6>
           <textarea
