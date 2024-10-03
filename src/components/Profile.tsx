@@ -1,22 +1,59 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import ProfileImg from "../startimg.webp";
+import BackgroundImg from "../forestimg.jpg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Comments from "./Comments";
 import {
   faGears,
   faTrashCan,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 
+const BackgroundWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const BackgroundContainer = styled.div`
+  width: 100%; 
+  height: 300px; 
+  background-image: url(${BackgroundImg});
+  background-size: cover; 
+  background-position: center; 
+  position: relative;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  margin-top: 5%;
+`;
+
+const ProfileImage = styled.img`
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 5px solid white;
+  position: absolute;
+  bottom: -55px; 
+  left: 20%;
+  transform: translateX(-70%); 
+`;
+
 const ProfileContainer = styled.div`
-  padding: 10%;
-  padding-top: 5%;
+  padding: 5%;
+  padding-top: 1%; 
   border-radius: 10px;
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   background-color:  #f3f4e3;
+  margin-top: 5px; 
+`;
+
+const BoxContainer = styled.div`
+  border-radius: 10px;
+  margin-bottom: 5%;
+  background-color: #f3f4e3;
 `;
 
 type Post = {
@@ -24,6 +61,7 @@ type Post = {
   username: string;
   content: string;
   createdAt: string;
+  profile_image: string;
 };
 
 const Profile: React.FC = () => {
@@ -56,7 +94,6 @@ const Profile: React.FC = () => {
 
     const fetchPosts = async () => {
       try {
-        // Hämta inlägg
         const response = await fetch("http://localhost:1337/feed", {
           method: "GET",
           credentials: "include",
@@ -80,7 +117,7 @@ const Profile: React.FC = () => {
 
         if (userResponse.ok) {
           const userData = await userResponse.json();
-          setCurrentUser(userData.username); // Sätt användarnamnet i state
+          setCurrentUser(userData.username); 
         } else {
           console.error("Failed to fetch current user");
         }
@@ -120,27 +157,6 @@ const Profile: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  const removeFriend = async (friendId: number) => {
-    try {
-      const response = await fetch("http://localhost:1337/friends/remove", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ friendId }),
-      });
-
-      if (response.ok) {
-        setFriends(friends.filter((friend) => friend.id !== friendId));
-      } else {
-        setError("Failed to remove friend");
-      }
-    } catch (error) {
-      console.error("Error removing friend:", error);
-      setError("Error removing friend");
-    }
-  };
 
   const handleDelete = async (postId: number) => {
     try {
@@ -160,14 +176,19 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <ProfileContainer style={{ width: "70%", margin: "0 auto", marginTop: "30px", marginBottom: "30px" }}>
-    <img
+    < div style={{ width: "70%", margin: "0 auto", marginTop: "30px", marginBottom: "30px" }}>
+    <ProfileContainer >
+    <BackgroundWrapper>
+    <BackgroundContainer />
+    
+    <ProfileImage
       src={profile.profile_image ? `http://localhost:1337${profile.profile_image}` : ProfileImg}
       alt="Profile Image"
-      style={{ width: "250px", height: "250px", borderRadius: "50%" }}
-      />
-
       
+      />
+      
+</BackgroundWrapper>
+    <div style={{marginTop: "10%", marginLeft: "5%"}}>
       <h1>{profile.name}</h1>
       <div style={{display: "flex", justifyContent: "flex-end"}}>
       <Button variant="secondary" onClick={() => navigate("/edit-profile")}>
@@ -176,9 +197,6 @@ const Profile: React.FC = () => {
       </div>
       <p>
         <strong>Användarnamn:</strong> {profile.username}
-      </p>
-      <p>
-        <strong>Namn:</strong> {profile.name}
       </p>
       <p>
         <strong>Email:</strong> {profile.email}
@@ -195,57 +213,67 @@ const Profile: React.FC = () => {
       <p>
         <strong>Bio:</strong> {profile.bio}
       </p>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div style={{ display: "flex", justifyContent: "flex-end",  }}>
        <div>
-          <Button>
-            <FontAwesomeIcon icon={faUserGroup} /> Vänner
-          </Button>
-        </div>
-             
+        <Link to="/my-friends">
+          <Button> <FontAwesomeIcon icon={faUserGroup} /> Vänner </Button>
+        </Link>
+        </div>    
       </div>
-
+      </div>
       <div style={{ paddingTop: "8%" }}>
-        <h3 style={{ borderTop: "1px solid #ccc", padding: "10px 0" }}>
+        <h3 style={{ borderTop: "2px solid #ccc", padding: "10px 0" }}>
           Mina inlägg:
         </h3>
         {posts.length > 0 ? (
           posts
             .filter((post) => post.username === currentUser)
             .map((post) => (
-              <div
-                key={post.id}
-                style={{
-                  borderBottom: "1px solid #ccc",
-                  padding: "10px 0",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
+            <BoxContainer key={post.id}>
+             
                 <div>
+                <img
+                        src={
+                          post.profile_image
+                            ? `http://localhost:1337${post.profile_image}`
+                            : ProfileImg
+                        }
+                        alt="Profile Image"
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
                   <p>
-                    <strong>{post.username}</strong> säger:
+                    <strong>{post.username}</strong>
                   </p>
                   <p>{post.content}</p>
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
                     {new Date(post.createdAt).toLocaleString()}
                   </p>
                 </div>
-                <div>
+                <div style={{display: "flex", justifyContent: "flex-end"}}>
+                <div style={{ marginTop: "-15%"}}>
                   <Button
                     onClick={() => handleDelete(post.id)}
                     variant="danger"
                   >
                     <FontAwesomeIcon icon={faTrashCan} />
                   </Button>
+                  </div>
                 </div>
-              </div>
+                <Comments postId={post.id} currentUser={currentUser} />
+              </BoxContainer>
+              
             ))
         ) : (
           <p>Du har inte gjort några inlägg ännu.</p>
         )}
       </div>
     </ProfileContainer>
+    </div>
   );
 };
 
