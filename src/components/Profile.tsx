@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import ProfileImg from "../startimg.webp";
-import BackgroundImg from "../forestimg.jpg"
+import BackgroundImg from "../forestimg.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Comments from "./Comments";
 import {
@@ -18,13 +18,13 @@ const BackgroundWrapper = styled.div`
 `;
 
 const BackgroundContainer = styled.div`
-  width: 100%; 
-  height: 300px; 
+  width: 100%;
+  height: 300px;
   background-image: url(${BackgroundImg});
-  background-size: cover; 
-  background-position: center; 
+  background-size: cover;
+  background-position: center;
   position: relative;
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 10px 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin-top: 5%;
 `;
@@ -35,19 +35,19 @@ const ProfileImage = styled.img`
   border-radius: 50%;
   border: 5px solid white;
   position: absolute;
-  bottom: -55px; 
+  bottom: -55px;
   left: 20%;
-  transform: translateX(-70%); 
+  transform: translateX(-70%);
 `;
 
 const ProfileContainer = styled.div`
   padding: 5%;
-  padding-top: 1%; 
+  padding-top: 1%;
   border-radius: 10px;
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  background-color:  #f3f4e3;
-  margin-top: 5px; 
+  background-color: #f3f4e3;
+  margin-top: 5px;
 `;
 
 const BoxContainer = styled.div`
@@ -69,7 +69,6 @@ const Profile: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
-  const [friends, setFriends] = useState<any[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -117,7 +116,7 @@ const Profile: React.FC = () => {
 
         if (userResponse.ok) {
           const userData = await userResponse.json();
-          setCurrentUser(userData.username); 
+          setCurrentUser(userData.username);
         } else {
           console.error("Failed to fetch current user");
         }
@@ -126,27 +125,11 @@ const Profile: React.FC = () => {
       }
     };
 
-    const fetchFriends = async () => {
-      try {
-        const response = await fetch("http://localhost:1337/friends/list", {
-          method: "GET",
-          credentials: "include",
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setFriends(data);
-        } else {
-          setError("Failed to fetch friends");
-        }
-      } catch (error) {
-        console.error("Error fetching friends:", error);
-        setError("Error fetching friends");
-      }
-    };
+    
 
     fetchPosts();
     fetchProfile();
-    fetchFriends();
+    
   }, []);
 
   if (error) {
@@ -156,7 +139,6 @@ const Profile: React.FC = () => {
   if (!profile) {
     return <div>Loading...</div>;
   }
-
 
   const handleDelete = async (postId: number) => {
     try {
@@ -176,103 +158,116 @@ const Profile: React.FC = () => {
   };
 
   return (
-    < div style={{ width: "70%", margin: "0 auto", marginTop: "30px", marginBottom: "30px" }}>
-    <ProfileContainer >
-    <BackgroundWrapper>
-    <BackgroundContainer />
-    
-    <ProfileImage
-      src={profile.profile_image ? `http://localhost:1337${profile.profile_image}` : ProfileImg}
-      alt="Profile Image"
-      
-      />
-      
-</BackgroundWrapper>
-    <div style={{marginTop: "10%", marginLeft: "5%"}}>
-      <h1>{profile.name}</h1>
-      <div style={{display: "flex", justifyContent: "flex-end"}}>
-      <Button variant="secondary" onClick={() => navigate("/edit-profile")}>
-          <FontAwesomeIcon icon={faGears} />
-        </Button>
-      </div>
-      <p>
-        <strong>Användarnamn:</strong> {profile.username}
-      </p>
-      <p>
-        <strong>Email:</strong> {profile.email}
-      </p>
-      <p>
-        <strong>Ålder:</strong> {profile.age}
-      </p>
-      <p>
-        <strong>Arbetsplats:</strong> {profile.workplace}
-      </p>
-      <p>
-        <strong>Skola:</strong> {profile.school}
-      </p>
-      <p>
-        <strong>Bio:</strong> {profile.bio}
-      </p>
-      <div style={{ display: "flex", justifyContent: "flex-end",  }}>
-       <div>
-        <Link to="/my-friends">
-          <Button> <FontAwesomeIcon icon={faUserGroup} /> Vänner </Button>
-        </Link>
-        </div>    
-      </div>
-      </div>
-      <div style={{ paddingTop: "8%" }}>
-        <h3 style={{ borderTop: "2px solid #ccc", padding: "10px 0" }}>
-          Mina inlägg:
-        </h3>
-        {posts.length > 0 ? (
-          posts
-            .filter((post) => post.username === currentUser)
-            .map((post) => (
-            <BoxContainer key={post.id}>
-             
-                <div>
-                <img
-                        src={
-                          post.profile_image
-                            ? `http://localhost:1337${post.profile_image}`
-                            : ProfileImg
-                        }
-                        alt="Profile Image"
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          borderRadius: "50%",
-                          marginRight: "10px",
-                        }}
-                      />
-                  <p>
-                    <strong>{post.username}</strong>
-                  </p>
-                  <p>{post.content}</p>
-                  <p style={{ fontSize: "0.8em", color: "#555" }}>
-                    {new Date(post.createdAt).toLocaleString()}
-                  </p>
-                </div>
-                <div style={{display: "flex", justifyContent: "flex-end"}}>
-                <div style={{ marginTop: "-15%"}}>
-                  <Button
-                    onClick={() => handleDelete(post.id)}
-                    variant="danger"
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </Button>
+    <div
+      style={{
+        width: "70%",
+        margin: "0 auto",
+        marginTop: "30px",
+        marginBottom: "30px",
+      }}
+    >
+      <ProfileContainer>
+        <BackgroundWrapper>
+          <BackgroundContainer />
+
+          <ProfileImage
+            src={
+              profile.profile_image
+                ? `http://localhost:1337${profile.profile_image}`
+                : ProfileImg
+            }
+            alt="Profile Image"
+          />
+        </BackgroundWrapper>
+        <div style={{ marginTop: "10%", marginLeft: "5%" }}>
+          <h1>{profile.name}</h1>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button
+              variant="secondary"
+              onClick={() => navigate("/edit-profile")}
+            >
+              <FontAwesomeIcon icon={faGears} />
+            </Button>
+          </div>
+          <p>
+            <strong>Användarnamn:</strong> {profile.username}
+          </p>
+          <p>
+            <strong>Email:</strong> {profile.email}
+          </p>
+          <p>
+            <strong>Ålder:</strong> {profile.age}
+          </p>
+          <p>
+            <strong>Arbetsplats:</strong> {profile.workplace}
+          </p>
+          <p>
+            <strong>Skola:</strong> {profile.school}
+          </p>
+          <p>
+            <strong>Bio:</strong> {profile.bio}
+          </p>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div>
+              <Link to="/my-friends">
+                <Button>
+                  {" "}
+                  <FontAwesomeIcon icon={faUserGroup} /> Vänner{" "}
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div style={{ paddingTop: "8%" }}>
+          <h3 style={{ borderTop: "2px solid #ccc", padding: "10px 0" }}>
+            Mina inlägg:
+          </h3>
+          {posts.length > 0 ? (
+            posts
+              .filter((post) => post.username === currentUser)
+              .map((post) => (
+                <BoxContainer key={post.id}>
+                  <div>
+                    <img
+                      src={
+                        post.profile_image
+                          ? `http://localhost:1337${post.profile_image}`
+                          : ProfileImg
+                      }
+                      alt="Profile Image"
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        borderRadius: "50%",
+                        marginRight: "10px",
+                      }}
+                    />
+                    <p>
+                      <strong>{post.username}</strong>
+                    </p>
+                    <p>{post.content}</p>
+                    <p style={{ fontSize: "0.8em", color: "#555" }}>
+                      {new Date(post.createdAt).toLocaleString()}
+                    </p>
                   </div>
-                </div>
-                <Comments postId={post.id} currentUser={currentUser} />
-              </BoxContainer>
-              
-            ))
-        ) : (
-          <p>Du har inte gjort några inlägg ännu.</p>
-        )}
-      </div>
-    </ProfileContainer>
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <div style={{ marginTop: "-15%" }}>
+                      <Button
+                        onClick={() => handleDelete(post.id)}
+                        variant="danger"
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </Button>
+                    </div>
+                  </div>
+                  <Comments postId={post.id} currentUser={currentUser} />
+                </BoxContainer>
+              ))
+          ) : (
+            <p>Du har inte gjort några inlägg ännu.</p>
+          )}
+        </div>
+      </ProfileContainer>
     </div>
   );
 };
