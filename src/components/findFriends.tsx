@@ -35,24 +35,6 @@ const Friends: React.FC = () => {
       }
     };
 
-    const fetchFriends = async () => {
-      try {
-        const response = await fetch("http://localhost:1337/friends/list", {
-          method: "GET",
-          credentials: "include",
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setFriends(data);
-        } else {
-          setError("Failed to fetch friends");
-        }
-      } catch (error) {
-        console.error("Error fetching friends:", error);
-        setError("Error fetching friends");
-      }
-    };
-
     const fetchReceivedRequests = async () => {
       try {
         const response = await fetch("http://localhost:1337/friends/requests", {
@@ -72,7 +54,7 @@ const Friends: React.FC = () => {
     };
 
     fetchUsers();
-    fetchFriends();
+
     fetchReceivedRequests();
   }, []);
 
@@ -125,31 +107,9 @@ const Friends: React.FC = () => {
     }
   };
 
-   const removeFriend = async (friendId: number) => {
-    try {
-      const response = await fetch('http://localhost:1337/friends/remove', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ friendId }),
-      });
-
-      if (response.ok) {
-        setFriends(friends.filter(friend => friend.id !== friendId));
-      } else {
-        setError('Failed to remove friend');
-      }
-    } catch (error) {
-      console.error('Error removing friend:', error);
-      setError('Error removing friend');
-    }
-  };
-
   if (error) {
     return <div>{error}</div>;
-  } 
+  }
 
   const filteredUsers = users.filter(
     (user) =>
@@ -158,7 +118,15 @@ const Friends: React.FC = () => {
   );
 
   return (
-    <div style={{ margin: "0 auto", width: "80%", backgroundColor: "#f3f4e3", marginTop: "4%", marginBottom: "4%" }}>
+    <div
+      style={{
+        margin: "0 auto",
+        width: "80%",
+        backgroundColor: "#f3f4e3",
+        marginTop: "4%",
+        marginBottom: "4%",
+      }}
+    >
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div style={{ width: "50%", padding: "5%" }}>
           <h2>Lägg Till Användare</h2>
@@ -217,16 +185,6 @@ const Friends: React.FC = () => {
               </li>
             )}
           </ul>
-
-                <h2>Mina Vänner</h2>
-      <ul>
-        {friends.map((friend) => (
-          <li style={{marginBottom: "5%", listStyle: "none"}} key={friend.id}>
-            {friend.name} ({friend.username})
-            <Button onClick={() => removeFriend(friend.id)} style={{ marginLeft: '10px' }} variant="danger">Ta bort vän</Button>
-          </li>
-        ))}
-      </ul> 
         </div>
       </div>
     </div>
