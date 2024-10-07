@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useUser } from "../UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ProfileImg from "../Img/startimg.webp";
 import {
   faUserPlus,
   faCheck,
@@ -136,6 +137,20 @@ const Friends: React.FC = () => {
                 style={{ marginBottom: "5%", listStyle: "none" }}
                 key={user.id}
               >
+                 <img
+                        src={
+                          user.profile_image
+                            ? `http://localhost:1337${user.profile_image}`
+                            : ProfileImg
+                        }
+                        alt="Profile Image"
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
                 {user.name} ({user.username})
                 {sentRequests.includes(user.id) ? (
                   <span style={{ marginLeft: "10px", color: "green" }}>
