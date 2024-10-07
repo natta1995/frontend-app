@@ -68,7 +68,7 @@ const MyFriends: React.FC = () => {
       <ul>
         {friends.map((friend) => (
           <li style={{marginBottom: "5%", listStyle: "none"}} key={friend.id}>
-            {friend.name} ({friend.username})
+          <strong> {friend.name} </strong> ({friend.username})
             <Button onClick={() => removeFriend(friend.id)} style={{ marginLeft: '10px' }} variant="danger"> <FontAwesomeIcon icon={faUserSlash} /> </Button>
           </li>
         ))}
