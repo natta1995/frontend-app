@@ -157,7 +157,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
                             ? `http://localhost:1337${comment.profile_image}`
                             : ProfileImg
                         }
-                        alt="Profile Image"
+                        alt={`${comment.username}s profile`}
                         style={{
                           width: "50px",
                           height: "50px",
