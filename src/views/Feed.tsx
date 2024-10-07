@@ -5,7 +5,7 @@ import { Form, Button } from "react-bootstrap";
 import ProfileImg from "../Img/startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faLeaf } from "@fortawesome/free-solid-svg-icons";
-import Comments from "./Comments";
+import Comments from "../components/Comments";
 
 const BoxContainer = styled.div`
   padding: 5%;

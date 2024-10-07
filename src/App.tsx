@@ -1,15 +1,15 @@
 import React from "react";
 import { UserProvider } from "./UserContext";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Feed from "./components/Feed";
-import Profile from "./components/Profile";
-import UserProfile from "./components/UserProfile";
+import Login from "./views/Login";
+import Register from "./views/Register";
+import Feed from "./views/Feed";
+import Profile from "./views/Profile";
+import UserProfile from "./views/UserProfile";
 import Layout from "./components/Layout";
-import EditProfile from "./components/EditProfile";
-import FindFriends from "./components/findFriends";
-import MyFriends from "./components/MyFriends";
+import EditProfile from "./views/EditProfile";
+import FindFriends from "./views/findFriends";
+import MyFriends from "./views/MyFriends";
 import { login, register } from "./api/auth";
 
 const App: React.FC = () => {

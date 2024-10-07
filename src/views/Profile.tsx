@@ -5,19 +5,17 @@ import { Button } from "react-bootstrap";
 import ProfileImg from "../Img/startimg.webp";
 import BackgroundImg from "../Img/forestimg.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Comments from "./Comments";
+import Comments from "../components/Comments";
 import {
   faGears,
   faTrashCan,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 
-
 const BackgroundWrapper = styled.div`
   position: relative;
   width: 100%;
 `;
-
 
 const PostContainer = styled.div`
   padding: 5%;
@@ -137,7 +135,6 @@ const Profile: React.FC = () => {
 
     fetchPosts();
     fetchProfile();
-    
   }, []);
 
   if (error) {
@@ -226,8 +223,14 @@ const Profile: React.FC = () => {
             </div>
           </div>
         </div>
-        <div style={{ paddingTop: "8%", borderTop: "2px solid #ccc", marginTop: "4%", marginBottom: "0.5%" }}>
-         
+        <div
+          style={{
+            paddingTop: "8%",
+            borderTop: "2px solid #ccc",
+            marginTop: "4%",
+            marginBottom: "0.5%",
+          }}
+        >
           {posts.length > 0 ? (
             posts
               .filter((post) => post.username === currentUser)
@@ -255,19 +258,21 @@ const Profile: React.FC = () => {
                     <p style={{ fontSize: "0.8em", color: "#555" }}>
                       {new Date(post.createdAt).toLocaleString()}
                     </p>
-                  
-                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <div style={{ marginTop: "-15%" }}>
-                      <Button
-                        onClick={() => handleDelete(post.id)}
-                        variant="danger"
-                      >
-                        <FontAwesomeIcon icon={faTrashCan} />
-                      </Button>
+
+                    <div
+                      style={{ display: "flex", justifyContent: "flex-end" }}
+                    >
+                      <div style={{ marginTop: "-15%" }}>
+                        <Button
+                          onClick={() => handleDelete(post.id)}
+                          variant="danger"
+                        >
+                          <FontAwesomeIcon icon={faTrashCan} />
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                 
-                  <Comments postId={post.id} currentUser={currentUser} />
+
+                    <Comments postId={post.id} currentUser={currentUser} />
                   </PostContainer>
                 </BoxContainer>
               ))
