@@ -177,6 +177,20 @@ const Friends: React.FC = () => {
                   style={{ marginBottom: "5%", listStyle: "none" }}
                   key={request.id}
                 >
+                      <img
+                        src={
+                          request.profile_image
+                            ? `http://localhost:1337${request.profile_image}`
+                            : ProfileImg
+                        }
+                        alt="Profile Image"
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
                   {request.name} ({request.username})
                   <Button
                     onClick={() => respondToRequest(request.id, "accept")}
