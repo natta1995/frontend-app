@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ProfileImg from "../Img/startimg.webp";
 import {
   faUserSlash
 } from "@fortawesome/free-solid-svg-icons";
@@ -68,6 +69,20 @@ const MyFriends: React.FC = () => {
       <ul>
         {friends.map((friend) => (
           <li style={{marginBottom: "5%", listStyle: "none"}} key={friend.id}>
+             <img
+              src={
+                          friend.profile_image
+                            ? `http://localhost:1337${friend.profile_image}`
+                            : ProfileImg
+                        }
+                        alt="Profile Image"
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
           <strong> {friend.name} </strong> ({friend.username})
             <Button onClick={() => removeFriend(friend.id)} style={{ marginLeft: '10px' }} variant="danger"> <FontAwesomeIcon icon={faUserSlash} /> </Button>
           </li>
