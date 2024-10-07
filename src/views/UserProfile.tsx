@@ -67,7 +67,7 @@ const UserProfile: React.FC = () => {
       <ProfileContainer style={{ width: "70%", margin: "0 auto", marginTop: "30px", marginBottom: "30px" }}>
       <img
          src={profile && profile.profile_image ? `http://localhost:1337${profile.profile_image}` : ProfileImg}
-         alt="Profile Image"
+         alt={`${profile.username}s profile`}
          style={{ width: "250px", height: "250px", borderRadius: "50%" }}
       />
         <h1 style={{ paddingTop: "8%" }}>{profile?.name}</h1>

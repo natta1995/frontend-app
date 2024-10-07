@@ -12,7 +12,7 @@ import {
 const Friends: React.FC = () => {
   const [users, setUsers] = useState<any[]>([]);
   const { currentUser } = useUser();
-  const [friends, setFriends] = useState<any[]>([]);
+  const [friends] = useState<any[]>([]);
   const [receivedRequests, setReceivedRequests] = useState<any[]>([]);
   const [sentRequests, setSentRequests] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -143,7 +143,7 @@ const Friends: React.FC = () => {
                             ? `http://localhost:1337${user.profile_image}`
                             : ProfileImg
                         }
-                        alt="Profile Image"
+                        alt={`${user.username}s profile`}
                         style={{
                           width: "100px",
                           height: "100px",
@@ -183,7 +183,7 @@ const Friends: React.FC = () => {
                             ? `http://localhost:1337${request.profile_image}`
                             : ProfileImg
                         }
-                        alt="Profile Image"
+                        alt={`${request.username}s profile`}
                         style={{
                           width: "100px",
                           height: "100px",

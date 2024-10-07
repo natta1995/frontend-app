@@ -75,7 +75,7 @@ const MyFriends: React.FC = () => {
                             ? `http://localhost:1337${friend.profile_image}`
                             : ProfileImg
                         }
-                        alt="Profile Image"
+                        alt={`${friend.username}s profile`}
                         style={{
                           width: "100px",
                           height: "100px",

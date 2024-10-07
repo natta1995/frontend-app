@@ -175,7 +175,7 @@ const Feed = () => {
                             ? `http://localhost:1337${post.profile_image}`
                             : ProfileImg
                         }
-                        alt="Profile Image"
+                        alt={`${post.username}s profile`}
                         style={{
                           width: "100px",
                           height: "100px",
