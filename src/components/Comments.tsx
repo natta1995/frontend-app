@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProfileImg from "../Img/startimg.webp";
 import styled from "styled-components";
-import { faTrashCan, faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashCan,
+  faAngleUp,
+  faAngleDown,
+} from "@fortawesome/free-solid-svg-icons";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +21,6 @@ const CommentContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
 
 type Comment = {
   id: number;
@@ -38,21 +41,23 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
   const [newComment, setNewComment] = useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const navigate = useNavigate();
- 
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch(`http://localhost:1337/feed/${postId}/comments`, {
-          method: "GET",
-          credentials: "include",
-        });
+        const response = await fetch(
+          `http://localhost:1337/feed/${postId}/comments`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
           const transformedData = data.map((comment: Comment) => ({
             ...comment,
-            createdAt: new Date(comment.created_at), 
+            createdAt: new Date(comment.created_at),
           }));
           setComments(transformedData);
         } else {
@@ -66,19 +71,21 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
     fetchComments();
   }, [postId]);
 
-
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:1337/feed/${postId}/comments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ content: newComment }),
-      });
+      const response = await fetch(
+        `http://localhost:1337/feed/${postId}/comments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ content: newComment }),
+        }
+      );
 
       if (response.ok) {
         const createdComment = await response.json();
@@ -92,13 +99,15 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
     }
   };
 
-  
   const handleDeleteComment = async (commentId: number) => {
     try {
-      const response = await fetch(`http://localhost:1337/feed/comments/${commentId}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://localhost:1337/feed/comments/${commentId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
 
       if (response.ok) {
         setComments(comments.filter((comment) => comment.id !== commentId));
@@ -109,7 +118,6 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
       console.error("Error deleting comment:", error);
     }
     console.log("Trying to delete comment with ID:", commentId);
-
   };
 
   const toggleCommentsVisibility = () => {
@@ -118,63 +126,91 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
 
   return (
     <div className="comments-section">
-       <Form onSubmit={handleCommentSubmit}>
-            <textarea
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Skriv en kommentar..."
-              style={{ width: "100%", padding: "10px", marginBottom: "10px", height: "60px" }}
-            />
-            <Button type="submit">Skicka</Button>
-          </Form>
-    <div style={{ display: "flex", justifyContent: "flex-end"}}>
-      {comments.length > 0 ? (
-      <Button onClick={toggleCommentsVisibility} style={{ marginBottom: "10px", marginTop: "10px" }}>
-        {isVisible ? (
-        <>
-      Dölj kommentarer <FontAwesomeIcon icon={faAngleUp} />
-        </>
-  ) : (
-    <>
-    Visa kommentarer <FontAwesomeIcon icon={faAngleDown} />
-    </>
-     )}
-      </Button>
-      ): (
-        <h6>Ingen har kommenterat detta inlägg ännu</h6>
-      )}
-    </div>
-      {isVisible && ( 
+      <Form onSubmit={handleCommentSubmit}>
+        <textarea
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          placeholder="Skriv en kommentar..."
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "10px",
+            height: "60px",
+          }}
+        />
+        <Button type="submit">Skicka</Button>
+      </Form>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        {comments.length > 0 ? (
+          <Button
+            onClick={toggleCommentsVisibility}
+            style={{ marginBottom: "10px", marginTop: "10px" }}
+          >
+            {isVisible ? (
+              <>
+                Dölj kommentarer <FontAwesomeIcon icon={faAngleUp} />
+              </>
+            ) : (
+              <>
+                Visa kommentarer <FontAwesomeIcon icon={faAngleDown} />
+              </>
+            )}
+          </Button>
+        ) : (
+          <h6>Ingen har kommenterat detta inlägg ännu</h6>
+        )}
+      </div>
+      {isVisible && (
         <div>
           {comments.length > 0 ? (
             comments.map((comment) => (
-              <CommentContainer key={comment.id} >
+              <CommentContainer key={comment.id}>
                 <div>
-                <div style={{backgroundColor: "#84c18f", paddingLeft: "10px", paddingRight: "700px", paddingTop: "10px", paddingBottom: "10px", borderRadius: "10px", display:"flex", alignItems: "row"}}onClick={() => navigate(`/profile/${comment.username}`)}>
-                <img
-                        src={
-                          comment.profile_image
-                            ? `http://localhost:1337${comment.profile_image}`
-                            : ProfileImg
-                        }
-                        alt={`${comment.username}s profile`}
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          borderRadius: "50%",
-                          marginRight: "10px",
-                        }}
-                      />
-      
-                  <strong style={{marginTop: "5px"}}>{comment.username}</strong>
+                  <div
+                    style={{
+                      backgroundColor: "#84c18f",
+                      paddingLeft: "10px",
+                      paddingRight: "700px",
+                      paddingTop: "10px",
+                      paddingBottom: "10px",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "row",
+                    }}
+                    onClick={() => navigate(`/profile/${comment.username}`)}
+                  >
+                    <img
+                      src={
+                        comment.profile_image
+                          ? `http://localhost:1337${comment.profile_image}`
+                          : ProfileImg
+                      }
+                      alt={`${comment.username}s profile`}
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        borderRadius: "50%",
+                        marginRight: "10px",
+                      }}
+                    />
+
+                    <strong style={{ marginTop: "5px" }}>
+                      {comment.username}
+                    </strong>
                   </div>
-                  <p style={{marginTop: "10px", marginLeft: "5px"}}>{comment.content}</p>
+                  <p style={{ marginTop: "10px", marginLeft: "5px" }}>
+                    {comment.content}
+                  </p>
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
-                  {new Date(comment.created_at).toLocaleString()}
+                    {new Date(comment.created_at).toLocaleString()}
                   </p>
                 </div>
                 {comment.username === currentUser && (
-                  <Button variant="danger" onClick={() => handleDeleteComment(comment.id)} style={{ marginLeft: "-6%", marginTop: "10%" }}>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDeleteComment(comment.id)}
+                    style={{ marginLeft: "-6%", marginTop: "10%" }}
+                  >
                     <FontAwesomeIcon icon={faTrashCan} />
                   </Button>
                 )}
@@ -183,8 +219,6 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
           ) : (
             <p>Inga kommentarer ännu.</p>
           )}
-
-         
         </div>
       )}
     </div>

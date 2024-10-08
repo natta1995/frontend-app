@@ -1,15 +1,65 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import ProfileImg from "../Img/startimg.webp";
+import BackgroundImg from "../Img/forestimg.jpg";
 import styled from "styled-components";
+import Comments from "../components/Comments";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 
-const ProfileContainer = styled.div`
-  padding: 10%;
-  padding-top: 5%;
+const BackgroundWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const PostContainer = styled.div`
+  padding: 5%;
   border-radius: 10px;
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  background-color:  #f3f4e3;
+  margin-bottom: 5%;
+  background-color: #f3f4e3;
+`;
+
+const BackgroundContainer = styled.div`
+  width: 100%;
+  height: 300px;
+  background-image: url(${BackgroundImg});
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  margin-top: 5%;
+`;
+
+const ProfileImage = styled.img`
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 5px solid white;
+  position: absolute;
+  bottom: -55px;
+  left: 20%;
+  transform: translateX(-70%);
+`;
+
+const ProfileContainer = styled.div`
+  padding: 5%;
+  padding-top: 1%;
+  border-radius: 10px;
+  border: 1px solid #d3efe5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  background-color: #f3f4e3;
+  margin-top: 5px;
+`;
+
+const BoxContainer = styled.div`
+  border-radius: 10px;
+  margin-bottom: 5%;
+  background-color: #f3f4e3;
 `;
 
 type Post = {
@@ -17,10 +67,12 @@ type Post = {
   username: string;
   content: string;
   createdAt: string;
+  profile_image: string;
 };
 
 const UserProfile: React.FC = () => {
   const { username } = useParams();
+  const [currentUser] = useState<string>("");
   const [profile, setProfile] = useState<any>(null);
   const [posts, setPosts] = useState<Post[]>([]);
 
@@ -63,49 +115,100 @@ const UserProfile: React.FC = () => {
   }, [username]);
 
   return (
-    <div>
-      <ProfileContainer style={{ width: "70%", margin: "0 auto", marginTop: "30px", marginBottom: "30px" }}>
-      <img
-         src={profile && profile.profile_image ? `http://localhost:1337${profile.profile_image}` : ProfileImg}
-         alt={`${profile.username}s profile`}
-         style={{ width: "250px", height: "250px", borderRadius: "50%" }}
-      />
-        <h1 style={{ paddingTop: "8%" }}>{profile?.name}</h1>
-        <p>
-          <strong>Användarnamn:</strong> {profile?.username}
-        </p>
-        <p>
-          <strong>Namn:</strong> {profile?.name}
-        </p>
-        <p>
-          <strong>Email:</strong> {profile?.email}
-        </p>
-        <p>
-          <strong>Ålder:</strong> {profile?.age}
-        </p>
-        <p>
-          <strong>Arbetsplats:</strong> {profile?.workplace}
-        </p>
-        <p>
-          <strong>Skola:</strong> {profile?.school}
-        </p>
-        <p>
-          <strong>Bio:</strong> {profile?.bio}
-        </p>
+    <div
+      style={{
+        width: "70%",
+        margin: "0 auto",
+        marginTop: "30px",
+        marginBottom: "30px",
+      }}
+    >
+      <ProfileContainer>
+        <BackgroundWrapper>
+          <BackgroundContainer />
+          <ProfileImage
+            src={
+              profile && profile.profile_image
+                ? `http://localhost:1337${profile.profile_image}`
+                : ProfileImg
+            }
+            alt={`${profile?.username}s profile`}
+            style={{ width: "250px", height: "250px", borderRadius: "50%" }}
+          />
+        </BackgroundWrapper>
+        <div style={{ marginTop: "10%", marginLeft: "5%" }}>
+          <h1>{profile?.name}</h1>
 
-        <h3>Mina vänner:</h3>
-
-        {posts.map((post) => (
-          <div
-            key={post.id}
-            style={{ borderBottom: "1px solid #ccc", padding: "10px 0" }}
-          >
-            <p>
-              <strong>{post.username}</strong> säger:
-            </p>
-            <p>{post.content}</p>
+          <p>
+            <strong>Användarnamn:</strong> {profile?.username}
+          </p>
+          <p>
+            <strong>Namn:</strong> {profile?.name}
+          </p>
+          <p>
+            <strong>Email:</strong> {profile?.email}
+          </p>
+          <p>
+            <strong>Ålder:</strong> {profile?.age}
+          </p>
+          <p>
+            <strong>Arbetsplats:</strong> {profile?.workplace}
+          </p>
+          <p>
+            <strong>Skola:</strong> {profile?.school}
+          </p>
+          <p>
+            <strong>Bio:</strong> {profile?.bio}
+          </p>
+        </div>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <div>
+            <Link to="/my-friends">
+              <Button>
+                {" "}
+                <FontAwesomeIcon icon={faUserGroup} /> Vänner{" "}
+              </Button>
+            </Link>
           </div>
-        ))}
+        </div>
+
+        <div
+          style={{
+            paddingTop: "8%",
+            borderTop: "2px solid #ccc",
+            marginTop: "4%",
+            marginBottom: "0.5%",
+          }}
+        >
+          {posts.map((post) => (
+            <BoxContainer key={post.id}>
+              <PostContainer>
+                <img
+                  src={
+                    post.profile_image
+                      ? `http://localhost:1337${post.profile_image}`
+                      : ProfileImg
+                  }
+                  alt={`${post.username}s profile`}
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    borderRadius: "50%",
+                    marginRight: "10px",
+                  }}
+                />
+                <p>
+                  <strong>{post.username}</strong>
+                </p>
+                <p>{post.content}</p>
+                <p style={{ fontSize: "0.8em", color: "#555" }}>
+                  {new Date(post.createdAt).toLocaleString()}
+                </p>
+                <Comments postId={post.id} currentUser={currentUser} />
+              </PostContainer>
+            </BoxContainer>
+          ))}
+        </div>
       </ProfileContainer>
     </div>
   );
