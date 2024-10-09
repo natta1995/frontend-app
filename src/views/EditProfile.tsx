@@ -10,6 +10,7 @@ const EditProfile: React.FC = () => {
     workplace: "",
     school: "",
     bio: "",
+    profile_image: "",
   });
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const EditProfile: React.FC = () => {
         if (response.ok) {
           const data = await response.json();
           setProfile(data);
+          console.log("mitt state", data);
         } else {
           console.error("Failed to fetch profile");
         }
@@ -57,17 +59,16 @@ const EditProfile: React.FC = () => {
 
     if (profileImage) {
       formData.append("image", profileImage);
+    } else if (profile.profile_image) {
+      formData.append("profile_image", profile.profile_image);
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:1337/users/profile-image",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch("http://localhost:1337/users/profile", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
 
       if (response.ok) {
         navigate("/profile");
@@ -98,7 +99,13 @@ const EditProfile: React.FC = () => {
       >
         <h2 style={{ textAlign: "center" }}>Ändra Profil</h2>
         <Form.Group controlId="formProfileImage">
-          <Form.Label>Profilbild</Form.Label>
+          {/*      {profile.profile_image && (
+        <img
+            src={`http://localhost:1337${profile.profile_image}`}
+            alt="Profile"
+            style={{ width: "200px", height: "200px", borderRadius: "50%", marginBottom: "10px" }}
+        />
+    )} */}
           <Form.Control
             type="file"
             accept="image/*"
