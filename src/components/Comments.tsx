@@ -14,7 +14,7 @@ const CommentContainer = styled.div`
   padding: 2%;
   border-radius: 10px;
   border: 1px solid #d3efe5;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  
   margin-bottom: 2%;
   background-color: #f3f4e3;
   display: flex;
@@ -138,7 +138,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
             height: "60px",
           }}
         />
-        <Button type="submit">Skicka</Button>
+        <Button type="submit">Kommentera</Button>
       </Form>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         {comments.length > 0 ? (
@@ -157,7 +157,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
             )}
           </Button>
         ) : (
-          <h6>Ingen har kommenterat detta inlägg ännu</h6>
+          <h6>Inga kommentarer ännu</h6>
         )}
       </div>
       {isVisible && (
@@ -168,7 +168,6 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
                 <div>
                   <div
                     style={{
-                      backgroundColor: "#84c18f",
                       paddingLeft: "10px",
                       paddingRight: "700px",
                       paddingTop: "10px",
