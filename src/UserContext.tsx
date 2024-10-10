@@ -35,6 +35,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           method: "GET",
           credentials: "include",
         });
+
         if (response.ok) {
           const data = await response.json();
           setCurrentUser(data); // Spara användarinformationen i Context
@@ -46,7 +47,16 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       }
     };
 
-    fetchCurrentUser();
+       // Kontrollera om en session-cookie finns innan API-anropet görs
+       const checkIfUserIsLoggedIn = () => {
+        // kontrollera om en session-cookie finns
+        const hasSession = document.cookie.includes("connect.sid");
+        if (hasSession) {
+          fetchCurrentUser();
+        }
+      };
+
+      checkIfUserIsLoggedIn();
   }, []); // Körs bara när komponenten mountas
 
   return (
