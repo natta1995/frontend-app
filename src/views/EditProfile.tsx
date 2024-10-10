@@ -99,6 +99,7 @@ const EditProfile: React.FC = () => {
       >
         <h2 style={{ textAlign: "center" }}>Ändra Profil</h2>
         <Form.Group controlId="formProfileImage">
+        <Form.Label>Profilbild</Form.Label>
           {/*      {profile.profile_image && (
         <img
             src={`http://localhost:1337${profile.profile_image}`}
