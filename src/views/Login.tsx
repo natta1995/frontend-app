@@ -26,6 +26,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
     if (success) {
       navigate("/feed");
+    }  else {
+      alert('Felaktigt användarnamn eller lösenord'); // Visa felmeddelande om inloggningen misslyckas
     }
   };
 
