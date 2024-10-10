@@ -40,6 +40,8 @@ const Layout: React.FC = () => {
     fetchPendingRequests();
   }, []);
 
+  console.log("Här är det", currentUser)
+
   return (
     <>
       <Navbar bg="light">

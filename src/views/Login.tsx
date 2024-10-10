@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../UserContext"
 
 const LogInContainer = styled.div`
   background-color: #d3efe5;
@@ -16,18 +17,38 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
+  const { setCurrentUser } = useUser();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
 
+  const fetchUserProfile = async () => {
+    try {
+      const response = await fetch("http://localhost:1337/users/profile", {
+        method: "GET",
+        credentials: "include", // Viktigt för att skicka cookies för sessionen
+      });
+      if (response.ok) {
+        return await response.json(); // Returnera användardata
+      } else {
+        console.error("Misslyckades att hämta användarprofil");
+        return null;
+      }
+    } catch (error) {
+      console.error("Fel vid hämtning av användarprofil:", error);
+      return null;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await onLogin(username, password);
+
+    const success = await onLogin(username, password); // Anropa backend för inloggning
 
     if (success) {
-      navigate("/feed");
-    }  else {
-      alert('Felaktigt användarnamn eller lösenord'); // Visa felmeddelande om inloggningen misslyckas
+      const userData = await fetchUserProfile(); // Hämta användarens profil (om du vill direkt)
+      setCurrentUser(userData); // Uppdatera UserProvider med den inloggade användaren
+      navigate("/feed"); // Omdirigera till feed-sidan
     }
   };
 

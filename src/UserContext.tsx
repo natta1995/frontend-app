@@ -29,6 +29,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   // Hämta användarinformation när UserProvider laddas
   useEffect(() => {
+    console.log("Kör den här ens")
     const fetchCurrentUser = async () => {
       try {
         const response = await fetch("http://localhost:1337/users/profile", {
@@ -39,6 +40,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         if (response.ok) {
           const data = await response.json();
           setCurrentUser(data); // Spara användarinformationen i Context
+          console.log("Här är vi nu", data )
         } else {
           console.error("Failed to fetch current user");
         }
@@ -47,16 +49,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       }
     };
 
-       // Kontrollera om en session-cookie finns innan API-anropet görs
-       const checkIfUserIsLoggedIn = () => {
-        // kontrollera om en session-cookie finns
-        const hasSession = document.cookie.includes("connect.sid");
-        if (hasSession) {
-          fetchCurrentUser();
-        }
-      };
-
-      checkIfUserIsLoggedIn();
+      fetchCurrentUser();
   }, []); // Körs bara när komponenten mountas
 
   return (
