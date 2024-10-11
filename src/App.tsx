@@ -11,6 +11,7 @@ import EditProfile from "./views/EditProfile";
 import FindFriends from "./views/findFriends";
 import MyFriends from "./views/MyFriends";
 import { login, register } from "./api/auth";
+import ProtectedRoute from "./ProtectedRoute";
 
 const App: React.FC = () => {
   const handleLogin = async (
@@ -56,13 +57,56 @@ const App: React.FC = () => {
             path="/register"
             element={<Register onRegister={handleRegister} />}
           />
+
           <Route element={<Layout />}>
-            <Route path="/feed" element={<Feed />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/profile/:username" element={<UserProfile />} />
-            <Route path="/edit-profile" element={<EditProfile />} />
-            <Route path="/my-friends" element={<MyFriends />} />
-            <Route path="/find-friends" element={<FindFriends />} />
+            <Route
+              path="/feed"
+              element={
+                <ProtectedRoute>
+                  <Feed />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile/:username"
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-profile"
+              element={
+                <ProtectedRoute>
+                  <EditProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/my-friends"
+              element={
+                <ProtectedRoute>
+                  <MyFriends />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/find-friends"
+              element={
+                <ProtectedRoute>
+                  <FindFriends />
+                </ProtectedRoute>
+              }
+            />
           </Route>
         </Routes>
       </Router>
