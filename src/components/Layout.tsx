@@ -3,6 +3,7 @@ import { useUser } from "../UserContext";
 import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 import LogoImg from "../Img/deer.webp";
+import ProfileImg from "../Img/startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -12,8 +13,6 @@ import {
   faUser,
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
-
-
 
 const Layout: React.FC = () => {
   const { currentUser } = useUser();
@@ -40,13 +39,15 @@ const Layout: React.FC = () => {
     fetchPendingRequests();
   }, []);
 
-  console.log("Här är det", currentUser)
-
   return (
     <>
-      <Navbar bg="light">
+      <Navbar style={{ backgroundColor: "#ccd5ae", height: "60px" }}>
         <Container>
-          <Navbar.Brand href="/feed" className="d-flex align-items-center">
+          <Navbar.Brand
+            href="/feed"
+            className="d-flex align-items-center"
+            style={{ color: "#bc6c25" }}
+          >
             <img
               src={LogoImg}
               alt="Logo"
@@ -56,54 +57,63 @@ const Layout: React.FC = () => {
             />
             DearFriends
           </Navbar.Brand>
-          
-            <Nav className="me-auto">
-              <Nav.Link href="/feed">
-                <FontAwesomeIcon icon={faHouse} />
-              </Nav.Link>
-              <Nav.Link href="/find-friends" style={{ position: "relative" }}>
-                <FontAwesomeIcon icon={faUserGroup} />
-                {pendingRequests > 0 && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "0.2",
-                      right: "5px",
-                      width: "10px",
-                      height: "10px",
-                      backgroundColor: "#e4190f",
-                      borderRadius: "50%",
-                      display: "inline-block",
-                    }}
-                  ></span>
-                )}
-              </Nav.Link>
-              <Nav.Link href="/my-friends">
-                <FontAwesomeIcon icon={faHeart} />
-              </Nav.Link>
-            </Nav>
-            
-            <Dropdown className="ms-auto">
-              <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic">
-                {currentUser && currentUser.name
-                  ? currentUser.name
-                  : "Laddar..."}
-              </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Dropdown.Item href="/profile">
-                  <FontAwesomeIcon icon={faUser} /> Min profil
-                </Dropdown.Item>
-                <Dropdown.Item href="/edit-profile">
-                  <FontAwesomeIcon icon={faGear} /> Inställningar
-                </Dropdown.Item>
-                <Dropdown.Item href="/">
-                  <FontAwesomeIcon icon={faRightFromBracket} /> Logga ut
-                </Dropdown.Item>{" "}
-                {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
-              </Dropdown.Menu>
-            </Dropdown>
-          
+          <Nav className="me-auto">
+            <Nav.Link href="/feed">
+              <FontAwesomeIcon icon={faHouse} />
+            </Nav.Link>
+            <Nav.Link href="/find-friends" style={{ position: "relative" }}>
+              <FontAwesomeIcon icon={faUserGroup} />
+              {pendingRequests > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "0.2",
+                    right: "5px",
+                    width: "10px",
+                    height: "10px",
+                    backgroundColor: "#e4190f",
+                    borderRadius: "50%",
+                    display: "inline-block",
+                  }}
+                ></span>
+              )}
+            </Nav.Link>
+            <Nav.Link href="/my-friends">
+              <FontAwesomeIcon icon={faHeart} />
+            </Nav.Link>
+          </Nav>
+
+          <Dropdown className="ms-auto">
+            <Dropdown.Toggle variant="ghostSecondary" id="dropdown-basic">
+              {currentUser ? (
+                <img
+                  src={
+                    currentUser.profile_image
+                      ? `http://localhost:1337${currentUser.profile_image}`
+                      : ProfileImg
+                  }
+                  alt="Profile"
+                  style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+                />
+              ) : (
+                "Laddar..."
+              )}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu style={{ backgroundColor: "#fefae0" }}>
+              <Dropdown.Item href="/profile">
+                <FontAwesomeIcon icon={faUser} /> {currentUser?.name}
+              </Dropdown.Item>
+              <Dropdown.Item href="/edit-profile">
+                <FontAwesomeIcon icon={faGear} /> Inställningar
+              </Dropdown.Item>
+              <Dropdown.Item href="/">
+                <FontAwesomeIcon icon={faRightFromBracket} /> Logga ut
+              </Dropdown.Item>{" "}
+              {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
+            </Dropdown.Menu>
+          </Dropdown>
         </Container>
       </Navbar>
 
