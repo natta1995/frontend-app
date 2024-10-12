@@ -88,7 +88,7 @@ const EditProfile: React.FC = () => {
           padding: "10%",
           paddingTop: "3%",
           paddingBottom: "3%",
-          backgroundColor: "#f3f4e3",
+          backgroundColor: "#ccd5ae",
           borderRadius: "10px",
           marginTop: "3%",
           marginBottom: "3%",
@@ -108,7 +108,7 @@ const EditProfile: React.FC = () => {
         </Form.Group>
 
         <Form.Group controlId="formName">
-          <Form.Label>Namn</Form.Label>
+          <Form.Label>Namn:</Form.Label>
           <Form.Control
             type="text"
             name="name"
@@ -118,7 +118,7 @@ const EditProfile: React.FC = () => {
         </Form.Group>
 
         <Form.Group controlId="formEmail">
-          <Form.Label>Email</Form.Label>
+          <Form.Label>Email:</Form.Label>
           <Form.Control
             type="email"
             name="email"
@@ -128,7 +128,7 @@ const EditProfile: React.FC = () => {
         </Form.Group>
 
         <Form.Group controlId="formAge">
-          <Form.Label>Ålder</Form.Label>
+          <Form.Label>Ålder:</Form.Label>
           <Form.Control
             type="number"
             name="age"
@@ -138,7 +138,7 @@ const EditProfile: React.FC = () => {
         </Form.Group>
 
         <Form.Group controlId="formWorkplace">
-          <Form.Label>Arbetsplats</Form.Label>
+          <Form.Label>Arbetsplats:</Form.Label>
           <Form.Control
             type="text"
             name="workplace"
@@ -148,7 +148,7 @@ const EditProfile: React.FC = () => {
         </Form.Group>
 
         <Form.Group controlId="formSchool">
-          <Form.Label>Skola</Form.Label>
+          <Form.Label>Skola:</Form.Label>
           <Form.Control
             type="text"
             name="school"
@@ -158,7 +158,7 @@ const EditProfile: React.FC = () => {
         </Form.Group>
 
         <Form.Group controlId="formBio">
-          <Form.Label>Bio</Form.Label>
+          <Form.Label>Bio:</Form.Label>
           <Form.Control
             as="textarea"
             name="bio"
