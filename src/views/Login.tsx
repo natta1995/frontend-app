@@ -1,16 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import LogoImg from "../Img/deer.webp";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../UserContext"
-
-const LogInContainer = styled.div`
-  background-color: #d3efe5;
-  padding: 10%;
-  border-radius: 10px;
-  border: 1px solid #d3efe5;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-`;
+import { useUser } from "../UserContext";
 
 interface LoginProps {
   onLogin: (username: string, password: string) => Promise<boolean>;
@@ -26,10 +18,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     try {
       const response = await fetch("http://localhost:1337/users/profile", {
         method: "GET",
-        credentials: "include", // Viktigt för att skicka cookies för sessionen
+        credentials: "include",
       });
       if (response.ok) {
-        return await response.json(); // Returnera användardata
+        return await response.json();
       } else {
         console.error("Misslyckades att hämta användarprofil");
         return null;
@@ -43,24 +35,41 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const success = await onLogin(username, password); // Anropa backend för inloggning
+    const success = await onLogin(username, password);
 
     if (success) {
-      const userData = await fetchUserProfile(); // Hämta användarens profil (om du vill direkt)
-      setCurrentUser(userData); // Uppdatera UserProvider med den inloggade användaren
-      navigate("/feed"); // Omdirigera till feed-sidan
+      const userData = await fetchUserProfile();
+      setCurrentUser(userData);
+      navigate("/feed");
     }
   };
 
   return (
     <Container className="mt-5">
-      <Row className="justify-content-md-center">
+      <Row className="align-items-center justify-content-center">
+        <Col md={8} className="text-center">
+          <img
+            src={LogoImg}
+            alt="LogoImage"
+            style={{ width: "40%", height: "auto" }}
+          />
+          <h2 style={{ color: "#bc6c25" }}>DearFriends</h2>
+          <p style={{ color: "#bc6c25" }}>Håll kontakten med dina vänner</p>
+        </Col>
+
         <Col md={4}>
-          <LogInContainer>
-            <h2 className="text-center">Logga in</h2>
+          <div
+            className="p-4 rounded shadow"
+            style={{ backgroundColor: "#ccd5ae" }}
+          >
+            <h2 className="text-center" style={{ color: "#bc6c25" }}>
+              Logga in
+            </h2>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formUsername" className="mb-3">
-                <Form.Label>Användarnamn</Form.Label>
+                <Form.Label style={{ color: "#bc6c25" }}>
+                  Användarnamn:
+                </Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Ange användarnamn"
@@ -71,7 +80,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               </Form.Group>
 
               <Form.Group controlId="formPassword" className="mb-3">
-                <Form.Label>Lösenord</Form.Label>
+                <Form.Label style={{ color: "#bc6c25" }}>Lösenord:</Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Ange lösenord"
@@ -81,15 +90,26 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit" className="w-100">
+              <Button
+                variant="primary"
+                type="submit"
+                className="w-100"
+                style={{
+                  backgroundColor: "#bc6c25",
+                  borderColor: "#bc6c25",
+                  marginTop: "4%",
+                }}
+              >
                 Logga in
               </Button>
 
               <div className="mt-3 text-center">
-                <Link to="/register">Har du inget konto? Registrera här</Link>
+                <Link to="/register" style={{ color: "#bc6c25" }}>
+                  Har du inget konto? Registrera här.
+                </Link>
               </div>
             </Form>
-          </LogInContainer>
+          </div>
         </Col>
       </Row>
     </Container>
