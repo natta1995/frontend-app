@@ -6,6 +6,7 @@ import ProfileImg from "../Img/startimg.webp";
 import BackgroundImg from "../Img/forestimg.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Comments from "../components/Comments";
+import { useUser } from "../UserContext";
 import {
   faGears,
   faTrashCan,
@@ -74,32 +75,11 @@ type Post = {
 };
 
 const Profile: React.FC = () => {
-  const [profile, setProfile] = useState<any>(null);
-  const [currentUser, setCurrentUser] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+  const { currentUser } = useUser();
   const [posts, setPosts] = useState<Post[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetch("http://localhost:1337/users/profile", {
-          method: "GET",
-          credentials: "include",
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setProfile(data);
-        } else {
-          setError("Failed to fetch profile");
-        }
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-        setError("Error fetching profile");
-      }
-    };
-
     const fetchPosts = async () => {
       try {
         const response = await fetch("http://localhost:1337/feed", {
@@ -113,35 +93,15 @@ const Profile: React.FC = () => {
         } else {
           console.error("Failed to fetch posts");
         }
-
-        const userResponse = await fetch(
-          "http://localhost:1337/users/profile",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-
-        if (userResponse.ok) {
-          const userData = await userResponse.json();
-          setCurrentUser(userData.username);
-        } else {
-          console.error("Failed to fetch current user");
-        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchPosts();
-    fetchProfile();
   }, []);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!profile) {
+  if (!currentUser) {
     return <div>Loading...</div>;
   }
 
@@ -177,15 +137,15 @@ const Profile: React.FC = () => {
 
           <ProfileImage
             src={
-              profile.profile_image
-                ? `http://localhost:1337${profile.profile_image}`
+              currentUser.profile_image
+                ? `http://localhost:1337${currentUser.profile_image}`
                 : ProfileImg
             }
             alt="Profile Image"
           />
         </BackgroundWrapper>
         <div style={{ marginTop: "10%", marginLeft: "5%" }}>
-          <h1>{profile.name}</h1>
+          <h1>{currentUser.name}</h1>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <Button
               variant="secondary"
@@ -195,22 +155,22 @@ const Profile: React.FC = () => {
             </Button>
           </div>
           <p>
-            <strong>Användarnamn:</strong> {profile.username}
+            <strong>Användarnamn:</strong> {currentUser.username}
           </p>
           <p>
-            <strong>Email:</strong> {profile.email}
+            <strong>Email:</strong> {currentUser.email}
           </p>
           <p>
-            <strong>Ålder:</strong> {profile.age}
+            <strong>Ålder:</strong> {currentUser.age}
           </p>
           <p>
-            <strong>Arbetsplats:</strong> {profile.workplace}
+            <strong>Arbetsplats:</strong> {currentUser.workplace}
           </p>
           <p>
-            <strong>Skola:</strong> {profile.school}
+            <strong>Skola:</strong> {currentUser.school}
           </p>
           <p>
-            <strong>Bio:</strong> {profile.bio}
+            <strong>Bio:</strong> {currentUser.bio}
           </p>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <div>
@@ -233,7 +193,7 @@ const Profile: React.FC = () => {
         >
           {posts.length > 0 ? (
             posts
-              .filter((post) => post.username === currentUser)
+              .filter((post) => post.username === currentUser.username)
               .map((post) => (
                 <BoxContainer key={post.id}>
                   <PostContainer>
@@ -272,7 +232,10 @@ const Profile: React.FC = () => {
                       </div>
                     </div>
 
-                    <Comments postId={post.id} currentUser={currentUser} />
+                    <Comments
+                      postId={post.id}
+                      currentUser={currentUser.username}
+                    />
                   </PostContainer>
                 </BoxContainer>
               ))
