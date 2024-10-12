@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../UserContext";
 
 const CommentContainer = styled.div`
   padding: 2%;
@@ -33,10 +34,11 @@ type Comment = {
 
 type CommentProps = {
   postId: number;
-  currentUser: string;
+  
 };
 
-const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
+const Comments: React.FC<CommentProps> = ({ postId }) => {
+  const { currentUser } = useUser();
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -204,7 +206,7 @@ const Comments: React.FC<CommentProps> = ({ postId, currentUser }) => {
                     {new Date(comment.created_at).toLocaleString()}
                   </p>
                 </div>
-                {comment.username === currentUser && (
+                {comment.username === currentUser?.username && (
                   <Button
                     variant="danger"
                     onClick={() => handleDeleteComment(comment.id)}

@@ -72,7 +72,6 @@ type Post = {
 
 const UserProfile: React.FC = () => {
   const { username } = useParams();
-  const [currentUser] = useState<string>("");
   const [profile, setProfile] = useState<any>(null);
   const [posts, setPosts] = useState<Post[]>([]);
 
@@ -204,7 +203,7 @@ const UserProfile: React.FC = () => {
                 <p style={{ fontSize: "0.8em", color: "#555" }}>
                   {new Date(post.createdAt).toLocaleString()}
                 </p>
-                <Comments postId={post.id} currentUser={currentUser} />
+                <Comments postId={post.id} />
               </PostContainer>
             </BoxContainer>
           ))}

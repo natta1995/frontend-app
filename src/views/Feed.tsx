@@ -6,6 +6,7 @@ import ProfileImg from "../Img/startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faLeaf } from "@fortawesome/free-solid-svg-icons";
 import Comments from "../components/Comments";
+import { useUser } from "../UserContext";
 
 const BoxContainer = styled.div`
   padding: 5%;
@@ -34,9 +35,10 @@ type Post = {
 };
 
 const Feed = () => {
+  const { currentUser } = useUser();
   const [posts, setPosts] = useState<Post[]>([]);
   const [newPost, setNewPost] = useState<string>("");
-  const [currentUser, setCurrentUser] = useState<string>("");
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,21 +54,6 @@ const Feed = () => {
           setPosts(data);
         } else {
           console.error("Failed to fetch posts");
-        }
-
-        const userResponse = await fetch(
-          "http://localhost:1337/users/profile",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-
-        if (userResponse.ok) {
-          const userData = await userResponse.json();
-          setCurrentUser(userData.username);
-        } else {
-          console.error("Failed to fetch current user");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -91,7 +78,6 @@ const Feed = () => {
 
       if (response.ok) {
         const createdPost: Post = await response.json();
-        console.log("API Response:", createdPost);
         setPosts([createdPost, ...posts]);
         setNewPost("");
       } else {
@@ -126,7 +112,7 @@ const Feed = () => {
       <InputContainer>
         <Form onSubmit={handlePostSubmit}>
           <h1 style={{ textAlign: "center", paddingBottom: "15px" }}>
-            Välkommen tillbaka {currentUser} ! <FontAwesomeIcon icon={faLeaf} />
+            Välkommen tillbaka {currentUser?.username} ! <FontAwesomeIcon icon={faLeaf} />
           </h1>
           <h6>Vad vill du dela med dig av idag?</h6>
           <textarea
@@ -191,7 +177,7 @@ const Feed = () => {
                     {new Date(post.createdAt).toLocaleString()}
                   </p>
                 </div>
-                {post.username === currentUser && (
+                {post.username === currentUser?.username && (
                   <Button
                     onClick={() => handleDelete(post.id)}
                     variant="danger"
@@ -200,7 +186,7 @@ const Feed = () => {
                   </Button>
                 )}
               </div>
-              <Comments postId={post.id} currentUser={currentUser} />
+            <Comments postId={post.id} />
             </BoxContainer>
           ))
         ) : (

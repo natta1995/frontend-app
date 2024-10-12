@@ -234,7 +234,6 @@ const Profile: React.FC = () => {
 
                     <Comments
                       postId={post.id}
-                      currentUser={currentUser.username}
                     />
                   </PostContainer>
                 </BoxContainer>
