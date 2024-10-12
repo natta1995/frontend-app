@@ -1,41 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../UserContext";
 
 const EditProfile: React.FC = () => {
+  const { currentUser, setCurrentUser } = useUser();
   const [profile, setProfile] = useState({
-    name: "",
-    email: "",
-    age: "",
-    workplace: "",
-    school: "",
-    bio: "",
-    profile_image: "",
+    name: currentUser?.name || "",
+    email: currentUser?.email || "",
+    age: currentUser?.age || "",
+    workplace: currentUser?.workplace || "",
+    school: currentUser?.school || "",
+    bio: currentUser?.bio || "",
+    profile_image: currentUser?.profile_image || "",
   });
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetch("http://localhost:1337/users/profile", {
-          method: "GET",
-          credentials: "include",
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setProfile(data);
-          console.log("mitt state", data);
-        } else {
-          console.error("Failed to fetch profile");
-        }
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      }
-    };
-
-    fetchProfile();
-  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -52,7 +32,7 @@ const EditProfile: React.FC = () => {
     const formData = new FormData();
     formData.append("name", profile.name);
     formData.append("email", profile.email);
-    formData.append("age", profile.age);
+    formData.append("age", String(profile.age));
     formData.append("workplace", profile.workplace);
     formData.append("school", profile.school);
     formData.append("bio", profile.bio);
@@ -71,9 +51,26 @@ const EditProfile: React.FC = () => {
       });
 
       if (response.ok) {
-        navigate("/profile");
+        const responseText = await response.text();
+        console.log("Serverns svar:", responseText);
+
+        const updatedProfileResponse = await fetch(
+          "http://localhost:1337/users/profile",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
+        if (updatedProfileResponse.ok) {
+          const updatedUser = await updatedProfileResponse.json();
+          console.log("Uppdaterad användare:", updatedUser);
+          setCurrentUser(updatedUser);
+          navigate("/profile");
+          console.error("Failed to fetch updated profile");
+        }
       } else {
-        console.error("Failed to update profile");
+        console.error("Failed to update profile, status:", response.status);
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -99,14 +96,7 @@ const EditProfile: React.FC = () => {
       >
         <h2 style={{ textAlign: "center" }}>Ändra Profil</h2>
         <Form.Group controlId="formProfileImage">
-        <Form.Label>Profilbild</Form.Label>
-          {/*      {profile.profile_image && (
-        <img
-            src={`http://localhost:1337${profile.profile_image}`}
-            alt="Profile"
-            style={{ width: "200px", height: "200px", borderRadius: "50%", marginBottom: "10px" }}
-        />
-    )} */}
+          <Form.Label>Profilbild</Form.Label>
           <Form.Control
             type="file"
             accept="image/*"
