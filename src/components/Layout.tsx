@@ -121,7 +121,7 @@ const Layout: React.FC = () => {
         <Outlet />
       </div>
 
-      <footer className="text-center py-3 bg-light">
+      <footer className="text-center py-3" style={{backgroundColor: "#faedcd"}}>
         <Container>
           <p>© 2024 DearFriends. All rights reserved.</p>
         </Container>

@@ -14,7 +14,7 @@ const BoxContainer = styled.div`
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: 5%;
-  background-color: #f3f4e3;
+  background-color: #faedcd;
 `;
 
 const InputContainer = styled.div`
@@ -23,7 +23,7 @@ const InputContainer = styled.div`
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: 5%;
-  background-color: #f3f4e3;
+  background-color: #faedcd;
 `;
 
 type Post = {
