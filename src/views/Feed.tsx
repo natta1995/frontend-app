@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faLeaf } from "@fortawesome/free-solid-svg-icons";
 import Comments from "../components/Comments";
 import { useUser } from "../UserContext";
+import FriendSuggestions from "../components/MyFriendSuggestions"
 
 const BoxContainer = styled.div`
   padding: 5%;
@@ -20,7 +21,7 @@ const InputContainer = styled.div`
   padding: 5%;
   border-radius: 10px;
   border: 1px solid #d4a373;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
   background-color: #faedcd;
 `;
 
@@ -149,6 +150,9 @@ const Feed = () => {
           </div>
         </Form>
       </InputContainer>
+      <div>
+        <FriendSuggestions />
+      </div>
 
       <div style={{ marginTop: "20px" }}>
         {posts.length > 0 ? (
