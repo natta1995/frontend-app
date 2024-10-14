@@ -12,6 +12,7 @@ const BoxContainer = styled.div`
   margin-bottom: 2%;
   background-color: #faedcd;
   margin-right: 15px;
+  width: 100%;
 `;
 
 const FriendSuggestions = () => {
