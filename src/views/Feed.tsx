@@ -11,8 +11,7 @@ import { useUser } from "../UserContext";
 const BoxContainer = styled.div`
   padding: 5%;
   border-radius: 10px;
-  border: 1px solid #d3efe5;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  border: 1px solid #d4a373;
   margin-bottom: 5%;
   background-color: #faedcd;
 `;
@@ -20,8 +19,7 @@ const BoxContainer = styled.div`
 const InputContainer = styled.div`
   padding: 5%;
   border-radius: 10px;
-  border: 1px solid #d3efe5;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  border: 1px solid #d4a373;
   margin-bottom: 5%;
   background-color: #faedcd;
 `;
@@ -112,24 +110,39 @@ const Feed = () => {
       <InputContainer>
         <Form onSubmit={handlePostSubmit}>
           <h1 style={{ textAlign: "center", paddingBottom: "15px" }}>
-            Välkommen tillbaka {currentUser?.username} ! <FontAwesomeIcon icon={faLeaf} />
+            Välkommen tillbaka {currentUser?.username} !
           </h1>
-          <h6>Vad vill du dela med dig av idag?</h6>
+        <div style={{ display: "flex", justifyContent: "column"}}>
+          {currentUser ? (
+                <img
+                  src={
+                    currentUser.profile_image
+                      ? `http://localhost:1337${currentUser.profile_image}`
+                      : ProfileImg
+                  }
+                  alt="Profile"
+                  style={{ width: "70px", height: "70px", borderRadius: "50%", marginRight: "10px" }}
+                />
+              ) : (
+                "Laddar..."
+              )}
           <textarea
             value={newPost}
             onChange={(e) => setNewPost(e.target.value)}
-            placeholder="Vad vill du dela?"
+            placeholder="Vad vill du dela idag?"
             style={{
               width: "100%",
               padding: "10px",
               marginBottom: "10px",
-              height: "100px",
+              height: "50px",
+              marginTop: "10px"
             }}
           />
+          </div>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button
               type="submit"
-              style={{ padding: "10px 20px", width: "70%" }}
+              style={{ padding: "10px 20px", width: "30%", backgroundColor: "#bc6c25", borderColor: "#bc6c25" }}
             >
               Publicera Inlägg
             </Button>
