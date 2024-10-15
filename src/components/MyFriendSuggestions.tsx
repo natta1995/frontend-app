@@ -127,6 +127,7 @@ const FriendSuggestions = () => {
                 padding: "1%",
                 alignItems: "center",
                 backgroundColor: "#fefae0",
+                cursor: "pointer"
               }}
               onClick={() => navigate(`/profile/${user.username}`)}
             >
