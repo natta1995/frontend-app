@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import ProfileImg from "../Img/startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card } from "react-bootstrap";
-import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons"; 
+import { useNavigate } from "react-router-dom";
 
 const BoxContainer = styled.div`
   padding: 1%;
@@ -25,6 +26,8 @@ const FriendSuggestions = () => {
   const [suggestedUsers, setSuggestedUsers] = useState<any[]>([]);
   const [sentRequests, setSentRequests] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -125,6 +128,7 @@ const FriendSuggestions = () => {
                 alignItems: "center",
                 backgroundColor: "#fefae0",
               }}
+              onClick={() => navigate(`/profile/${user.username}`)}
             >
               <img
                 src={
