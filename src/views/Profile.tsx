@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import ProfileImg from "../Img/startimg.webp";
 import BackgroundImg from "../Img/forestimg.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Comments from "../components/Comments";
 import { useUser } from "../UserContext";
-import {
-  faGears,
-  faTrashCan,
-  faUserGroup,
-} from "@fortawesome/free-solid-svg-icons";
+import MyFriends from "../components/MyFriends";
+import { faGears, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const BackgroundWrapper = styled.div`
   position: relative;
@@ -174,12 +171,7 @@ const Profile: React.FC = () => {
           </p>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <div>
-              <Link to="/my-friends">
-                <Button>
-                  {" "}
-                  <FontAwesomeIcon icon={faUserGroup} /> Vänner{" "}
-                </Button>
-              </Link>
+              <MyFriends />
             </div>
           </div>
         </div>
@@ -232,9 +224,7 @@ const Profile: React.FC = () => {
                       </div>
                     </div>
 
-                    <Comments
-                      postId={post.id}
-                    />
+                    <Comments postId={post.id} />
                   </PostContainer>
                 </BoxContainer>
               ))
