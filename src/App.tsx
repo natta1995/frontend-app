@@ -8,7 +8,7 @@ import Profile from "./views/Profile";
 import UserProfile from "./views/UserProfile";
 import Layout from "./components/Layout";
 import EditProfile from "./views/EditProfile";
-import FindFriends from "./views/findFriends";
+import FindNewFriends from "./views/FindNewFriends";
 import { login, register } from "./api/auth";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -94,7 +94,7 @@ const App: React.FC = () => {
               path="/find-friends"
               element={
                 <ProtectedRoute>
-                  <FindFriends />
+                  <FindNewFriends />
                 </ProtectedRoute>
               }
             />

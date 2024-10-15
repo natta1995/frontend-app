@@ -20,7 +20,7 @@ const FriendContainer = styled.div`
 `;
 
 
-const Friends: React.FC = () => {
+const FindNewFriends: React.FC = () => {
   const [users, setUsers] = useState<any[]>([]);
   const { currentUser } = useUser();
   const [friends] = useState<any[]>([]);
@@ -230,4 +230,4 @@ const Friends: React.FC = () => {
   );
 };
 
-export default Friends;
+export default FindNewFriends;
