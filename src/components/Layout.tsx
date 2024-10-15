@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useUser } from "../UserContext";
 import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LogoImg from "../Img/deer.webp";
 import ProfileImg from "../Img/startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,8 +16,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Layout: React.FC = () => {
-  const { currentUser } = useUser();
+  const { currentUser, setCurrentUser } = useUser();
   const [pendingRequests, setPendingRequests] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPendingRequests = async () => {
@@ -38,6 +40,25 @@ const Layout: React.FC = () => {
 
     fetchPendingRequests();
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:1337/users/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setCurrentUser(null); 
+        localStorage.clear(); 
+        navigate("/");
+      } else {
+        console.error("Failed to log out");
+      }
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <>
@@ -108,10 +129,9 @@ const Layout: React.FC = () => {
               <Dropdown.Item href="/edit-profile">
                 <FontAwesomeIcon icon={faGear} /> Inställningar
               </Dropdown.Item>
-              <Dropdown.Item href="/">
+              <Dropdown.Item onClick={handleLogout}>
                 <FontAwesomeIcon icon={faRightFromBracket} /> Logga ut
               </Dropdown.Item>{" "}
-              {/*LÄGG TILL RIKTIG FUNKTIONALITET - AVSLUTA SEKTION*/}
             </Dropdown.Menu>
           </Dropdown>
         </Container>
