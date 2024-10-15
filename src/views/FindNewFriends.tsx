@@ -3,6 +3,8 @@ import { Button } from "react-bootstrap";
 import { useUser } from "../UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProfileImg from "../Img/startimg.webp";
+import MyFriendSuggestions from "../components/MyFriendSuggestions";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   faUserPlus,
@@ -14,9 +16,8 @@ const FriendContainer = styled.div`
   width: 50%;
   padding: 5%;
   border-radius: 10px;
-  border: 1px solid #d3efe5;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  background-color: #f3f4e3;
+  border: 1px solid #d4a373;
+  background-color: #faedcd;
 `;
 
 
@@ -27,6 +28,7 @@ const FindNewFriends: React.FC = () => {
   const [receivedRequests, setReceivedRequests] = useState<any[]>([]);
   const [sentRequests, setSentRequests] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -138,14 +140,17 @@ const FindNewFriends: React.FC = () => {
         marginBottom: "4%",
       }}
     >
+     
+      <MyFriendSuggestions />
       <div style={{ display: "flex", flexDirection: "row"}}>  
         <FriendContainer >
-          <h2>Hitta nya vänner !</h2>
+        <div style={{ height: "800px", overflowY: "auto", padding: "1px" }}>
           <ul>
             {filteredUsers.map((user) => (
               <li
-                style={{ marginBottom: "5%", listStyle: "none" }}
+                style={{ marginBottom: "5%", listStyle: "none", cursor: "pointer", backgroundColor: "#fefae0", padding: "10px" }}
                 key={user.id}
+                onClick={() => navigate(`/profile/${user.username}`)}
               >
                  <img
                         src={
@@ -177,9 +182,11 @@ const FindNewFriends: React.FC = () => {
               </li>
             ))}
           </ul>
+          </div>
         </FriendContainer>
         <FriendContainer >
-          <h2>Mottagna Vänförfrågningar</h2>
+          <h4>Vänförfrågningar</h4>
+         
           <ul>
             {receivedRequests.length > 0 ? (
               receivedRequests.map((request) => (
@@ -224,6 +231,7 @@ const FindNewFriends: React.FC = () => {
               </li>
             )}
           </ul>
+          
           </FriendContainer>
       </div>
     </div>
