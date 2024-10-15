@@ -89,9 +89,11 @@ const FriendSuggestions = () => {
   };
 
   useEffect(() => {
-    if (friends.length > 0 && users.length > 0) {
+    if (currentUser && friends.length > 0 && users.length > 0) {
       const friendIds = friends.map((friend) => friend.id);
-      const nonFriends = users.filter((user) => !friendIds.includes(user.id));
+      const nonFriends = users.filter(
+        (user) => !friendIds.includes(user.id) && user.id !== currentUser.id
+      );
 
       const randomUsers = nonFriends
         .sort(() => 0.5 - Math.random())
@@ -99,7 +101,7 @@ const FriendSuggestions = () => {
 
       setSuggestedUsers(randomUsers);
     }
-  }, [friends, users]);
+  }, [friends, users, currentUser]);
 
   return (
     <BoxContainer>
