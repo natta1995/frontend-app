@@ -12,7 +12,7 @@ import {
   faGear,
   faRightFromBracket,
   faUser,
-  faHeart,
+  faMessage,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Layout: React.FC = () => {
@@ -101,7 +101,7 @@ const Layout: React.FC = () => {
               )}
             </Nav.Link>
             <Nav.Link href="/feed">
-              <FontAwesomeIcon icon={faHeart} />
+            <FontAwesomeIcon icon={faMessage} />
             </Nav.Link>
           </Nav>
 
