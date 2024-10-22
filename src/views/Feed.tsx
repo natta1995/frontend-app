@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import ProfileImg from "../Img/startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan, faLeaf } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faLeaf, faL } from "@fortawesome/free-solid-svg-icons";
 import Comments from "../components/Comments";
 import { useUser } from "../UserContext";
 import FriendSuggestions from "../components/MyFriendSuggestions"
@@ -110,8 +110,8 @@ const Feed = () => {
     >
       <InputContainer>
         <Form onSubmit={handlePostSubmit}>
-          <h1 style={{ textAlign: "center", paddingBottom: "15px" }}>
-            Välkommen tillbaka {currentUser?.username} !
+          <h1 style={{ textAlign: "center", paddingBottom: "15px", color: "#bc6c25" }}>
+            Välkommen tillbaka {currentUser?.username} ! <FontAwesomeIcon icon={faLeaf} />
           </h1>
         <div style={{ display: "flex", justifyContent: "column"}}>
           {currentUser ? (
