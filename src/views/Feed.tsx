@@ -12,7 +12,7 @@ import FriendSuggestions from "../components/MyFriendSuggestions"
 const BoxContainer = styled.div`
   padding: 5%;
   border-radius: 10px;
-  border: 1px solid #d4a373;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
   margin-bottom: 5%;
   background-color: #faedcd;
 `;
@@ -20,7 +20,7 @@ const BoxContainer = styled.div`
 const InputContainer = styled.div`
   padding: 5%;
   border-radius: 10px;
-  border: 1px solid #d4a373;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
   margin-bottom: 2%;
   background-color: #faedcd;
 `;

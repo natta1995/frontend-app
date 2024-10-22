@@ -11,7 +11,7 @@ const BoxContainer = styled.div`
   padding: 1%;
   paddingleft: -6%;
   border-radius: 10px;
-  border: 1px solid #d4a373;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
   margin-bottom: 2%;
   background-color: #faedcd;
   margin-right: 15px;

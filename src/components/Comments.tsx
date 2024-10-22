@@ -140,13 +140,15 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
             height: "60px",
           }}
         />
-        <Button type="submit">Kommentera</Button>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button style={{backgroundColor: "#bc6c25", borderColor: "#bc6c25", }} type="submit">Kommentera</Button>
+        </div>
       </Form>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         {comments.length > 0 ? (
           <Button
             onClick={toggleCommentsVisibility}
-            style={{ marginBottom: "10px", marginTop: "10px" }}
+            style={{ marginBottom: "10px", marginTop: "10px", backgroundColor: "#faedcd", color: "black", borderColor: "#faedcd"}}
           >
             {isVisible ? (
               <>
