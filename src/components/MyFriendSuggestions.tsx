@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import ProfileImg from "../Img/startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card } from "react-bootstrap";
-import { faUserPlus } from "@fortawesome/free-solid-svg-icons"; 
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 const BoxContainer = styled.div`
@@ -27,7 +27,6 @@ const FriendSuggestions = () => {
   const [sentRequests, setSentRequests] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -99,8 +98,8 @@ const FriendSuggestions = () => {
       );
 
       const randomUsers = nonFriends
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 5);
+        .sort(() => 0.4 - Math.random())
+        .slice(0, 4);
 
       setSuggestedUsers(randomUsers);
     }
@@ -124,10 +123,21 @@ const FriendSuggestions = () => {
               key={user.id}
               style={{
                 listStyle: "none",
-                padding: "1%",
+                padding: "2%",
                 alignItems: "center",
                 backgroundColor: "#fefae0",
-                cursor: "pointer"
+                cursor: "pointer",
+                margin: "10px",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                transition: "transform 0.2s",
+                width: "180px",
+                borderRadius: "10px",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.05)"; // Zooma in kortet lite vid hover
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)"; // Återställ vid hover-out
               }}
               onClick={() => navigate(`/profile/${user.username}`)}
             >
@@ -141,6 +151,8 @@ const FriendSuggestions = () => {
                 style={{
                   width: "100px",
                   height: "100px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
                 }}
               />
               <div style={{ textAlign: "center" }}>
@@ -152,7 +164,10 @@ const FriendSuggestions = () => {
                     </span>
                   ) : (
                     <Button
-                      onClick={() => sendFriendRequest(user.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        sendFriendRequest(user.id);
+                      }}
                       style={{ marginLeft: "10px" }}
                     >
                       <FontAwesomeIcon icon={faUserPlus} />
