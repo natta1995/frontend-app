@@ -143,7 +143,7 @@ const Feed = () => {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button
               type="submit"
-              style={{ padding: "10px 20px", width: "30%", backgroundColor: "#bc6c25", borderColor: "#bc6c25" }}
+              style={{ padding: "10px 20px", width: "30%", backgroundColor: "#bc6c25", borderColor: "#bc6c25", marginTop: "10px"}}
             >
               Publicera Inlägg
             </Button>
