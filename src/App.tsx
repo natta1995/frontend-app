@@ -16,19 +16,19 @@ const App: React.FC = () => {
   const handleLogin = async (
     username: string,
     password: string
-  ): Promise<boolean> => {
-    try {
-      const result = await login(username, password);
+  ): Promise<{ success: boolean; message: string }> => {
+    const result = await login(username, password);
 
-      if (result.success) {
-        return true;
-      } else {
-        alert(result.message);
-        return false;
-      }
-    } catch (error) {
-      console.error("An unexpected error occurred:", error);
-      return false;
+    if (result.success) {
+      return {
+        success: true,
+        message: result.message,
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message,
+      };
     }
   };
 

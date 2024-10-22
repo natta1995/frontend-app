@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import LogoImg from "../Img/deer.webp";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
 
 interface LoginProps {
-  onLogin: (username: string, password: string) => Promise<boolean>;
+  onLogin: (
+    username: string,
+    password: string
+  ) => Promise<{ success: boolean; message: string }>;
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const { setCurrentUser } = useUser();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const fetchUserProfile = async () => {
@@ -35,12 +39,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const success = await onLogin(username, password);
+    const { success, message } = await onLogin(username, password);
 
     if (success) {
       const userData = await fetchUserProfile();
       setCurrentUser(userData);
       navigate("/feed");
+    } else {
+      setErrorMessage(message); // Uppdatera felmeddelandet
     }
   };
 
@@ -65,6 +71,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <h2 className="text-center" style={{ color: "#bc6c25" }}>
               Logga in
             </h2>
+            {errorMessage && (
+              <Alert variant="danger" className="text-center">
+                Felaktigt användarnamn eller lösenord.
+              </Alert>
+            )}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formUsername" className="mb-3">
                 <Form.Label style={{ color: "#bc6c25" }}>
