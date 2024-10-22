@@ -12,15 +12,13 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
 
 const CommentContainer = styled.div`
-  padding: 2%;
-  border-radius: 10px;
-  border: 1px solid #d3efe5;
-  
-  margin-bottom: 2%;
-  background-color: #f3f4e3;
+  padding: 1%;
+  border-top: 2px solid #ccc;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #fefae0;
 `;
 
 type Comment = {
@@ -34,7 +32,6 @@ type Comment = {
 
 type CommentProps = {
   postId: number;
-  
 };
 
 const Comments: React.FC<CommentProps> = ({ postId }) => {
@@ -141,14 +138,25 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
           }}
         />
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button style={{backgroundColor: "#bc6c25", borderColor: "#bc6c25", }} type="submit">Kommentera</Button>
+          <Button
+            style={{ backgroundColor: "#bc6c25", borderColor: "#bc6c25" }}
+            type="submit"
+          >
+            Kommentera
+          </Button>
         </div>
       </Form>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         {comments.length > 0 ? (
           <Button
             onClick={toggleCommentsVisibility}
-            style={{ marginBottom: "10px", marginTop: "10px", backgroundColor: "#faedcd", color: "black", borderColor: "#faedcd"}}
+            style={{
+              marginBottom: "10px",
+              marginTop: "10px",
+              backgroundColor: "#faedcd",
+              color: "black",
+              borderColor: "#faedcd",
+            }}
           >
             {isVisible ? (
               <>
@@ -161,7 +169,7 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
             )}
           </Button>
         ) : (
-          <h6>Inga kommentarer ännu</h6>
+          ""
         )}
       </div>
       {isVisible && (
@@ -173,10 +181,7 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
                   <div
                     style={{
                       paddingLeft: "10px",
-                      paddingRight: "700px",
-                      paddingTop: "10px",
-                      paddingBottom: "10px",
-                      borderRadius: "10px",
+
                       display: "flex",
                       alignItems: "row",
                     }}
@@ -200,23 +205,26 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
                     <strong style={{ marginTop: "5px" }}>
                       {comment.username}
                     </strong>
+
+                    <p style={{ marginTop: "5px", marginLeft: "15px" }}>
+                      {comment.content}
+                    </p>
                   </div>
-                  <p style={{ marginTop: "10px", marginLeft: "5px" }}>
-                    {comment.content}
-                  </p>
+                </div>
+                {/*  {comment.username === currentUser?.username && (
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDeleteComment(comment.id)}
+                    
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} />
+                  </Button>
+                )} */}
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
                     {new Date(comment.created_at).toLocaleString()}
                   </p>
                 </div>
-                {comment.username === currentUser?.username && (
-                  <Button
-                    variant="danger"
-                    onClick={() => handleDeleteComment(comment.id)}
-                    style={{ marginLeft: "-6%", marginTop: "10%" }}
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </Button>
-                )}
               </CommentContainer>
             ))
           ) : (
