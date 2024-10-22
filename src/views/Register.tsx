@@ -9,6 +9,8 @@ const RegisterContainer = styled.div`
   border-radius: 10px;
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  background-color: #ccd5ae;
+  color: #bc6c25;
 `;
 
 interface RegisterProps {
@@ -39,11 +41,12 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
     <Container className="mt-5">
       <Row className="justify-content-md-center">
         <Col md={4}>
+
           <RegisterContainer>
-            <h2 className="text-center">Registrera dig</h2>
+            <h2 className="text-center">Skapa nytt konto</h2>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formName" className="mb-3">
-                <Form.Label>Namn</Form.Label>
+                <Form.Label>Namn*</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Ange ditt namn"
@@ -54,7 +57,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
               </Form.Group>
 
               <Form.Group controlId="formUsername" className="mb-3">
-                <Form.Label>Användarnamn</Form.Label>
+                <Form.Label>Användarnamn*</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Ange användarnamn"
@@ -65,7 +68,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
               </Form.Group>
 
               <Form.Group controlId="formEmail" className="mb-3">
-                <Form.Label>Email</Form.Label>
+                <Form.Label>Email*</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Ange din email"
@@ -76,7 +79,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
               </Form.Group>
 
               <Form.Group controlId="formPassword" className="mb-3">
-                <Form.Label>Lösenord</Form.Label>
+                <Form.Label>Lösenord*</Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Ange lösenord"
@@ -87,7 +90,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
               </Form.Group>
 
               <Form.Group controlId="formAge" className="mb-3">
-                <Form.Label>Ålder</Form.Label>
+                <Form.Label>Ålder*</Form.Label>
                 <Form.Control
                   type="number"
                   placeholder="Ange din ålder"
@@ -97,12 +100,12 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit" className="w-100">
-                Registrera
+              <Button variant="primary" type="submit" className="w-100" style={{backgroundColor: "#bc6c25", borderColor: "#bc6c25" }}>
+                Gå med
               </Button>
 
-              <div className="mt-3 text-center">
-                <Link to="/">Har du redan ett konto? Logga in här</Link>
+              <div className="mt-3 text-center" >
+                <Link to="/" style={{color: "#bc6c25"}}>Har du redan ett konto? Logga in här</Link>
               </div>
             </Form>
           </RegisterContainer>
