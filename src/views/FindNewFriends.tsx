@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const FriendContainer = styled.div`
-  width: 50%;
+  width: 100%;
   padding: 5%;
   border-radius: 10px;
   border: 1px solid #d4a373;
@@ -135,7 +135,7 @@ const FindNewFriends: React.FC = () => {
     <div
       style={{
         margin: "0 auto",
-        width: "80%",
+        width: "65%",
         marginTop: "4%",
         marginBottom: "4%",
       }}
@@ -144,7 +144,56 @@ const FindNewFriends: React.FC = () => {
       <MyFriendSuggestions />
       <div style={{ display: "flex", flexDirection: "row"}}>  
         <FriendContainer >
+        <div>
+        <h4>Vänförfrågningar</h4>
+         
+         <ul>
+           {receivedRequests.length > 0 ? (
+             receivedRequests.map((request) => (
+               <li
+                 style={{ marginBottom: "5%", listStyle: "none" }}
+                 key={request.id}
+               >
+                     <img
+                       src={
+                         request.profile_image
+                           ? `http://localhost:1337${request.profile_image}`
+                           : ProfileImg
+                       }
+                       alt={`${request.username}s profile`}
+                       style={{
+                         width: "100px",
+                         height: "100px",
+                         borderRadius: "50%",
+                         marginRight: "10px",
+                       }}
+                     />
+                 {request.name} ({request.username})
+                 <Button
+                   onClick={() => respondToRequest(request.id, "accept")}
+                   style={{ marginLeft: "10px" }}
+                   variant="success"
+                 >
+                   <FontAwesomeIcon icon={faCheck} />
+                 </Button>
+                 <Button
+                   onClick={() => respondToRequest(request.id, "reject")}
+                   style={{ marginLeft: "10px" }}
+                   variant="danger"
+                 >
+                   <FontAwesomeIcon icon={faXmark} />
+                 </Button>
+               </li>
+             ))
+           ) : (
+             <li style={{ listStyle: "none" }}>
+               Du har inga väntade vänförfrågningar just nu.
+             </li>
+           )}
+         </ul>
+        </div>
         <div style={{ height: "800px", overflowY: "auto", padding: "1px" }}>
+          <h4>Hitta och lägg till nya vänner !</h4>
           <ul>
             {filteredUsers.map((user) => (
               <li
@@ -174,8 +223,10 @@ const FindNewFriends: React.FC = () => {
                 ) : (
                   <Button
                     onClick={() => sendFriendRequest(user.id)}
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: "10px", backgroundColor: "#606c38",
+                      borderColor: "#606c38", }}
                   >
+                    Lägg till vän <br/>
                     <FontAwesomeIcon icon={faUserPlus} />
                   </Button>
                 )}
@@ -184,55 +235,7 @@ const FindNewFriends: React.FC = () => {
           </ul>
           </div>
         </FriendContainer>
-        <FriendContainer >
-          <h4>Vänförfrågningar</h4>
-         
-          <ul>
-            {receivedRequests.length > 0 ? (
-              receivedRequests.map((request) => (
-                <li
-                  style={{ marginBottom: "5%", listStyle: "none" }}
-                  key={request.id}
-                >
-                      <img
-                        src={
-                          request.profile_image
-                            ? `http://localhost:1337${request.profile_image}`
-                            : ProfileImg
-                        }
-                        alt={`${request.username}s profile`}
-                        style={{
-                          width: "100px",
-                          height: "100px",
-                          borderRadius: "50%",
-                          marginRight: "10px",
-                        }}
-                      />
-                  {request.name} ({request.username})
-                  <Button
-                    onClick={() => respondToRequest(request.id, "accept")}
-                    style={{ marginLeft: "10px" }}
-                    variant="success"
-                  >
-                    <FontAwesomeIcon icon={faCheck} />
-                  </Button>
-                  <Button
-                    onClick={() => respondToRequest(request.id, "reject")}
-                    style={{ marginLeft: "10px" }}
-                    variant="danger"
-                  >
-                    <FontAwesomeIcon icon={faXmark} />
-                  </Button>
-                </li>
-              ))
-            ) : (
-              <li style={{ listStyle: "none" }}>
-                Du har inga väntade vänförfrågningar just nu.
-              </li>
-            )}
-          </ul>
-          
-          </FriendContainer>
+        
       </div>
     </div>
   );
