@@ -16,8 +16,9 @@ const FriendContainer = styled.div`
   width: 100%;
   padding: 5%;
   border-radius: 10px;
-  border: 1px solid #d4a373;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
   background-color: #faedcd;
+  
 `;
 
 
@@ -135,7 +136,7 @@ const FindNewFriends: React.FC = () => {
     <div
       style={{
         margin: "0 auto",
-        width: "65%",
+        width: "64%",
         marginTop: "4%",
         marginBottom: "4%",
       }}
@@ -197,7 +198,9 @@ const FindNewFriends: React.FC = () => {
           <ul>
             {filteredUsers.map((user) => (
               <li
-                style={{ marginBottom: "5%", listStyle: "none", cursor: "pointer", backgroundColor: "#fefae0", padding: "10px" }}
+                style={{ marginBottom: "5%", listStyle: "none", cursor: "pointer", backgroundColor: "#fefae0", padding: "20px", width: "95%",  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", borderRadius: "10px",  display: "flex", // Lägg till flex
+                  alignItems: "center", // Vertikal centrerad
+                  justifyContent: "space-between", }}
                 key={user.id}
                 onClick={() => navigate(`/profile/${user.username}`)}
               >
@@ -215,21 +218,28 @@ const FindNewFriends: React.FC = () => {
                           marginRight: "10px",
                         }}
                       />
+                
                 {user.name} ({user.username})
                 {sentRequests.includes(user.id) ? (
                   <span style={{ marginLeft: "10px", color: "green" }}>
                     Skickad
                   </span>
                 ) : (
+                  
                   <Button
-                    onClick={() => sendFriendRequest(user.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      sendFriendRequest(user.id) 
+                    }} 
                     style={{ marginLeft: "10px", backgroundColor: "#606c38",
-                      borderColor: "#606c38", }}
+                      borderColor: "#606c38"}}
                   >
                     Lägg till vän <br/>
                     <FontAwesomeIcon icon={faUserPlus} />
                   </Button>
+                  
                 )}
+                
               </li>
             ))}
           </ul>
