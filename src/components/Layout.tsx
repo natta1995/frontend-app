@@ -62,7 +62,7 @@ const Layout: React.FC = () => {
 
   return (
     <>
-      <Navbar style={{ backgroundColor: "#ccd5ae", height: "60px" }}>
+      <Navbar style={{ backgroundColor: "#ccd5ae", height: "70px", boxShadow: "2px 4px 10px rgba(0, 0, 0, 0.4)"}}>
         <Container>
           <Navbar.Brand
             href="/feed"
