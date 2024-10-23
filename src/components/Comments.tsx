@@ -233,6 +233,7 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
                   <Button
                     variant="danger"
                     onClick={() => handleDeleteComment(comment.id)}
+                    style={{backgroundColor: "#faedcd", color: "black", borderColor: "#faedcd"}}
                   >
                     <FontAwesomeIcon icon={faTrashCan} />
                   </Button>

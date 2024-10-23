@@ -198,6 +198,7 @@ const Feed = () => {
                   <Button
                     onClick={() => handleDelete(post.id)}
                     variant="danger"
+                    style={{backgroundColor: "#faedcd", color: "black", borderColor: "#faedcd"}}
                   >
                     <FontAwesomeIcon icon={faTrashCan} />{" "}
                   </Button>
