@@ -189,8 +189,8 @@ const FriendSuggestions = () => {
                     {user.username}
                     <div>
                       {sentRequests.includes(user.id) ? (
-                        <span style={{ marginLeft: "10px", color: "green" }}>
-                          Skickad
+                        <span style={{ marginLeft: "10px", color: "#606c38"}}>
+                          Vänförfrågan skickad
                         </span>
                       ) : (
                         <Button
