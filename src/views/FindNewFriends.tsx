@@ -152,9 +152,12 @@ const FindNewFriends: React.FC = () => {
            {receivedRequests.length > 0 ? (
              receivedRequests.map((request) => (
                <li
-                 style={{ marginBottom: "5%", listStyle: "none" }}
+               style={{ marginBottom: "5%", listStyle: "none", cursor: "pointer", backgroundColor: "#fefae0", padding: "20px", width: "95%",  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", borderRadius: "10px",  display: "flex", 
+                alignItems: "center", // Vertikal centrerad
+                justifyContent: "space-between", }}
                  key={request.id}
                >
+                <div>
                      <img
                        src={
                          request.profile_image
@@ -170,6 +173,8 @@ const FindNewFriends: React.FC = () => {
                        }}
                      />
                  {request.name} ({request.username})
+                 </div>
+                <div>
                  <Button
                    onClick={() => respondToRequest(request.id, "accept")}
                    style={{ marginLeft: "10px" }}
@@ -184,6 +189,7 @@ const FindNewFriends: React.FC = () => {
                  >
                    <FontAwesomeIcon icon={faXmark} />
                  </Button>
+                 </div>
                </li>
              ))
            ) : (
@@ -198,12 +204,13 @@ const FindNewFriends: React.FC = () => {
           <ul>
             {filteredUsers.map((user) => (
               <li
-                style={{ marginBottom: "5%", listStyle: "none", cursor: "pointer", backgroundColor: "#fefae0", padding: "20px", width: "95%",  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", borderRadius: "10px",  display: "flex", // Lägg till flex
+                style={{ marginBottom: "5%", listStyle: "none", cursor: "pointer", backgroundColor: "#fefae0", padding: "20px", width: "95%",  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", borderRadius: "10px",  display: "flex", 
                   alignItems: "center", // Vertikal centrerad
                   justifyContent: "space-between", }}
                 key={user.id}
                 onClick={() => navigate(`/profile/${user.username}`)}
               >
+                <div>
                  <img
                         src={
                           user.profile_image
@@ -220,6 +227,7 @@ const FindNewFriends: React.FC = () => {
                       />
                 
                 {user.name} ({user.username})
+                </div>
                 {sentRequests.includes(user.id) ? (
                   <span style={{ marginLeft: "10px", color: "green" }}>
                     Skickad
