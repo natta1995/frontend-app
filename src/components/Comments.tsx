@@ -14,11 +14,11 @@ import { useUser } from "../UserContext";
 const CommentContainer = styled.div`
   padding: 1%;
   border-top: 2px solid #ccc;
-
+  flex-direction: row;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fefae0;
+  background-color: #faedcd;
 `;
 
 type Comment = {
@@ -206,25 +206,37 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
                       {comment.username}
                     </strong>
 
-                    <p style={{ marginTop: "5px", marginLeft: "15px" }}>
+                    <p
+                      style={{
+                        marginTop: "5px",
+                        marginLeft: "15px",
+                        width: "600px",
+                      }}
+                    >
                       {comment.content}
+                      <p
+                        style={{
+                          fontSize: "0.8em",
+                          color: "#555",
+                          textAlign: "right",
+                          marginBottom: "0px",
+                          paddingBottom: "0px",
+                          paddingTop: "15px",
+                        }}
+                      >
+                        {new Date(comment.created_at).toLocaleString()}
+                      </p>
                     </p>
                   </div>
                 </div>
-                {/*  {comment.username === currentUser?.username && (
+                {comment.username === currentUser?.username && (
                   <Button
                     variant="danger"
                     onClick={() => handleDeleteComment(comment.id)}
-                    
                   >
                     <FontAwesomeIcon icon={faTrashCan} />
                   </Button>
-                )} */}
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <p style={{ fontSize: "0.8em", color: "#555" }}>
-                    {new Date(comment.created_at).toLocaleString()}
-                  </p>
-                </div>
+                )}
               </CommentContainer>
             ))
           ) : (
