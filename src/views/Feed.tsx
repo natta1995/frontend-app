@@ -122,7 +122,7 @@ const Feed = () => {
                       : ProfileImg
                   }
                   alt="Profile"
-                  style={{ width: "70px", height: "70px", borderRadius: "50%", marginRight: "10px" }}
+                  style={{ width: "70px", height: "65px", borderRadius: "50%", marginRight: "10px", paddingLeft: "0px" }}
                 />
               ) : (
                 "Laddar..."
