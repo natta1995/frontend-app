@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Dropdown } from "react-bootstrap";
 import ProfileImg from "../Img/startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan, faLeaf, faL } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashCan,
+  faLeaf,
+  faEllipsis,
+} from "@fortawesome/free-solid-svg-icons";
 import Comments from "../components/Comments";
 import { useUser } from "../UserContext";
-import FriendSuggestions from "../components/MyFriendSuggestions"
+import FriendSuggestions from "../components/MyFriendSuggestions";
 
 const BoxContainer = styled.div`
   padding: 5%;
@@ -37,7 +41,7 @@ const Feed = () => {
   const { currentUser } = useUser();
   const [posts, setPosts] = useState<Post[]>([]);
   const [newPost, setNewPost] = useState<string>("");
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -110,40 +114,59 @@ const Feed = () => {
     >
       <InputContainer>
         <Form onSubmit={handlePostSubmit}>
-          <h1 style={{ textAlign: "center", paddingBottom: "15px", color: "#bc6c25" }}>
-            Välkommen tillbaka {currentUser?.username} ! <FontAwesomeIcon icon={faLeaf} />
-          </h1>
-        <div style={{ display: "flex", justifyContent: "column"}}>
-          {currentUser ? (
-                <img
-                  src={
-                    currentUser.profile_image
-                      ? `http://localhost:1337${currentUser.profile_image}`
-                      : ProfileImg
-                  }
-                  alt="Profile"
-                  style={{ width: "70px", height: "65px", borderRadius: "50%", marginRight: "10px", paddingLeft: "0px" }}
-                />
-              ) : (
-                "Laddar..."
-              )}
-          <textarea
-            value={newPost}
-            onChange={(e) => setNewPost(e.target.value)}
-            placeholder="Vad vill du dela idag?"
+          <h1
             style={{
-              width: "100%",
-              padding: "10px",
-              marginBottom: "10px",
-              height: "50px",
-              marginTop: "10px"
+              textAlign: "center",
+              paddingBottom: "15px",
+              color: "#bc6c25",
             }}
-          />
+          >
+            Välkommen tillbaka {currentUser?.username} !{" "}
+            <FontAwesomeIcon icon={faLeaf} />
+          </h1>
+          <div style={{ display: "flex", justifyContent: "column" }}>
+            {currentUser ? (
+              <img
+                src={
+                  currentUser.profile_image
+                    ? `http://localhost:1337${currentUser.profile_image}`
+                    : ProfileImg
+                }
+                alt="Profile"
+                style={{
+                  width: "70px",
+                  height: "65px",
+                  borderRadius: "50%",
+                  marginRight: "10px",
+                  paddingLeft: "0px",
+                }}
+              />
+            ) : (
+              "Laddar..."
+            )}
+            <textarea
+              value={newPost}
+              onChange={(e) => setNewPost(e.target.value)}
+              placeholder="Vad vill du dela idag?"
+              style={{
+                width: "100%",
+                padding: "10px",
+                marginBottom: "10px",
+                height: "50px",
+                marginTop: "10px",
+              }}
+            />
           </div>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button
               type="submit"
-              style={{ padding: "10px 20px", width: "30%", backgroundColor: "#bc6c25", borderColor: "#bc6c25", marginTop: "10px"}}
+              style={{
+                padding: "10px 20px",
+                width: "30%",
+                backgroundColor: "#bc6c25",
+                borderColor: "#bc6c25",
+                marginTop: "10px",
+              }}
             >
               Publicera Inlägg
             </Button>
@@ -158,10 +181,34 @@ const Feed = () => {
         {posts.length > 0 ? (
           posts.map((post) => (
             <BoxContainer key={post.id}>
+              <div style={{ display: "flex" }}>
+                {post.username === currentUser?.username && (
+                  <Dropdown className="ms-auto">
+                    <Dropdown.Toggle
+                      variant="ghostSecondary"
+                      id="dropdown-basic"
+                    >
+                      <FontAwesomeIcon icon={faEllipsis} />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        <Button
+                          onClick={() => handleDelete(post.id)}
+                          variant="danger"
+                          style={{}}
+                        >
+                          <FontAwesomeIcon icon={faTrashCan} /> Radera inlägg
+                        </Button>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+              </div>
               <div
                 style={{
                   borderBottom: "1px solid #ccc",
-                  padding: "10px 0",
+                  padding: "0px 0",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
@@ -194,17 +241,8 @@ const Feed = () => {
                     {new Date(post.createdAt).toLocaleString()}
                   </p>
                 </div>
-                {post.username === currentUser?.username && (
-                  <Button
-                    onClick={() => handleDelete(post.id)}
-                    variant="danger"
-                    style={{backgroundColor: "#faedcd", color: "black", borderColor: "#faedcd"}}
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />{" "}
-                  </Button>
-                )}
               </div>
-            <Comments postId={post.id} />
+              <Comments postId={post.id} />
             </BoxContainer>
           ))
         ) : (
