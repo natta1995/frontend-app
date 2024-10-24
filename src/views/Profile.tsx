@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 import ProfileImg from "../Img/startimg.webp";
 import BackgroundImg from "../Img/forestimg.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Comments from "../components/Comments";
 import { useUser } from "../UserContext";
 import MyFriends from "../components/MyFriends";
-import { faGears, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faGears, faTrashCan, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 
 const BackgroundWrapper = styled.div`
   position: relative;
@@ -21,7 +21,7 @@ const PostContainer = styled.div`
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: 5%;
-  background-color: #f3f4e3;
+  background-color: #faedcd;
 `;
 
 const BackgroundContainer = styled.div`
@@ -53,7 +53,7 @@ const ProfileContainer = styled.div`
   border-radius: 10px;
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  background-color: #f3f4e3;
+  background-color: #faedcd;
   margin-top: 5px;
 `;
 
@@ -188,7 +188,32 @@ const Profile: React.FC = () => {
               .filter((post) => post.username === currentUser.username)
               .map((post) => (
                 <BoxContainer key={post.id}>
+                  
                   <PostContainer>
+                  <div style={{ display: "flex" }}>
+                {post.username === currentUser?.username && (
+                  <Dropdown className="ms-auto">
+                    <Dropdown.Toggle
+                      variant="ghostSecondary"
+                      id="dropdown-basic"
+                    >
+                      <FontAwesomeIcon icon={faEllipsis} />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        <Button
+                          onClick={() => handleDelete(post.id)}
+                          variant="danger"
+                        >
+                          <FontAwesomeIcon icon={faTrashCan} /> Radera inlägg
+                        </Button>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+              </div>
+              
                     <img
                       src={
                         post.profile_image
@@ -206,6 +231,7 @@ const Profile: React.FC = () => {
                     <p>
                       <strong>{post.username}</strong>
                     </p>
+                   
                     <p>{post.content}</p>
                     <p style={{ fontSize: "0.8em", color: "#555" }}>
                       {new Date(post.createdAt).toLocaleString()}
@@ -214,14 +240,6 @@ const Profile: React.FC = () => {
                     <div
                       style={{ display: "flex", justifyContent: "flex-end" }}
                     >
-                      <div style={{ marginTop: "-15%" }}>
-                        <Button
-                          onClick={() => handleDelete(post.id)}
-                          variant="danger"
-                        >
-                          <FontAwesomeIcon icon={faTrashCan} />
-                        </Button>
-                      </div>
                     </div>
 
                     <Comments postId={post.id} />
