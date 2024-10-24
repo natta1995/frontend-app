@@ -196,7 +196,6 @@ const Feed = () => {
                         <Button
                           onClick={() => handleDelete(post.id)}
                           variant="danger"
-                          style={{}}
                         >
                           <FontAwesomeIcon icon={faTrashCan} /> Radera inlägg
                         </Button>

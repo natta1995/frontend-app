@@ -6,8 +6,9 @@ import {
   faTrashCan,
   faAngleUp,
   faAngleDown,
+  faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
 
@@ -181,31 +182,32 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
                   <div
                     style={{
                       paddingLeft: "10px",
-
                       display: "flex",
                       alignItems: "row",
                     }}
-                    onClick={() => navigate(`/profile/${comment.username}`)}
                   >
-                    <img
-                      src={
-                        comment.profile_image
-                          ? `http://localhost:1337${comment.profile_image}`
-                          : ProfileImg
-                      }
-                      alt={`${comment.username}s profile`}
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        marginRight: "10px",
-                      }}
-                    />
+                    <div
+                      onClick={() => navigate(`/profile/${comment.username}`)}
+                    >
+                      <img
+                        src={
+                          comment.profile_image
+                            ? `http://localhost:1337${comment.profile_image}`
+                            : ProfileImg
+                        }
+                        alt={`${comment.username}s profile`}
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
 
-                    <strong style={{ marginTop: "5px" }}>
-                      {comment.username}
-                    </strong>
-
+                      <strong style={{ marginTop: "5px" }}>
+                        {comment.username}
+                      </strong>
+                    </div>
                     <p
                       style={{
                         marginTop: "5px",
@@ -227,17 +229,31 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
                         {new Date(comment.created_at).toLocaleString()}
                       </p>
                     </p>
+                    <div style={{}}>
+                      {comment.username === currentUser?.username && (
+                        <Dropdown className="ms-auto">
+                          <Dropdown.Toggle
+                            variant="ghostSecondary"
+                            id="dropdown-basic"
+                          >
+                            <FontAwesomeIcon icon={faEllipsis} />
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu>
+                            <Dropdown.Item>
+                              <Button
+                                variant="danger"
+                                onClick={() => handleDeleteComment(comment.id)}
+                              >
+                                <FontAwesomeIcon icon={faTrashCan} /> Radera
+                                inlägg
+                              </Button>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      )}
+                    </div>
                   </div>
                 </div>
-                {comment.username === currentUser?.username && (
-                  <Button
-                    variant="danger"
-                    onClick={() => handleDeleteComment(comment.id)}
-                    style={{backgroundColor: "#faedcd", color: "black", borderColor: "#faedcd"}}
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </Button>
-                )}
               </CommentContainer>
             ))
           ) : (
