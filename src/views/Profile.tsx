@@ -8,7 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Comments from "../components/Comments";
 import { useUser } from "../UserContext";
 import MyFriends from "../components/MyFriends";
-import { faGears, faTrashCan, faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGears,
+  faTrashCan,
+  faEllipsis,
+} from "@fortawesome/free-solid-svg-icons";
 
 const BackgroundWrapper = styled.div`
   position: relative;
@@ -175,82 +179,81 @@ const Profile: React.FC = () => {
             </div>
           </div>
         </div>
-        <div
-          style={{
-            paddingTop: "8%",
-            borderTop: "2px solid #ccc",
-            marginTop: "4%",
-            marginBottom: "0.5%",
-          }}
-        >
-          {posts.length > 0 ? (
-            posts
-              .filter((post) => post.username === currentUser.username)
-              .map((post) => (
-                <BoxContainer key={post.id}>
-                  
-                  <PostContainer>
-                  <div style={{ display: "flex" }}>
-                {post.username === currentUser?.username && (
-                  <Dropdown className="ms-auto">
-                    <Dropdown.Toggle
-                      variant="ghostSecondary"
-                      id="dropdown-basic"
-                    >
-                      <FontAwesomeIcon icon={faEllipsis} />
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Button
-                          onClick={() => handleDelete(post.id)}
-                          variant="danger"
-                        >
-                          <FontAwesomeIcon icon={faTrashCan} /> Radera inlägg
-                        </Button>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                )}
-              </div>
-              
-                    <img
-                      src={
-                        post.profile_image
-                          ? `http://localhost:1337${post.profile_image}`
-                          : ProfileImg
-                      }
-                      alt={`${post.username}s profile`}
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        borderRadius: "50%",
-                        marginRight: "10px",
-                      }}
-                    />
-                    <p>
-                      <strong>{post.username}</strong>
-                    </p>
-                   
-                    <p>{post.content}</p>
-                    <p style={{ fontSize: "0.8em", color: "#555" }}>
-                      {new Date(post.createdAt).toLocaleString()}
-                    </p>
-
-                    <div
-                      style={{ display: "flex", justifyContent: "flex-end" }}
-                    >
-                    </div>
-
-                    <Comments postId={post.id} />
-                  </PostContainer>
-                </BoxContainer>
-              ))
-          ) : (
-            <p>Du har inte gjort några inlägg ännu.</p>
-          )}
-        </div>
       </ProfileContainer>
+
+      <div
+        style={{
+          paddingTop: "2%",
+          marginTop: "4%",
+          marginBottom: "0.5%",
+        }}
+      >
+        {posts.length > 0 ? (
+          posts
+            .filter((post) => post.username === currentUser.username)
+            .map((post) => (
+              <BoxContainer key={post.id}>
+                <PostContainer>
+                  <div style={{ display: "flex" }}>
+                    {post.username === currentUser?.username && (
+                      <Dropdown className="ms-auto">
+                        <Dropdown.Toggle
+                          variant="ghostSecondary"
+                          id="dropdown-basic"
+                        >
+                          <FontAwesomeIcon icon={faEllipsis} />
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                          <Dropdown.Item>
+                            <Button
+                              onClick={() => handleDelete(post.id)}
+                              variant="danger"
+                            >
+                              <FontAwesomeIcon icon={faTrashCan} /> Radera
+                              inlägg
+                            </Button>
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    )}
+                  </div>
+
+                  <img
+                    src={
+                      post.profile_image
+                        ? `http://localhost:1337${post.profile_image}`
+                        : ProfileImg
+                    }
+                    alt={`${post.username}s profile`}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      borderRadius: "50%",
+                      marginRight: "10px",
+                    }}
+                  />
+                  <p>
+                    <strong>{post.username}</strong>
+                  </p>
+
+                  <p>{post.content}</p>
+                  <p style={{ fontSize: "0.8em", color: "#555" }}>
+                    {new Date(post.createdAt).toLocaleString()}
+                  </p>
+
+                  <div
+                    style={{ display: "flex", justifyContent: "flex-end" }}
+                  ></div>
+
+                  <Comments postId={post.id} />
+                </PostContainer>
+              </BoxContainer>
+            ))
+        ) : (
+          <p>Du har inte gjort några inlägg ännu.</p>
+        )}
+      </div>
     </div>
   );
 };
