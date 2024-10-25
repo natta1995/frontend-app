@@ -177,14 +177,14 @@ const FindNewFriends: React.FC = () => {
                 <div>
                  <Button
                    onClick={() => respondToRequest(request.id, "accept")}
-                   style={{ marginLeft: "10px" }}
+                   style={{ marginLeft: "10px", backgroundColor: "#606c38", borderColor: "#606c38" }}
                    variant="success"
                  >
                    <FontAwesomeIcon icon={faCheck} />
                  </Button>
                  <Button
                    onClick={() => respondToRequest(request.id, "reject")}
-                   style={{ marginLeft: "10px" }}
+                   style={{ marginLeft: "10px",backgroundColor: "#d62828", borderColor: "#d62828"   }}
                    variant="danger"
                  >
                    <FontAwesomeIcon icon={faXmark} />
