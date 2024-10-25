@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
 import ProfileImg from "../Img/startimg.webp";
 import BackgroundImg from "../Img/forestimg.jpg";
 import styled from "styled-components";
 import Comments from "../components/Comments";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 
 const BackgroundWrapper = styled.div`
   position: relative;
@@ -20,7 +16,7 @@ const PostContainer = styled.div`
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: 5%;
-  background-color: #f3f4e3;
+  background-color: #faedcd;
 `;
 
 const BackgroundContainer = styled.div`
@@ -52,7 +48,7 @@ const ProfileContainer = styled.div`
   border-radius: 10px;
   border: 1px solid #d3efe5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  background-color: #f3f4e3;
+  background-color: #faedcd;
   margin-top: 5px;
 `;
 
@@ -160,55 +156,44 @@ const UserProfile: React.FC = () => {
             <strong>Bio:</strong> {profile?.bio}
           </p>
         </div>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <div>
-            <Link to="/my-friends">
-              <Button>
-                {" "}
-                <FontAwesomeIcon icon={faUserGroup} /> Vänner{" "}
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        <div
-          style={{
-            paddingTop: "8%",
-            borderTop: "2px solid #ccc",
-            marginTop: "4%",
-            marginBottom: "0.5%",
-          }}
-        >
-          {posts.map((post) => (
-            <BoxContainer key={post.id}>
-              <PostContainer>
-                <img
-                  src={
-                    post.profile_image
-                      ? `http://localhost:1337${post.profile_image}`
-                      : ProfileImg
-                  }
-                  alt={`${post.username}s profile`}
-                  style={{
-                    width: "100px",
-                    height: "100px",
-                    borderRadius: "50%",
-                    marginRight: "10px",
-                  }}
-                />
-                <p>
-                  <strong>{post.username}</strong>
-                </p>
-                <p>{post.content}</p>
-                <p style={{ fontSize: "0.8em", color: "#555" }}>
-                  {new Date(post.createdAt).toLocaleString()}
-                </p>
-                <Comments postId={post.id} />
-              </PostContainer>
-            </BoxContainer>
-          ))}
-        </div>
       </ProfileContainer>
+      <div
+        style={{
+          paddingTop: "4%",
+
+          marginTop: "4%",
+          marginBottom: "0.5%",
+        }}
+      >
+        {posts.map((post) => (
+          <BoxContainer key={post.id}>
+            <PostContainer>
+              <img
+                src={
+                  post.profile_image
+                    ? `http://localhost:1337${post.profile_image}`
+                    : ProfileImg
+                }
+                alt={`${post.username}s profile`}
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  borderRadius: "50%",
+                  marginRight: "10px",
+                }}
+              />
+              <p>
+                <strong>{post.username}</strong>
+              </p>
+              <p>{post.content}</p>
+              <p style={{ fontSize: "0.8em", color: "#555" }}>
+                {new Date(post.createdAt).toLocaleString()}
+              </p>
+              <Comments postId={post.id} />
+            </PostContainer>
+          </BoxContainer>
+        ))}
+      </div>
     </div>
   );
 };
