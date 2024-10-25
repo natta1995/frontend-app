@@ -64,7 +64,7 @@ const MyFriends = () => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="primary" style={{backgroundColor: "#606c38", borderColor: "#606c38"}} onClick={handleShow}>
         <FontAwesomeIcon icon={faUserGroup} /> Vänner
       </Button>
 
