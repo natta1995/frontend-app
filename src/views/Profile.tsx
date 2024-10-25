@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { Button, Dropdown } from "react-bootstrap";
 import ProfileImg from "../Img/startimg.webp";
 import BackgroundImg from "../Img/forestimg.jpg";
@@ -8,11 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Comments from "../components/Comments";
 import { useUser } from "../UserContext";
 import MyFriends from "../components/MyFriends";
-import {
-  faGears,
-  faTrashCan,
-  faEllipsis,
-} from "@fortawesome/free-solid-svg-icons";
+import ProfileEdit from "../components/ProfileEdit";
+import { faTrashCan, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 
 const BackgroundWrapper = styled.div`
   position: relative;
@@ -78,7 +74,6 @@ type Post = {
 const Profile: React.FC = () => {
   const { currentUser } = useUser();
   const [posts, setPosts] = useState<Post[]>([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -148,12 +143,7 @@ const Profile: React.FC = () => {
         <div style={{ marginTop: "10%", marginLeft: "5%" }}>
           <h1>{currentUser.name}</h1>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button
-              variant="secondary"
-              onClick={() => navigate("/edit-profile")}
-            >
-              <FontAwesomeIcon icon={faGears} />
-            </Button>
+            <ProfileEdit />
           </div>
           <p>
             <strong>Användarnamn:</strong> {currentUser.username}
