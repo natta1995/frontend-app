@@ -199,8 +199,8 @@ const FindNewFriends: React.FC = () => {
            )}
          </ul>
         </div>
+        <h4>Hitta och lägg till nya vänner !</h4>
         <div style={{ height: "800px", overflowY: "auto", padding: "1px" }}>
-          <h4>Hitta och lägg till nya vänner !</h4>
           <ul>
             {filteredUsers.map((user) => (
               <li
