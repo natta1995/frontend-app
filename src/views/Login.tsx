@@ -101,6 +101,12 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 />
               </Form.Group>
 
+              <div className="mt-3 text-center">
+                <Link to="/" style={{ color: "#bc6c25" }}>
+                  Glömt lösenord? Återställ lösenord.
+                </Link>
+              </div>
+
               <Button
                 variant="primary"
                 type="submit"
