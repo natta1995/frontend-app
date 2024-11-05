@@ -9,13 +9,19 @@ import { useNavigate } from "react-router-dom";
 
 const BoxContainer = styled.div`
   padding: 1%;
-  paddingleft: -6%;
   border-radius: 10px;
   box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
   margin-bottom: 2%;
   background-color: #faedcd;
-  margin-right: 15px;
   width: 100%;
+
+    @media (max-width: 768px) {
+    padding: 2%;
+  }
+
+  @media (max-width: 480px) {
+    padding: 5%;
+  }
 `;
 
 // Styling for the carousel arrows
@@ -144,6 +150,7 @@ const FriendSuggestions = () => {
                 display: "flex",
                 gap: "5%",
                 flexWrap: "wrap",
+                justifyContent: "center",
               }}
             >
               {userGroup.map((user) => (
@@ -183,7 +190,7 @@ const FriendSuggestions = () => {
                       objectFit: "cover",
                     }}
                   />
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: "center", width: "180px" }}>
                     <strong>{user.name}</strong>
                     <br />
                     {user.username}

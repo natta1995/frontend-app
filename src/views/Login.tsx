@@ -46,7 +46,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       setCurrentUser(userData);
       navigate("/feed");
     } else {
-      setErrorMessage(message); // Uppdatera felmeddelandet
+      setErrorMessage(message); 
     }
   };
 
