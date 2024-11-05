@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import { useUser } from "../UserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Dropdown } from "react-bootstrap";
+import { faTrashCan, faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
+
 import ProfileImg from "../Img/startimg.webp";
 import BackgroundImg from "../Img/forestimg.jpg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import Comments from "../components/Comments";
-import { useUser } from "../UserContext";
 import MyFriends from "../components/MyFriends";
 import ProfileEdit from "../components/ProfileEdit";
-import { faTrashCan, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 
 const BackgroundWrapper = styled.div`
   position: relative;
@@ -37,8 +39,8 @@ const BackgroundContainer = styled.div`
 `;
 
 const ProfileImage = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   border: 5px solid white;
   position: absolute;
