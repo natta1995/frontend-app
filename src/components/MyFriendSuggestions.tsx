@@ -15,7 +15,7 @@ const BoxContainer = styled.div`
   background-color: #faedcd;
   width: 100%;
 
-    @media (max-width: 768px) {
+  @media (max-width: 768px) {
     padding: 2%;
   }
 
@@ -196,7 +196,7 @@ const FriendSuggestions = () => {
                     {user.username}
                     <div>
                       {sentRequests.includes(user.id) ? (
-                        <span style={{ marginLeft: "10px", color: "#606c38"}}>
+                        <span style={{ marginLeft: "10px", color: "#606c38" }}>
                           Vänförfrågan skickad
                         </span>
                       ) : (
@@ -211,8 +211,7 @@ const FriendSuggestions = () => {
                             borderColor: "#606c38",
                           }}
                         >
-                          Lägg till vän
-                          <FontAwesomeIcon icon={faUserPlus} />
+                          <FontAwesomeIcon icon={faUserPlus} /> Lägg till vän
                         </Button>
                       )}
                     </div>
