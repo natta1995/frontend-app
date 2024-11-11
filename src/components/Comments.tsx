@@ -15,12 +15,8 @@ import { useUser } from "../UserContext";
 const CommentContainer = styled.div`
   padding: 1%;
   border-top: 2px solid #ccc;
-  flex-direction: row;
-  display: flex;
   justify-content: space-between;
-  align-items: center;
   background-color: #faedcd;
-  whith: 50%;
 `;
 
 type Comment = {
@@ -174,89 +170,88 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
           ""
         )}
       </div>
+
       {isVisible && (
         <div>
           {comments.length > 0 ? (
             comments.map((comment) => (
               <CommentContainer key={comment.id}>
-                <div>
+                <div
+                  style={{
+                    paddingLeft: "10px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
                   <div
-                    style={{
-                      paddingLeft: "10px",
-                      display: "flex",
-                      flexDirection: "row",
-                      
-                    }}
+                    style={{}}
+                    onClick={() => navigate(`/profile/${comment.username}`)}
                   >
-                    <div
-                    style={{flexDirection: "column"}}
-                      onClick={() => navigate(`/profile/${comment.username}`)}
-                    >
-                      <img
-                        src={
-                          comment.profile_image
-                            ? `http://localhost:1337${comment.profile_image}`
-                            : ProfileImg
-                        }
-                        alt={`${comment.username}s profile`}
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          borderRadius: "50%",
-                          marginRight: "10px",
-                        }}
-                      />
+                    <img
+                      src={
+                        comment.profile_image
+                          ? `http://localhost:1337${comment.profile_image}`
+                          : ProfileImg
+                      }
+                      alt={`${comment.username}s profile`}
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        borderRadius: "50%",
+                        marginRight: "10px",
+                      }}
+                    />
 
-                      <strong style={{ marginTop: "5px" }}>
-                        {comment.username}
-                      </strong>
-                    </div>
+                    <strong style={{ marginTop: "5px" }}>
+                      {comment.username}
+                    </strong>
+
                     <p
                       style={{
                         marginTop: "5px",
                         marginLeft: "15px",
-                        
                       }}
                     >
                       {comment.content}
-                      <p
-                        style={{
-                          fontSize: "0.8em",
-                          color: "#555",
-                          textAlign: "right",
-                          marginBottom: "0px",
-                          paddingBottom: "0px",
-                          paddingTop: "15px",
-                        }}
-                      >
-                        {new Date(comment.created_at).toLocaleString()}
-                      </p>
                     </p>
-                    <div style={{}}>
-                      {comment.username === currentUser?.username && (
-                        <Dropdown className="ms-auto">
-                          <Dropdown.Toggle
-                            variant="ghostSecondary"
-                            id="dropdown-basic"
-                          >
-                            <FontAwesomeIcon icon={faEllipsis} />
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu>
-                            <Dropdown.Item>
-                              <Button
-                                variant="danger"
-                                onClick={() => handleDeleteComment(comment.id)}
-                              >
-                                <FontAwesomeIcon icon={faTrashCan} /> Radera
-                                inlägg
-                              </Button>
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      )}
-                    </div>
+                  </div>
+
+                  <div style={{}}>
+                    {comment.username === currentUser?.username && (
+                      <Dropdown className="ms-auto">
+                        <Dropdown.Toggle
+                          variant="ghostSecondary"
+                          id="dropdown-basic"
+                        >
+                          <FontAwesomeIcon icon={faEllipsis} />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item>
+                            <Button
+                              variant="danger"
+                              onClick={() => handleDeleteComment(comment.id)}
+                            >
+                              <FontAwesomeIcon icon={faTrashCan} /> Radera
+                              inlägg
+                            </Button>
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    )}
                   </div>
                 </div>
+                <p
+                  style={{
+                    fontSize: "0.8em",
+                    color: "#555",
+                    textAlign: "right",
+                    marginBottom: "0px",
+                    paddingBottom: "0px",
+                    paddingTop: "15px",
+                  }}
+                >
+                  {new Date(comment.created_at).toLocaleString()}
+                </p>
               </CommentContainer>
             ))
           ) : (
