@@ -20,6 +20,7 @@ const CommentContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: #faedcd;
+  whith: 50%;
 `;
 
 type Comment = {
@@ -183,10 +184,12 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
                     style={{
                       paddingLeft: "10px",
                       display: "flex",
-                      alignItems: "row",
+                      flexDirection: "row",
+                      
                     }}
                   >
                     <div
+                    style={{flexDirection: "column"}}
                       onClick={() => navigate(`/profile/${comment.username}`)}
                     >
                       <img
@@ -212,7 +215,7 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
                       style={{
                         marginTop: "5px",
                         marginLeft: "15px",
-                        width: "600px",
+                        
                       }}
                     >
                       {comment.content}
