@@ -25,7 +25,7 @@ const FriendContainer = styled.div`
 const FindNewFriends: React.FC = () => {
   const [users, setUsers] = useState<any[]>([]);
   const { currentUser } = useUser();
-  const [friends] = useState<any[]>([]);
+  const [friends, setFriends] = useState<any[]>([]);
   const [receivedRequests, setReceivedRequests] = useState<any[]>([]);
   const [sentRequests, setSentRequests] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -71,6 +71,28 @@ const FindNewFriends: React.FC = () => {
     fetchUsers();
 
     fetchReceivedRequests();
+  }, []);
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        const response = await fetch("http://localhost:1337/friends/list", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setFriends(data);
+        } else {
+          setError("Failed to fetch friends");
+        }
+      } catch (error) {
+        console.error("Error fetching friends:", error);
+        setError("Error fetching friends");
+      }
+    };
+
+    fetchFriends();
   }, []);
 
   const sendFriendRequest = async (friendId: number) => {
@@ -199,6 +221,11 @@ const FindNewFriends: React.FC = () => {
            )}
          </ul>
         </div>
+
+
+
+
+
         <h4>Hitta och lägg till nya vänner !</h4>
         <div style={{ height: "800px", overflowY: "auto", padding: "1px" }}>
           <ul>
@@ -252,6 +279,9 @@ const FindNewFriends: React.FC = () => {
             ))}
           </ul>
           </div>
+
+
+
         </FriendContainer>
         
       </div>
