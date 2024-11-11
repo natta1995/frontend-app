@@ -208,8 +208,7 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
 
                     <p
                       style={{
-                        marginTop: "5px",
-                        marginLeft: "15px",
+                        marginTop: "5px"
                       }}
                     >
                       {comment.content}
