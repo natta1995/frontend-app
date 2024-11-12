@@ -118,7 +118,7 @@ const MyFriends = () => {
                     style={{ marginLeft: "10px" }}
                     variant="danger"
                   >
-                    <FontAwesomeIcon icon={faUserSlash} />
+                    <FontAwesomeIcon icon={faUserSlash} /> Ta bort
                   </Button>
                 </li>
               ))}

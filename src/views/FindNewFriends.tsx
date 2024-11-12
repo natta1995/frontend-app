@@ -269,8 +269,7 @@ const FindNewFriends: React.FC = () => {
                     style={{ marginLeft: "10px", backgroundColor: "#606c38",
                       borderColor: "#606c38"}}
                   >
-                    Lägg till vän <br/>
-                    <FontAwesomeIcon icon={faUserPlus} />
+                    <FontAwesomeIcon icon={faUserPlus} /> Lägg till vän <br/>
                   </Button>
                   
                 )}
