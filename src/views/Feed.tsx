@@ -12,6 +12,7 @@ import {
 import Comments from "../components/Comments";
 import { useUser } from "../UserContext";
 import FriendSuggestions from "../components/MyFriendSuggestions";
+import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 
 const BoxContainer = styled.div`
   padding: 5%;
@@ -43,6 +44,7 @@ const Feed = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [newPost, setNewPost] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const navigate = useNavigate();
 
@@ -120,6 +122,13 @@ const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     }
   };
 
+  const handleEmojiClick = (emojiObject: EmojiClickData) => {
+    setNewPost((prev) => prev + emojiObject.emoji); // Lägg till emoji i texten
+  };
+
+  const toggleEmojiPicker = () => {
+    setShowEmojiPicker(!showEmojiPicker);
+  };
  
 
   return (
@@ -178,6 +187,13 @@ const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         onChange={handleImageChange}
         style={{ marginTop: "10px", marginBottom: "10px" }}
     />
+
+    <div>
+    <button type="button" onClick={toggleEmojiPicker} style={{ marginBottom: "10px" }}>
+              Välj Emoji 😊
+            </button>
+            {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
+        </div>
           
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button
