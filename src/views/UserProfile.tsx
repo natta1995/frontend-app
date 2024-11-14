@@ -32,8 +32,8 @@ const BackgroundContainer = styled.div`
 `;
 
 const ProfileImage = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   border: 5px solid white;
   position: absolute;
@@ -128,7 +128,6 @@ const UserProfile: React.FC = () => {
                 : ProfileImg
             }
             alt={`${profile?.username}s profile`}
-            style={{ width: "250px", height: "250px", borderRadius: "50%" }}
           />
         </BackgroundWrapper>
         <div style={{ marginTop: "10%", marginLeft: "5%" }}>
