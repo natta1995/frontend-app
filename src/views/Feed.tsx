@@ -72,38 +72,38 @@ const Feed = () => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-        setSelectedImage(e.target.files[0]);
+      setSelectedImage(e.target.files[0]);
     }
-};
+  };
 
-const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const formData = new FormData();
-  formData.append("content", newPost);
-  if (selectedImage) {
+    const formData = new FormData();
+    formData.append("content", newPost);
+    if (selectedImage) {
       formData.append("image", selectedImage);
-  }
+    }
 
-  try {
+    try {
       const response = await fetch("http://localhost:1337/feed/create", {
-          method: "POST",
-          credentials: "include",
-          body: formData,
+        method: "POST",
+        credentials: "include",
+        body: formData,
       });
 
       if (response.ok) {
-          const createdPost: Post = await response.json();
-          setPosts([createdPost, ...posts]);
-          setNewPost("");
-          setSelectedImage(null);
+        const createdPost: Post = await response.json();
+        setPosts([createdPost, ...posts]);
+        setNewPost("");
+        setSelectedImage(null);
       } else {
-          console.error("Failed to create post");
+        console.error("Failed to create post");
       }
-  } catch (error) {
+    } catch (error) {
       console.error("Error creating post:", error);
-  }
-};
+    }
+  };
 
   const handleDelete = async (postId: number) => {
     try {
@@ -129,7 +129,6 @@ const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   const toggleEmojiPicker = () => {
     setShowEmojiPicker(!showEmojiPicker);
   };
- 
 
   return (
     <div
@@ -179,22 +178,25 @@ const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 marginTop: "10px",
               }}
             />
-    
           </div>
           <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        style={{ marginTop: "10px", marginBottom: "10px" }}
-    />
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            style={{ marginTop: "10px", marginBottom: "10px" }}
+          />
 
-    <div>
-    <button type="button" onClick={toggleEmojiPicker} style={{ marginBottom: "10px" }}>
+          <div>
+            <button
+              type="button"
+              onClick={toggleEmojiPicker}
+              style={{ marginBottom: "10px" }}
+            >
               Välj Emoji 😊
             </button>
             {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
-        </div>
-          
+          </div>
+
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button
               type="submit"
@@ -277,7 +279,11 @@ const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                     <img
                       src={`http://localhost:1337${post.image_url}`}
                       alt="Inläggsbild"
-                      style={{ maxWidth: "100%", maxHeight: "400px", marginTop: "10px" }}
+                      style={{
+                        maxWidth: "100%",
+                        maxHeight: "400px",
+                        marginTop: "10px",
+                      }}
                     />
                   )}
                   <p>{post.content}</p>

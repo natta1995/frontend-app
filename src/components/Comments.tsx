@@ -11,6 +11,7 @@ import {
 import { Button, Form, Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
+import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 
 const CommentContainer = styled.div`
   padding: 1%;
@@ -37,6 +38,7 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -121,6 +123,14 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
     setIsVisible(!isVisible);
   };
 
+  const handleEmojiClick = (emojiObject: EmojiClickData) => {
+    setNewComment((prev) => prev + emojiObject.emoji); // Lägg till emoji i texten
+  };
+
+  const toggleEmojiPicker = () => {
+    setShowEmojiPicker(!showEmojiPicker);
+  };
+
   return (
     <div className="comments-section">
       <Form onSubmit={handleCommentSubmit}>
@@ -135,6 +145,16 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
             height: "60px",
           }}
         />
+        <div>
+          <button
+            type="button"
+            onClick={toggleEmojiPicker}
+            style={{ marginBottom: "10px" }}
+          >
+            Välj Emoji 😊
+          </button>
+          {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
+        </div>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             style={{ backgroundColor: "#bc6c25", borderColor: "#bc6c25" }}
@@ -208,7 +228,7 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
 
                     <p
                       style={{
-                        marginTop: "5px"
+                        marginTop: "5px",
                       }}
                     >
                       {comment.content}
