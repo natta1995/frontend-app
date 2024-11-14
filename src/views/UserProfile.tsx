@@ -64,6 +64,7 @@ type Post = {
   content: string;
   createdAt: string;
   profile_image: string;
+  image_url: string;
 };
 
 const UserProfile: React.FC = () => {
@@ -184,6 +185,17 @@ const UserProfile: React.FC = () => {
               <p>
                 <strong>{post.username}</strong>
               </p>
+              {post.image_url && (
+                <img
+                  src={`http://localhost:1337${post.image_url}`}
+                  alt="Inläggsbild"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "400px",
+                    marginTop: "10px",
+                  }}
+                />
+              )}
               <p>{post.content}</p>
               <p style={{ fontSize: "0.8em", color: "#555" }}>
                 {new Date(post.createdAt).toLocaleString()}
