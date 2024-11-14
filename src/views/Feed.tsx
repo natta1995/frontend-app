@@ -35,12 +35,14 @@ type Post = {
   content: string;
   createdAt: string;
   profile_image: string;
+  image_url: string;
 };
 
 const Feed = () => {
   const { currentUser } = useUser();
   const [posts, setPosts] = useState<Post[]>([]);
   const [newPost, setNewPost] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   const navigate = useNavigate();
 
@@ -66,30 +68,40 @@ const Feed = () => {
     fetchPosts();
   }, []);
 
-  const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+        setSelectedImage(e.target.files[0]);
+    }
+};
 
-    try {
+const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append("content", newPost);
+  if (selectedImage) {
+      formData.append("image", selectedImage);
+  }
+
+  try {
       const response = await fetch("http://localhost:1337/feed/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ content: newPost }),
+          method: "POST",
+          credentials: "include",
+          body: formData,
       });
 
       if (response.ok) {
-        const createdPost: Post = await response.json();
-        setPosts([createdPost, ...posts]);
-        setNewPost("");
+          const createdPost: Post = await response.json();
+          setPosts([createdPost, ...posts]);
+          setNewPost("");
+          setSelectedImage(null);
       } else {
-        console.error("Failed to create post");
+          console.error("Failed to create post");
       }
-    } catch (error) {
+  } catch (error) {
       console.error("Error creating post:", error);
-    }
-  };
+  }
+};
 
   const handleDelete = async (postId: number) => {
     try {
@@ -107,6 +119,8 @@ const Feed = () => {
       console.error("Error deleting post:", error);
     }
   };
+
+ 
 
   return (
     <div
@@ -156,7 +170,15 @@ const Feed = () => {
                 marginTop: "10px",
               }}
             />
+    
           </div>
+          <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        style={{ marginTop: "10px", marginBottom: "10px" }}
+    />
+          
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button
               type="submit"
@@ -235,6 +257,13 @@ const Feed = () => {
                       {post.username}
                     </strong>{" "}
                   </h5>
+                  {post.image_url && (
+                    <img
+                      src={`http://localhost:1337${post.image_url}`}
+                      alt="Inläggsbild"
+                      style={{ maxWidth: "100%", maxHeight: "400px", marginTop: "10px" }}
+                    />
+                  )}
                   <p>{post.content}</p>
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
                     {new Date(post.createdAt).toLocaleString()}
