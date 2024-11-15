@@ -179,21 +179,28 @@ const Feed = () => {
               }}
             />
           </div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            style={{ marginTop: "10px", marginBottom: "10px" }}
-          />
-
           <div>
             <Button
               type="button"
               onClick={toggleEmojiPicker}
-              style={{ padding: "7px", backgroundColor: "#bc6c25", borderColor: "#bc6c25" }}
+              style={{
+                padding: "7px",
+                backgroundColor: "#bc6c25",
+                borderColor: "#bc6c25",
+                marginRight: "10px",
+                marginLeft: "8%"
+              }}
             >
               😊
             </Button>
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ marginTop: "10px", marginBottom: "10px" }}
+            />
+
             {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
           </div>
 
