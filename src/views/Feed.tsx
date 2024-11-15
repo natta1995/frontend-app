@@ -187,13 +187,13 @@ const Feed = () => {
           />
 
           <div>
-            <button
+            <Button
               type="button"
               onClick={toggleEmojiPicker}
-              style={{ marginBottom: "10px" }}
+              style={{ padding: "7px", backgroundColor: "#bc6c25", borderColor: "#bc6c25" }}
             >
-              Välj Emoji 😊
-            </button>
+              😊
+            </Button>
             {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
           </div>
 

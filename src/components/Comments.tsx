@@ -146,13 +146,13 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
           }}
         />
         <div>
-          <button
-            type="button"
-            onClick={toggleEmojiPicker}
-            style={{ marginBottom: "10px" }}
-          >
-            Välj Emoji 😊
-          </button>
+        <Button
+              type="button"
+              onClick={toggleEmojiPicker}
+              style={{ padding: "7px", backgroundColor: "#bc6c25", borderColor: "#bc6c25" }}
+            >
+              😊
+            </Button>
           {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
         </div>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
