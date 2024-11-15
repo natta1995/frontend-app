@@ -11,6 +11,7 @@ import HandleUser from "./views/HandleUser";
 import FindNewFriends from "./views/FindNewFriends";
 import { login, register } from "./api/auth";
 import ProtectedRoute from "./ProtectedRoute";
+import MyMessages from "./views/Messages";
 
 const App: React.FC = () => {
   const handleLogin = async (
@@ -95,6 +96,14 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute>
                   <FindNewFriends />
+                </ProtectedRoute>
+              }
+            />
+                <Route
+              path="/messages"
+              element={
+                <ProtectedRoute>
+                  <MyMessages />
                 </ProtectedRoute>
               }
             />

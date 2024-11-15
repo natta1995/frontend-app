@@ -100,7 +100,7 @@ const Layout: React.FC = () => {
                 ></span>
               )}
             </Nav.Link>
-            <Nav.Link href="/feed">
+            <Nav.Link href="/messages">
             <FontAwesomeIcon icon={faMessage} />
             </Nav.Link>
           </Nav>
