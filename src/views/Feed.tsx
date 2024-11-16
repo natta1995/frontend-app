@@ -188,7 +188,7 @@ const Feed = () => {
                 backgroundColor: "#bc6c25",
                 borderColor: "#bc6c25",
                 marginRight: "10px",
-                marginLeft: "8%"
+                marginLeft: "8%",
               }}
             >
               😊
@@ -282,18 +282,29 @@ const Feed = () => {
                       {post.username}
                     </strong>{" "}
                   </h5>
-                  {post.image_url && (
-                    <img
-                      src={`http://localhost:1337${post.image_url}`}
-                      alt="Inläggsbild"
-                      style={{
-                        maxWidth: "100%",
-                        maxHeight: "400px",
-                        marginTop: "10px",
-                      }}
-                    />
-                  )}
                   <p>{post.content}</p>
+                  <div
+                    style={{
+                      backgroundColor: "black",
+                      width: "870px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {post.image_url && (
+                      <img
+                        src={`http://localhost:1337${post.image_url}`}
+                        alt="Inläggsbild"
+                        style={{
+                          maxWidth: "100%",
+                          maxHeight: "400px",
+                          marginTop: "10px",
+                        }}
+                      />
+                    )}
+                  </div>
+
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
                     {new Date(post.createdAt).toLocaleString()}
                   </p>
