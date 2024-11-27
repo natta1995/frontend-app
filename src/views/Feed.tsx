@@ -37,6 +37,7 @@ type Post = {
   createdAt: string;
   profile_image: string;
   image_url: string;
+  likes: number[];
 };
 
 const Feed = () => {
@@ -128,6 +129,33 @@ const Feed = () => {
 
   const toggleEmojiPicker = () => {
     setShowEmojiPicker(!showEmojiPicker);
+  };
+
+  const handleLikeToggle = async (feedId: number, isLiked: boolean) => {
+    const method = isLiked ? "DELETE" : "POST"; // DELETE för ogilla, POST för gilla
+    const url = `http://localhost:1337/feed/${feedId}/like`;
+
+    try {
+      const response = await fetch(url, {
+        method,
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const updatedPost = await response.json();
+
+        // Uppdatera likes för det aktuella inlägget
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post.id === feedId ? { ...post, likes: updatedPost.likes } : post
+          )
+        );
+      } else {
+        console.error("Failed to toggle like");
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error);
+    }
   };
 
   return (
@@ -226,93 +254,121 @@ const Feed = () => {
 
       <div style={{ marginTop: "20px" }}>
         {posts.length > 0 ? (
-          posts.map((post) => (
-            <BoxContainer key={post.id}>
-              <div style={{ display: "flex" }}>
-                {post.username === currentUser?.username && (
-                  <Dropdown className="ms-auto">
-                    <Dropdown.Toggle
-                      variant="ghostSecondary"
-                      id="dropdown-basic"
-                    >
-                      <FontAwesomeIcon icon={faEllipsis} />
-                    </Dropdown.Toggle>
+          posts.map((post) => {
+            const likes = post.likes || []; // Om likes är undefined, blir det en tom array
+            const isLikedByCurrentUser = likes.includes(currentUser?.id ?? -1);
 
-                    <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Button
-                          onClick={() => handleDelete(post.id)}
-                          variant="danger"
-                        >
-                          <FontAwesomeIcon icon={faTrashCan} /> Radera inlägg
-                        </Button>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                )}
-              </div>
-              <div
-                style={{
-                  borderBottom: "1px solid #ccc",
-                  padding: "0px 0",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <div>
-                  <h5>
-                    <strong
-                      onClick={() => navigate(`/profile/${post.username}`)}
+            return (
+              <BoxContainer key={post.id}>
+                <div style={{ display: "flex" }}>
+                  {post.username === currentUser?.username && (
+                    <Dropdown className="ms-auto">
+                      <Dropdown.Toggle
+                        variant="ghostSecondary"
+                        id="dropdown-basic"
+                      >
+                        <FontAwesomeIcon icon={faEllipsis} />
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        <Dropdown.Item>
+                          <Button
+                            onClick={() => handleDelete(post.id)}
+                            variant="danger"
+                          >
+                            <FontAwesomeIcon icon={faTrashCan} /> Radera inlägg
+                          </Button>
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  )}
+                </div>
+                <div
+                  style={{
+                    borderBottom: "1px solid #ccc",
+                    padding: "0px 0",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div>
+                    <h5>
+                      <strong
+                        onClick={() => navigate(`/profile/${post.username}`)}
+                      >
+                        <img
+                          src={
+                            post.profile_image
+                              ? `http://localhost:1337${post.profile_image}`
+                              : ProfileImg
+                          }
+                          alt={`${post.username}s profile`}
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            borderRadius: "50%",
+                            marginRight: "10px",
+                          }}
+                        />
+                        {post.username}
+                      </strong>{" "}
+                    </h5>
+                    <p>{post.content}</p>
+                    <div
+                      style={{
+                        backgroundColor: "black",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
                     >
-                      <img
-                        src={
-                          post.profile_image
-                            ? `http://localhost:1337${post.profile_image}`
-                            : ProfileImg
+                      {post.image_url && (
+                        <img
+                          src={`http://localhost:1337${post.image_url}`}
+                          alt="Inläggsbild"
+                          style={{
+                            maxWidth: "100%",
+                            maxHeight: "400px",
+                            marginTop: "10px",
+                          }}
+                        />
+                      )}
+                    </div>
+                    <div>
+                      <Button
+                        onClick={() =>
+                          handleLikeToggle(post.id, isLikedByCurrentUser)
                         }
-                        alt={`${post.username}s profile`}
                         style={{
-                          width: "100px",
-                          height: "100px",
-                          borderRadius: "50%",
-                          marginRight: "10px",
-                        }}
-                      />
-                      {post.username}
-                    </strong>{" "}
-                  </h5>
-                  <p>{post.content}</p>
-                  <div
-                    style={{
-                      backgroundColor: "black",
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    {post.image_url && (
-                      <img
-                        src={`http://localhost:1337${post.image_url}`}
-                        alt="Inläggsbild"
-                        style={{
-                          maxWidth: "100%",
-                          maxHeight: "400px",
+                          padding: "10px",
+                          backgroundColor: isLikedByCurrentUser
+                            ? "#bc6c25"
+                            : "#bc6c25",
+                          borderColor: isLikedByCurrentUser ? "#bc6c25" : "#bc6c25",
                           marginTop: "10px",
                         }}
-                      />
-                    )}
-                  </div>
+                      >
+                        {isLikedByCurrentUser ? "❤️" : "❤️ Gilla"}
+                      </Button>
+                      <p style={{ marginTop: "5px", color: "#555" }}>
+                        {post.likes?.length}{" "}
+                        {post.likes?.length === 1
+                          ? "person gillar detta"
+                          : "personer gillar detta"}
+                      </p>
+                    </div>
 
-                  <p style={{ fontSize: "0.8em", color: "#555" }}>
-                    {new Date(post.createdAt).toLocaleString()}
-                  </p>
+                    <p style={{ fontSize: "0.8em", color: "#555" }}>
+                      {new Date(post.createdAt).toLocaleString()}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <Comments postId={post.id} />
-            </BoxContainer>
-          ))
+                <Comments postId={post.id} />
+              </BoxContainer>
+            );
+          })
         ) : (
           <p>Inga inlägg tillgängliga.</p>
         )}
@@ -320,5 +376,4 @@ const Feed = () => {
     </div>
   );
 };
-
 export default Feed;
