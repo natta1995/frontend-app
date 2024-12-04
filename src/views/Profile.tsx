@@ -72,6 +72,7 @@ type Post = {
   createdAt: string;
   profile_image: string;
   image_url: string;
+  likes: number[];
 };
 
 const Profile: React.FC = () => {
@@ -241,13 +242,20 @@ const Profile: React.FC = () => {
                     />
                   )}
                   <p>{post.content}</p>
+
+                  <div>
+                     <p style={{ marginTop: "5px", color: "#555" }}>
+                        {post.likes?.length}{" "}
+                        {post.likes?.length === 1
+                          ? "person gillar detta"
+                          : "personer gillar detta"}
+                      </p>
+                  </div>
                   <p style={{ fontSize: "0.8em", color: "#555" }}>
                     {new Date(post.createdAt).toLocaleString()}
                   </p>
 
-                  <div
-                    style={{ display: "flex", justifyContent: "flex-end" }}
-                  ></div>
+               
 
                   <Comments postId={post.id} />
                 </PostContainer>
