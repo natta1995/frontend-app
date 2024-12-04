@@ -132,29 +132,59 @@ const Feed = () => {
   };
 
   const handleLikeToggle = async (feedId: number, isLiked: boolean) => {
-    const method = isLiked ? "DELETE" : "POST"; // DELETE för ogilla, POST för gilla
+    const method = isLiked ? "DELETE" : "POST"; 
     const url = `http://localhost:1337/feed/${feedId}/like`;
-
+  
+    
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === feedId
+          ? {
+              ...post,
+              likes: isLiked
+                ? post.likes.filter((id) => id !== currentUser?.id) 
+                : [...post.likes, currentUser?.id ?? -1], 
+            }
+          : post
+      )
+    );
+  
     try {
       const response = await fetch(url, {
         method,
         credentials: "include",
       });
-
-      if (response.ok) {
-        const updatedPost = await response.json();
-
-        // Uppdatera likes för det aktuella inlägget
+  
+      if (!response.ok) {
+        console.error("Failed to toggle like");
         setPosts((prevPosts) =>
           prevPosts.map((post) =>
-            post.id === feedId ? { ...post, likes: updatedPost.likes } : post
+            post.id === feedId
+              ? {
+                  ...post,
+                  likes: isLiked
+                    ? [...post.likes, currentUser?.id ?? -1] 
+                    : post.likes.filter((id) => id !== currentUser?.id), 
+                }
+              : post
           )
         );
-      } else {
-        console.error("Failed to toggle like");
       }
     } catch (error) {
       console.error("Error toggling like:", error);
+      // Återställ likes till föregående tillstånd vid nätverksfel
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post.id === feedId
+            ? {
+                ...post,
+                likes: isLiked
+                  ? [...post.likes, currentUser?.id ?? -1] // Återställ like
+                  : post.likes.filter((id) => id !== currentUser?.id), // Återställ dislike
+              }
+            : post
+        )
+      );
     }
   };
 
