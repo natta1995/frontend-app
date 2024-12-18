@@ -7,7 +7,7 @@ import Feed from "./views/Feed";
 import Profile from "./views/Profile";
 import UserProfile from "./views/UserProfile";
 import Layout from "./components/Layout";
-import HandleUser from "./views/HandleUser";
+import HandleUser from "./views/HandleAccount";
 import FindNewFriends from "./views/FindNewFriends";
 import { login, register } from "./api/auth";
 import ProtectedRoute from "./ProtectedRoute";
