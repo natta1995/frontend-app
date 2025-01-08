@@ -62,11 +62,11 @@ const HandleAccount = () => {
             Är du säker på att du vill ta bort ditt konto? <br></br> VARNING ett
             raderat konto går inte att återfå.
           </p>
+        </Modal.Body>
+        <Modal.Footer>
           <Button variant="danger" onClick={deleteAccount}>
             Radera konto
           </Button>
-        </Modal.Body>
-        <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Avbryt
           </Button>
