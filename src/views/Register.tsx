@@ -13,6 +13,10 @@ const RegisterContainer = styled.div`
   color: #bc6c25;
 `;
 
+const InformationsText = styled.p`
+  font-size: 12px;
+`
+
 interface RegisterProps {
   onRegister: (
     username: string,
@@ -44,9 +48,10 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
 
           <RegisterContainer>
             <h2 className="text-center">Skapa nytt konto</h2>
+            <InformationsText> OBS! För din säkerhet så behöver lösenordet innehålla minst 8 tecken, en storbokstav, en liten bokstav, en siffra och ett specialtecken.</InformationsText>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formName" className="mb-3">
-                <Form.Label>Namn*</Form.Label>
+                <Form.Label>Namn</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Ange ditt namn"
@@ -57,7 +62,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
               </Form.Group>
 
               <Form.Group controlId="formUsername" className="mb-3">
-                <Form.Label>Användarnamn*</Form.Label>
+                <Form.Label>Användarnamn</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Ange användarnamn"
@@ -68,7 +73,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
               </Form.Group>
 
               <Form.Group controlId="formEmail" className="mb-3">
-                <Form.Label>Email*</Form.Label>
+                <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Ange din email"
@@ -79,7 +84,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
               </Form.Group>
 
               <Form.Group controlId="formPassword" className="mb-3">
-                <Form.Label>Lösenord*</Form.Label>
+                <Form.Label>Lösenord </Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Ange lösenord"
@@ -90,7 +95,7 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
               </Form.Group>
 
               <Form.Group controlId="formAge" className="mb-3">
-                <Form.Label>Ålder*</Form.Label>
+                <Form.Label>Ålder</Form.Label>
                 <Form.Control
                   type="number"
                   placeholder="Ange din ålder"
