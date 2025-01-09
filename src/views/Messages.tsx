@@ -4,7 +4,7 @@ const MyMessages = () => {
     return (
         <>
         <h1>Mina meddelanden</h1>
-        <p>Första utkastet</p>
+        <p>Sidan är under uppbyggnaden. </p>
         </>
     )
 }
