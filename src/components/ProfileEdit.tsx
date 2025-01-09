@@ -57,9 +57,6 @@ const EditProfile: React.FC = () => {
       });
 
       if (response.ok) {
-        const responseText = await response.text();
-        console.log("Serverns svar:", responseText);
-
         const updatedProfileResponse = await fetch(
           "http://localhost:1337/users/profile",
           {
@@ -70,13 +67,12 @@ const EditProfile: React.FC = () => {
 
         if (updatedProfileResponse.ok) {
           const updatedUser = await updatedProfileResponse.json();
-          console.log("Uppdaterad användare:", updatedUser);
           setCurrentUser(updatedUser);
           navigate("/profile");
-          console.error("Failed to fetch updated profile");
         }
       } else {
         console.error("Failed to update profile, status:", response.status);
+        console.error("Failed to fetch updated profile");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -180,12 +176,25 @@ const EditProfile: React.FC = () => {
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer style={{display: "flex", justifyContent: "space-between", margin: "5%"}}>
-        <Button variant="success" type="submit" onClick={handleSubmit}>
-                Uppdatera
-              </Button>
+        <Modal.Footer
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "5%",
+          }}
+        >
+          <Button
+            variant="success"
+            type="submit"
+            onClick={(e) => {
+              handleSubmit(e);
+              handleClose();
+            }}
+          >
+            Uppdatera
+          </Button>
           <Button variant="secondary" onClick={handleClose}>
-                Stäng
+            Stäng
           </Button>
         </Modal.Footer>
       </Modal>
