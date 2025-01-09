@@ -181,7 +181,7 @@ const EditProfile: React.FC = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer style={{display: "flex", justifyContent: "space-between", margin: "5%"}}>
-        <Button variant="success" type="submit">
+        <Button variant="success" type="submit" onClick={handleSubmit}>
                 Uppdatera
               </Button>
           <Button variant="secondary" onClick={handleClose}>
