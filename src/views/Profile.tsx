@@ -230,6 +230,16 @@ const Profile: React.FC = () => {
                   <p>
                     <strong>{post.username}</strong>
                   </p>
+                  <p>{post.content}</p>
+                  <div
+                      style={{
+                        backgroundColor: "black",
+                        width: "50%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
                   {post.image_url && (
                     <img
                       src={`http://localhost:1337${post.image_url}`}
@@ -238,10 +248,11 @@ const Profile: React.FC = () => {
                         maxWidth: "100%",
                         maxHeight: "400px",
                         marginTop: "10px",
+                        
                       }}
                     />
                   )}
-                  <p>{post.content}</p>
+                  </div>
 
                   <div>
                      <p style={{ marginTop: "5px", color: "#555" }}>

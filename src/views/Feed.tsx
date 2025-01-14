@@ -348,7 +348,7 @@ const Feed = () => {
                     <div
                       style={{
                         backgroundColor: "black",
-                        width: "100%",
+                        width: "50%",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
