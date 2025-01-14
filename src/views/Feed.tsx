@@ -322,7 +322,7 @@ const Feed = () => {
                     alignItems: "center",
                   }}
                 >
-                  <div>
+                  <div style={{width: "100%"}}>
                     <h5>
                       <strong
                         onClick={() => navigate(`/profile/${post.username}`)}
@@ -354,6 +354,7 @@ const Feed = () => {
                         alignItems: "center",
                       }}
                     >
+                   
                       {post.image_url && (
                         <img
                           src={`http://localhost:1337${post.image_url}`}
@@ -365,6 +366,7 @@ const Feed = () => {
                           }}
                         />
                       )}
+                      
                     </div>
                     <div>
                       <Button
