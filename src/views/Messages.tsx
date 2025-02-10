@@ -15,6 +15,7 @@ const MyMessages = () => {
       status: "sent" | "delivered" | "read";
     }[]
   >([]);
+  const [newMessage, setNewMessage] = useState<string>("");
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -55,12 +56,46 @@ const MyMessages = () => {
     fetchMessages();
   }, [selectedFriend, currentUser]);
 
+  const sendMessage = async () => {
+    if (!newMessage.trim() || !currentUser || !selectedFriend) return;
+
+    try {
+      const response = await fetch("http://localhost:1337/messages/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sender_id: currentUser.id,
+          receiver_id: selectedFriend,
+          message_text: newMessage,
+        }),
+      });
+
+      if (response.ok) {
+        const newMsg = await response.json();
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: newMsg.id,
+            sender_id: currentUser.id,
+            message_text: newMessage,
+            created_at: new Date().toISOString(), // Fusk-tid för att direkt visa i listan
+            status: "sent",
+          },
+        ]);
+        setNewMessage(""); // Rensa input-fältet
+      }
+    } catch (error) {
+      console.error("Fel vid skickning av meddelande:", error);
+    }
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
 
   return (
     <div style={{ display: "flex", height: "100vh" }}>
+      {/* Vänsterpanel - Lista med vänner */}
       <div
         style={{ width: "30%", borderRight: "1px solid #ccc", padding: "10px" }}
       >
@@ -84,7 +119,15 @@ const MyMessages = () => {
         )}
       </div>
 
-      <div style={{ width: "70%", padding: "10px" }}>
+      {/* Högerpanel - Chatten */}
+      <div
+        style={{
+          width: "70%",
+          padding: "10px",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <h2>Chatt</h2>
         {selectedFriend ? (
           <>
@@ -97,6 +140,7 @@ const MyMessages = () => {
                 padding: "10px",
                 height: "300px",
                 overflowY: "auto",
+                flex: 1,
               }}
             >
               {messages.length > 0 ? (
@@ -112,14 +156,28 @@ const MyMessages = () => {
                       borderRadius: "5px",
                     }}
                   >
-                    {msg.message_text} <br></br>
-                    {msg.created_at} <br></br>
-                    {msg.status}
+                    {msg.message_text} ({msg.status})
                   </p>
                 ))
               ) : (
                 <p>Inga meddelanden än.</p>
               )}
+            </div>
+            {/* Inputfält & Skicka-knapp */}
+            <div style={{ display: "flex", marginTop: "10px" }}>
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                placeholder="Skriv ett meddelande..."
+                style={{ flex: 1, padding: "5px" }}
+              />
+              <button
+                onClick={sendMessage}
+                style={{ marginLeft: "5px", padding: "5px 10px" }}
+              >
+                Skicka
+              </button>
             </div>
           </>
         ) : (
