@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useUser } from "../UserContext";
+import { io } from "socket.io-client";
 
 const MyMessages = () => {
   const { currentUser } = useUser();
@@ -16,6 +17,7 @@ const MyMessages = () => {
     }[]
   >([]);
   const [newMessage, setNewMessage] = useState<string>("");
+  const socketRef = useRef(io("http://localhost:1337"));
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -56,38 +58,38 @@ const MyMessages = () => {
     fetchMessages();
   }, [selectedFriend, currentUser]);
 
-  const sendMessage = async () => {
+  const sendMessage = () => {
     if (!newMessage.trim() || !currentUser || !selectedFriend) return;
 
-    try {
-      const response = await fetch("http://localhost:1337/messages/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sender_id: currentUser.id,
-          receiver_id: selectedFriend,
-          message_text: newMessage,
-        }),
-      });
+    const messageData = {
+      sender_id: currentUser.id,
+      receiver_id: selectedFriend,
+      message_text: newMessage,
+    };
 
-      if (response.ok) {
-        const newMsg = await response.json();
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: newMsg.id,
-            sender_id: currentUser.id,
-            message_text: newMessage,
-            created_at: new Date().toISOString(), // Fusk-tid för att direkt visa i listan
-            status: "sent",
-          },
-        ]);
-        setNewMessage(""); // Rensa input-fältet
-      }
-    } catch (error) {
-      console.error("Fel vid skickning av meddelande:", error);
-    }
+    socketRef.current.emit("sendMessage", messageData);
+    setNewMessage("");
   };
+
+
+  useEffect(() => {
+    const socket = socketRef.current;
+
+    socket.on("receiveMessage", (newMessage) => {
+        setMessages((prev) => {
+            // 🔥 Om meddelandet redan finns, lägg inte till det igen
+            if (!prev.some(msg => msg.id === newMessage.id)) {
+                return [...prev, newMessage];
+            }
+            return prev;
+        });
+    });
+
+    return () => {
+        socket.off("receiveMessage");
+    };
+}, []);
+
 
   if (error) {
     return <div>{error}</div>;
@@ -156,9 +158,8 @@ const MyMessages = () => {
                       borderRadius: "5px",
                     }}
                   >
-                    {msg.message_text} <br></br>
-                    ({msg.status}) <br></br>
-                    ({msg.created_at})
+                    {msg.message_text} <br></br>({msg.status}) <br></br>(
+                    {msg.created_at})
                   </p>
                 ))
               ) : (
