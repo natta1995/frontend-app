@@ -156,7 +156,9 @@ const MyMessages = () => {
                       borderRadius: "5px",
                     }}
                   >
-                    {msg.message_text} ({msg.status})
+                    {msg.message_text} <br></br>
+                    ({msg.status}) <br></br>
+                    ({msg.created_at})
                   </p>
                 ))
               ) : (
