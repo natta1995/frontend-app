@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import LogoImg from "../Img/deer.webp";
 import ProfileImg from "../Img/startimg.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../styles/dropdown.css";
 import {
   faHouse,
   faUserGroup,

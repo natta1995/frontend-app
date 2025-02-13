@@ -1,0 +1,34 @@
+/* Ta bort pilen */
+.dropdown-toggle::after {
+    display: none !important;
+  }
+  
+  /* Ta bort fokus-kant */
+  .dropdown-toggle:focus,
+  .dropdown-toggle:active, 
+  .dropdown-toggle.show {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color:  transparent !important;
+  }
+  
+  /* Profilbild - lägg till en hover-effekt */
+  .dropdown-toggle img {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .dropdown-toggle:hover img {
+    transform: scale(1.1);
+  }
+  
+/* Animerad dropdown-meny */
+.dropdown-menu {
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  
+  .show .dropdown-menu {
+    opacity: 1;
+    transform: translateY(0);
+  }
