@@ -2,12 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import { useUser } from "../UserContext";
 import { io } from "socket.io-client";
 import ProfileImg from "../Img/startimg.webp";
+import { Form, Button, Dropdown } from "react-bootstrap";
+import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 
 const MyMessages = () => {
   const { currentUser } = useUser();
   const [selectedFriend, setSelectedFriend] = useState<number | null>(null);
   const [friends, setFriends] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [messages, setMessages] = useState<
     {
       id: number;
@@ -90,6 +93,14 @@ const MyMessages = () => {
     };
   }, []);
 
+  const handleEmojiClick = (emojiObject: EmojiClickData) => {
+    setNewMessage((prev) => prev + emojiObject.emoji); // Lägg till emoji i texten
+  };
+
+  const toggleEmojiPicker = () => {
+    setShowEmojiPicker(!showEmojiPicker);
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -140,6 +151,7 @@ const MyMessages = () => {
         style={{
           width: "70%",
           padding: "10px",
+          height: "90%",
           display: "flex",
           flexDirection: "column",
         }}
@@ -157,6 +169,8 @@ const MyMessages = () => {
                 height: "300px",
                 overflowY: "auto",
                 flex: 1,
+                display: "flex",
+                flexDirection: "column",
               }}
             >
               {messages.length > 0 ? (
@@ -164,16 +178,18 @@ const MyMessages = () => {
                   <p
                     key={msg.id}
                     style={{
-                      textAlign:
-                        msg.sender_id === currentUser?.id ? "right" : "left",
+                      alignSelf:
+                        msg.sender_id === currentUser?.id ? "flex-end" : "flex-start",
                       background:
                         msg.sender_id === currentUser?.id ? "#dcf8c6" : "#fff",
-                      padding: "5px",
-                      borderRadius: "5px",
+                      padding: "20px",
+                      borderRadius: "10px",
+                      margin: "20px",
+                      width: "45%"
                     }}
                   >
-                    {msg.message_text} <br></br>({msg.status}) <br></br>(
-                    {msg.created_at})
+                    {msg.message_text} <br></br>
+                    {msg.created_at} {msg.status}
                   </p>
                 ))
               ) : (
@@ -189,12 +205,32 @@ const MyMessages = () => {
                 placeholder="Skriv ett meddelande..."
                 style={{ flex: 1, padding: "5px" }}
               />
+
               <button
                 onClick={sendMessage}
                 style={{ marginLeft: "5px", padding: "5px 10px" }}
               >
                 Skicka
               </button>
+              <Button
+                type="button"
+                onClick={toggleEmojiPicker}
+                style={{
+                  padding: "7px",
+                  backgroundColor: "#bc6c25",
+                  borderColor: "#bc6c25",
+                  marginRight: "10px",
+                  marginLeft: "8%",
+                }}
+              >
+                😊
+              </Button>
+            </div>
+
+            <div>
+              {showEmojiPicker && (
+                <EmojiPicker onEmojiClick={handleEmojiClick} />
+              )}
             </div>
           </>
         ) : (
