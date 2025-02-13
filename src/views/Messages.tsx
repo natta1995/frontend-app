@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useUser } from "../UserContext";
 import { io } from "socket.io-client";
+import ProfileImg from "../Img/startimg.webp";
 
 const MyMessages = () => {
   const { currentUser } = useUser();
@@ -71,25 +72,23 @@ const MyMessages = () => {
     setNewMessage("");
   };
 
-
   useEffect(() => {
     const socket = socketRef.current;
 
     socket.on("receiveMessage", (newMessage) => {
-        setMessages((prev) => {
-            // 🔥 Om meddelandet redan finns, lägg inte till det igen
-            if (!prev.some(msg => msg.id === newMessage.id)) {
-                return [...prev, newMessage];
-            }
-            return prev;
-        });
+      setMessages((prev) => {
+        // 🔥 Om meddelandet redan finns, lägg inte till det igen
+        if (!prev.some((msg) => msg.id === newMessage.id)) {
+          return [...prev, newMessage];
+        }
+        return prev;
+      });
     });
 
     return () => {
-        socket.off("receiveMessage");
+      socket.off("receiveMessage");
     };
-}, []);
-
+  }, []);
 
   if (error) {
     return <div>{error}</div>;
@@ -113,6 +112,21 @@ const MyMessages = () => {
               }}
               onClick={() => setSelectedFriend(friend.id)}
             >
+              <img
+                src={
+                  friend.profile_image
+                    ? `http://localhost:1337${friend.profile_image}`
+                    : ProfileImg
+                }
+                alt={`${friend.username}s profile`}
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  marginRight: "10px",
+                }}
+              />
               {friend.name}
             </div>
           ))
