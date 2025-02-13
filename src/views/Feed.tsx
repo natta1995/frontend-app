@@ -13,6 +13,7 @@ import Comments from "../components/Comments";
 import { useUser } from "../UserContext";
 import FriendSuggestions from "../components/MyFriendSuggestions";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import "../styles/dropdown.css"
 
 const BoxContainer = styled.div`
   padding: 5%;

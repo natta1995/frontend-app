@@ -20,6 +20,10 @@
   .dropdown-toggle:hover img {
     transform: scale(1.1);
   }
+
+  .dropdown-toggle:hover {
+    transform: scale(1.3);
+  }
   
 /* Animerad dropdown-meny */
 .dropdown-menu {
