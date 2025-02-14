@@ -80,12 +80,19 @@ const Layout: React.FC = () => {
             DearFriends
           </Navbar.Brand>
 
+          <div>
+            <input style={{ width: "300px"}}
+            placeholder="Sök efter användare">
+            </input>
+            <button>Sök</button>
+          </div>
+
           <Nav className="me-auto">
             <Nav.Link href="/feed">
-              <FontAwesomeIcon icon={faHouse} />
+              <FontAwesomeIcon icon={faHouse} style={{height: "22px", marginRight: "30px", marginLeft: "200px"}}/>
             </Nav.Link>
             <Nav.Link href="/find-friends" style={{ position: "relative" }}>
-              <FontAwesomeIcon icon={faUserGroup} />
+              <FontAwesomeIcon icon={faUserGroup} style={{height: "22px", marginRight: "30px"}}/>
               {pendingRequests > 0 && (
                 <span
                   style={{
@@ -102,7 +109,7 @@ const Layout: React.FC = () => {
               )}
             </Nav.Link>
             <Nav.Link href="/messages">
-            <FontAwesomeIcon icon={faMessage} />
+            <FontAwesomeIcon icon={faMessage} style={{height: "22px"}}/>
             </Nav.Link>
           </Nav>
 
