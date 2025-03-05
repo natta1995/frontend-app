@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useUser } from "../UserContext";
 import ProfileImg from "../Img/startimg.webp";
 import BackgroundImg from "../Img/forestimg.jpg";
 import styled from "styled-components";
@@ -68,9 +69,41 @@ type Post = {
 };
 
 const UserProfile: React.FC = () => {
+  const { currentUser } = useUser();
   const { username } = useParams();
   const [profile, setProfile] = useState<any>(null);
   const [posts, setPosts] = useState<Post[]>([]);
+  const [isFriend, setIsFriend] = useState(false);
+  const [friendRequestSent, setFriendRequestSent] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [username]);
+
+  useEffect(() => {
+    if (!currentUser || !profile) return;
+
+    const checkFriendship = async () => {
+      try {
+        const response = await fetch(`http://localhost:1337/friends/list`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const friendExists = data.some(
+            (friend: any) => friend.id === profile.id
+          );
+          setIsFriend(friendExists);
+        }
+      } catch (error) {
+        console.error("Error checking friendship:", error);
+      }
+    };
+
+    checkFriendship();
+  }, [currentUser, profile]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -109,6 +142,92 @@ const UserProfile: React.FC = () => {
 
     fetchData();
   }, [username]);
+
+  const sendFriendRequest = async () => {
+    try {
+      const response = await fetch(`http://localhost:1337/friends/request`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ friendId: profile.id }),
+      });
+
+      if (response.ok) {
+        setFriendRequestSent(true);
+      }
+    } catch (error) {
+      console.error("Error sending friend request:", error);
+    }
+  };
+
+  const removeFriend = async () => {
+    try {
+      const response = await fetch(`http://localhost:1337/friends/remove`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ friendId: profile.id }),
+      });
+
+      if (response.ok) {
+        setIsFriend(false);
+      }
+    } catch (error) {
+      console.error("Error removing friend:", error);
+    }
+  };
+
+  const checkPendingRequest = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:1337/friends/sent-requests`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const requestExists = data.some(
+          (req: any) => req.friendId === profile.id
+        );
+        setFriendRequestSent(requestExists);
+      }
+    } catch (error) {
+      console.error("Error checking sent friend requests:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!currentUser || !profile) return;
+
+    const checkFriendship = async () => {
+      try {
+        const response = await fetch(`http://localhost:1337/friends/list`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const friendExists = data.some(
+            (friend: any) => friend.id === profile.id
+          );
+          setIsFriend(friendExists);
+        }
+      } catch (error) {
+        console.error("Error checking friendship:", error);
+      }
+    };
+
+    checkFriendship();
+    checkPendingRequest(); // ✅ Lägg till denna så vi även kollar skickade vänförfrågningar
+  }, [currentUser, profile]);
 
   return (
     <div
@@ -155,6 +274,57 @@ const UserProfile: React.FC = () => {
           <p>
             <strong>Bio:</strong> {profile?.bio}
           </p>
+        </div>
+        <div>
+          {currentUser?.id !== profile?.id && ( // Visa ej på egen profil
+            <>
+              {currentUser?.id !== profile?.id && ( // Visa ej på egen profil
+                <>
+                  {isFriend ? (
+                    <button
+                      onClick={removeFriend}
+                      style={{
+                        padding: "10px 20px",
+                        backgroundColor: "#e63946",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        marginTop: "20px",
+                      }}
+                    >
+                      Ta bort vän
+                    </button>
+                  ) : friendRequestSent ? (
+                    <p
+                      style={{
+                        marginTop: "20px",
+                        fontWeight: "bold",
+                        color: "#555",
+                      }}
+                    >
+                      Vänförfrågan skickad
+                    </p>
+                  ) : (
+                    <button
+                      onClick={sendFriendRequest}
+                      style={{
+                        padding: "10px 20px",
+                        backgroundColor: "#2a9d8f",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        marginTop: "20px",
+                      }}
+                    >
+                      Lägg till vän
+                    </button>
+                  )}
+                </>
+              )}
+            </>
+          )}
         </div>
       </ProfileContainer>
       <div
