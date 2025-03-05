@@ -18,10 +18,31 @@ import {
 
 const Layout: React.FC = () => {
   const { currentUser, setCurrentUser } = useUser();
+  const [users, setUsers] = useState<any[]>([]);
   const [pendingRequests, setPendingRequests] = useState<number>(0);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("http://localhost:1337/users/userslist", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data);
+        } else {
+          setError("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        setError("Error fetching users");
+      }
+    };
+
     const fetchPendingRequests = async () => {
       try {
         const response = await fetch("http://localhost:1337/friends/requests", {
@@ -39,6 +60,8 @@ const Layout: React.FC = () => {
       }
     };
 
+    fetchUsers();
+
     fetchPendingRequests();
   }, []);
 
@@ -50,8 +73,8 @@ const Layout: React.FC = () => {
       });
 
       if (response.ok) {
-        setCurrentUser(null); 
-        localStorage.clear(); 
+        setCurrentUser(null);
+        localStorage.clear();
         navigate("/");
       } else {
         console.error("Failed to log out");
@@ -61,9 +84,23 @@ const Layout: React.FC = () => {
     }
   };
 
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+  );
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <>
-      <Navbar style={{ backgroundColor: "#ccd5ae", height: "70px", boxShadow: "2px 4px 10px rgba(0, 0, 0, 0.4)"}}>
+      <Navbar
+        style={{
+          backgroundColor: "#ccd5ae",
+          height: "70px",
+          boxShadow: "2px 4px 10px rgba(0, 0, 0, 0.4)",
+        }}
+      >
         <Container>
           <Navbar.Brand
             href="/feed"
@@ -81,18 +118,65 @@ const Layout: React.FC = () => {
           </Navbar.Brand>
 
           <div>
-            <input style={{ width: "300px"}}
-            placeholder="Sök efter användare">
-            </input>
-            <button>Sök</button>
+            <input
+              style={{ width: "300px" }}
+              placeholder="Sök efter användare"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+           
+
+            {searchQuery && (
+              <div
+                style={{
+                  position: "absolute",
+                  background: "white",
+                  width: "300px",
+                  maxHeight: "200px",
+                  overflowY: "auto",
+                  boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
+                }}
+              >
+                {filteredUsers.length > 0 ? (
+                  filteredUsers.map((user) => (
+                    <div
+                      key={user.id}
+                      onClick={() => {
+                      setSearchQuery("");
+                      navigate(`/profile/${user.username}`);
+                    }}
+                      style={{
+                        padding: "10px",
+                        cursor: "pointer",
+                        borderBottom: "1px solid #ccc",
+                      }}
+                    >
+                      {user.name}
+                    </div>
+                  ))
+                ) : (
+                  <div style={{ padding: "10px" }}>Inga användare hittades</div>
+                )}
+              </div>
+            )}
           </div>
 
           <Nav className="me-auto">
             <Nav.Link href="/feed">
-              <FontAwesomeIcon icon={faHouse} style={{height: "22px", marginRight: "30px", marginLeft: "200px"}}/>
+              <FontAwesomeIcon
+                icon={faHouse}
+                style={{
+                  height: "22px",
+                  marginRight: "30px",
+                  marginLeft: "200px",
+                }}
+              />
             </Nav.Link>
             <Nav.Link href="/find-friends" style={{ position: "relative" }}>
-              <FontAwesomeIcon icon={faUserGroup} style={{height: "22px", marginRight: "30px"}}/>
+              <FontAwesomeIcon
+                icon={faUserGroup}
+                style={{ height: "22px", marginRight: "30px" }}
+              />
               {pendingRequests > 0 && (
                 <span
                   style={{
@@ -109,7 +193,7 @@ const Layout: React.FC = () => {
               )}
             </Nav.Link>
             <Nav.Link href="/messages">
-            <FontAwesomeIcon icon={faMessage} style={{height: "22px"}}/>
+              <FontAwesomeIcon icon={faMessage} style={{ height: "22px" }} />
             </Nav.Link>
           </Nav>
 
@@ -149,7 +233,10 @@ const Layout: React.FC = () => {
         <Outlet />
       </div>
 
-      <footer className="text-center py-3" style={{backgroundColor: "#faedcd"}}>
+      <footer
+        className="text-center py-3"
+        style={{ backgroundColor: "#faedcd" }}
+      >
         <Container>
           <p>© 2024 DearFriends. All rights reserved.</p>
         </Container>
